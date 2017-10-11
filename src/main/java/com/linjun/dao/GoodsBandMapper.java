@@ -4,9 +4,7 @@ import com.linjun.model.GoodsBand;
 import com.linjun.model.GoodsBandCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface GoodsBandMapper {
     long countByExample(GoodsBandCriteria example);
 

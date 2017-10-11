@@ -4,9 +4,7 @@ import com.linjun.model.Order;
 import com.linjun.model.OrderCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface OrderMapper {
     long countByExample(OrderCriteria example);
 

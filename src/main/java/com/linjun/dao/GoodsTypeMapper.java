@@ -4,9 +4,7 @@ import com.linjun.model.GoodsType;
 import com.linjun.model.GoodsTypeCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface GoodsTypeMapper {
     long countByExample(GoodsTypeCriteria example);
 

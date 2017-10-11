@@ -4,9 +4,7 @@ import com.linjun.model.AdvertsingPosing;
 import com.linjun.model.AdvertsingPosingCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface AdvertsingPosingMapper {
     long countByExample(AdvertsingPosingCriteria example);
 

@@ -4,9 +4,7 @@ import com.linjun.model.Evaluate;
 import com.linjun.model.EvaluateCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface EvaluateMapper {
     long countByExample(EvaluateCriteria example);
 

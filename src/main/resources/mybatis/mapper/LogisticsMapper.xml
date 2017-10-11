@@ -4,6 +4,407 @@
   <resultMap id="BaseResultMap" type="com.linjun.model.Logistics">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="orderId" jdbcType="BIGINT" property="orderid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="logisticsName" jdbcType="VARCHAR" property="logisticsname" />
+    <result column="logisticsState" jdbcType="VARCHAR" property="logisticsstate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, orderId, userID, logisticsName, logisticsState
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.LogisticsCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_logistics
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.LogisticsCriteria">
+    delete from t_logistics
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Logistics">
+    insert into t_logistics (id, orderId, userID, 
+      logisticsName, logisticsState)
+    values (#{id,jdbcType=BIGINT}, #{orderid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{logisticsname,jdbcType=VARCHAR}, #{logisticsstate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Logistics">
+    insert into t_logistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="logisticsname != null">
+        logisticsName,
+      </if>
+      <if test="logisticsstate != null">
+        logisticsState,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsname != null">
+        #{logisticsname,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsstate != null">
+        #{logisticsstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.LogisticsCriteria" resultType="java.lang.Long">
+    select count(*) from t_logistics
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_logistics
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderid != null">
+        orderId = #{record.orderid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.logisticsname != null">
+        logisticsName = #{record.logisticsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsstate != null">
+        logisticsState = #{record.logisticsstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_logistics
+    set id = #{record.id,jdbcType=BIGINT},
+      orderId = #{record.orderid,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      logisticsName = #{record.logisticsname,jdbcType=VARCHAR},
+      logisticsState = #{record.logisticsstate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Logistics">
+    update t_logistics
+    <set>
+      <if test="orderid != null">
+        orderId = #{orderid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsname != null">
+        logisticsName = #{logisticsname,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsstate != null">
+        logisticsState = #{logisticsstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Logistics">
+    update t_logistics
+    set orderId = #{orderid,jdbcType=BIGINT},
+      userID = #{userid,jdbcType=BIGINT},
+      logisticsName = #{logisticsname,jdbcType=VARCHAR},
+      logisticsState = #{logisticsstate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Logistics">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="orderId" jdbcType="BIGINT" property="orderid" />
+    <result column="logisticsName" jdbcType="VARCHAR" property="logisticsname" />
+    <result column="logisticsState" jdbcType="VARCHAR" property="logisticsstate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, orderId, logisticsName, logisticsState
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.LogisticsCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_logistics
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.LogisticsCriteria">
+    delete from t_logistics
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Logistics">
+    insert into t_logistics (id, orderId, logisticsName, 
+      logisticsState)
+    values (#{id,jdbcType=BIGINT}, #{orderid,jdbcType=BIGINT}, #{logisticsname,jdbcType=VARCHAR}, 
+      #{logisticsstate,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Logistics">
+    insert into t_logistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderid != null">
+        orderId,
+      </if>
+      <if test="logisticsname != null">
+        logisticsName,
+      </if>
+      <if test="logisticsstate != null">
+        logisticsState,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsname != null">
+        #{logisticsname,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsstate != null">
+        #{logisticsstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.LogisticsCriteria" resultType="java.lang.Long">
+    select count(*) from t_logistics
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_logistics
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderid != null">
+        orderId = #{record.orderid,jdbcType=BIGINT},
+      </if>
+      <if test="record.logisticsname != null">
+        logisticsName = #{record.logisticsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logisticsstate != null">
+        logisticsState = #{record.logisticsstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_logistics
+    set id = #{record.id,jdbcType=BIGINT},
+      orderId = #{record.orderid,jdbcType=BIGINT},
+      logisticsName = #{record.logisticsname,jdbcType=VARCHAR},
+      logisticsState = #{record.logisticsstate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Logistics">
+    update t_logistics
+    <set>
+      <if test="orderid != null">
+        orderId = #{orderid,jdbcType=BIGINT},
+      </if>
+      <if test="logisticsname != null">
+        logisticsName = #{logisticsname,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsstate != null">
+        logisticsState = #{logisticsstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Logistics">
+    update t_logistics
+    set orderId = #{orderid,jdbcType=BIGINT},
+      logisticsName = #{logisticsname,jdbcType=VARCHAR},
+      logisticsState = #{logisticsstate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Logistics">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="orderId" jdbcType="BIGINT" property="orderid" />
     <result column="logisticsName" jdbcType="VARCHAR" property="logisticsname" />
     <result column="logisticsState" jdbcType="VARCHAR" property="logisticsstate" />
   </resultMap>

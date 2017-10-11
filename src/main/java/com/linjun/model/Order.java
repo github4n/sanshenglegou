@@ -13,9 +13,9 @@ public class Order {
 
     private Long goodsid;
 
-    private String marketpricce;
+    private Long marketpricce;
 
-    private String memberprice;
+    private Long memberprice;
 
     private Integer goodsum;
 
@@ -71,20 +71,20 @@ public class Order {
         this.goodsid = goodsid;
     }
 
-    public String getMarketpricce() {
+    public Long getMarketpricce() {
         return marketpricce;
     }
 
-    public void setMarketpricce(String marketpricce) {
-        this.marketpricce = marketpricce == null ? null : marketpricce.trim();
+    public void setMarketpricce(Long marketpricce) {
+        this.marketpricce = marketpricce;
     }
 
-    public String getMemberprice() {
+    public Long getMemberprice() {
         return memberprice;
     }
 
-    public void setMemberprice(String memberprice) {
-        this.memberprice = memberprice == null ? null : memberprice.trim();
+    public void setMemberprice(Long memberprice) {
+        this.memberprice = memberprice;
     }
 
     public Integer getGoodsum() {

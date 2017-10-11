@@ -4,9 +4,7 @@ import com.linjun.model.OrderDetail;
 import com.linjun.model.OrderDetailCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface OrderDetailMapper {
     long countByExample(OrderDetailCriteria example);
 

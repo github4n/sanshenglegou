@@ -7,6 +7,646 @@
     <result column="goodsBandID" jdbcType="BIGINT" property="goodsbandid" />
     <result column="TypeID" jdbcType="BIGINT" property="typeid" />
     <result column="goodsSum" jdbcType="BIGINT" property="goodssum" />
+    <result column="marketPrive" jdbcType="BIGINT" property="marketprive" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="sendCredit" jdbcType="INTEGER" property="sendcredit" />
+    <result column="storeID" jdbcType="BIGINT" property="storeid" />
+    <result column="shop" jdbcType="VARCHAR" property="shop" />
+    <result column="soldamount" jdbcType="BIGINT" property="soldamount" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsName, goodsBandID, TypeID, goodsSum, marketPrive, memberPrice, sendCredit, 
+    storeID, shop, soldamount, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsCriteria">
+    delete from t_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Goods">
+    insert into t_goods (id, goodsName, goodsBandID, 
+      TypeID, goodsSum, marketPrive, 
+      memberPrice, sendCredit, storeID, 
+      shop, soldamount, createTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsname,jdbcType=VARCHAR}, #{goodsbandid,jdbcType=BIGINT}, 
+      #{typeid,jdbcType=BIGINT}, #{goodssum,jdbcType=BIGINT}, #{marketprive,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{sendcredit,jdbcType=INTEGER}, #{storeid,jdbcType=BIGINT}, 
+      #{shop,jdbcType=VARCHAR}, #{soldamount,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Goods">
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsbandid != null">
+        goodsBandID,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="goodssum != null">
+        goodsSum,
+      </if>
+      <if test="marketprive != null">
+        marketPrive,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="sendcredit != null">
+        sendCredit,
+      </if>
+      <if test="storeid != null">
+        storeID,
+      </if>
+      <if test="shop != null">
+        shop,
+      </if>
+      <if test="soldamount != null">
+        soldamount,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsbandid != null">
+        #{goodsbandid,jdbcType=BIGINT},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="goodssum != null">
+        #{goodssum,jdbcType=BIGINT},
+      </if>
+      <if test="marketprive != null">
+        #{marketprive,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="sendcredit != null">
+        #{sendcredit,jdbcType=INTEGER},
+      </if>
+      <if test="storeid != null">
+        #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="shop != null">
+        #{shop,jdbcType=VARCHAR},
+      </if>
+      <if test="soldamount != null">
+        #{soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsCriteria" resultType="java.lang.Long">
+    select count(*) from t_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goods
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsbandid != null">
+        goodsBandID = #{record.goodsbandid,jdbcType=BIGINT},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodssum != null">
+        goodsSum = #{record.goodssum,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketprive != null">
+        marketPrive = #{record.marketprive,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.sendcredit != null">
+        sendCredit = #{record.sendcredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeid != null">
+        storeID = #{record.storeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.shop != null">
+        shop = #{record.shop,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soldamount != null">
+        soldamount = #{record.soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsBandID = #{record.goodsbandid,jdbcType=BIGINT},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      goodsSum = #{record.goodssum,jdbcType=BIGINT},
+      marketPrive = #{record.marketprive,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      sendCredit = #{record.sendcredit,jdbcType=INTEGER},
+      storeID = #{record.storeid,jdbcType=BIGINT},
+      shop = #{record.shop,jdbcType=VARCHAR},
+      soldamount = #{record.soldamount,jdbcType=BIGINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Goods">
+    update t_goods
+    <set>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsbandid != null">
+        goodsBandID = #{goodsbandid,jdbcType=BIGINT},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="goodssum != null">
+        goodsSum = #{goodssum,jdbcType=BIGINT},
+      </if>
+      <if test="marketprive != null">
+        marketPrive = #{marketprive,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="sendcredit != null">
+        sendCredit = #{sendcredit,jdbcType=INTEGER},
+      </if>
+      <if test="storeid != null">
+        storeID = #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="shop != null">
+        shop = #{shop,jdbcType=VARCHAR},
+      </if>
+      <if test="soldamount != null">
+        soldamount = #{soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Goods">
+    update t_goods
+    set goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsBandID = #{goodsbandid,jdbcType=BIGINT},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      goodsSum = #{goodssum,jdbcType=BIGINT},
+      marketPrive = #{marketprive,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      sendCredit = #{sendcredit,jdbcType=INTEGER},
+      storeID = #{storeid,jdbcType=BIGINT},
+      shop = #{shop,jdbcType=VARCHAR},
+      soldamount = #{soldamount,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Goods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsBandID" jdbcType="BIGINT" property="goodsbandid" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="goodsSum" jdbcType="BIGINT" property="goodssum" />
+    <result column="marketPrive" jdbcType="BIGINT" property="marketprive" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="sendCredit" jdbcType="INTEGER" property="sendcredit" />
+    <result column="storeID" jdbcType="BIGINT" property="storeid" />
+    <result column="shop" jdbcType="VARCHAR" property="shop" />
+    <result column="soldamount" jdbcType="BIGINT" property="soldamount" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsName, goodsBandID, TypeID, goodsSum, marketPrive, memberPrice, sendCredit, 
+    storeID, shop, soldamount, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsCriteria">
+    delete from t_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Goods">
+    insert into t_goods (id, goodsName, goodsBandID, 
+      TypeID, goodsSum, marketPrive, 
+      memberPrice, sendCredit, storeID, 
+      shop, soldamount, createTime
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsname,jdbcType=VARCHAR}, #{goodsbandid,jdbcType=BIGINT}, 
+      #{typeid,jdbcType=BIGINT}, #{goodssum,jdbcType=BIGINT}, #{marketprive,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{sendcredit,jdbcType=INTEGER}, #{storeid,jdbcType=BIGINT}, 
+      #{shop,jdbcType=VARCHAR}, #{soldamount,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Goods">
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsbandid != null">
+        goodsBandID,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="goodssum != null">
+        goodsSum,
+      </if>
+      <if test="marketprive != null">
+        marketPrive,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="sendcredit != null">
+        sendCredit,
+      </if>
+      <if test="storeid != null">
+        storeID,
+      </if>
+      <if test="shop != null">
+        shop,
+      </if>
+      <if test="soldamount != null">
+        soldamount,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsbandid != null">
+        #{goodsbandid,jdbcType=BIGINT},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="goodssum != null">
+        #{goodssum,jdbcType=BIGINT},
+      </if>
+      <if test="marketprive != null">
+        #{marketprive,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="sendcredit != null">
+        #{sendcredit,jdbcType=INTEGER},
+      </if>
+      <if test="storeid != null">
+        #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="shop != null">
+        #{shop,jdbcType=VARCHAR},
+      </if>
+      <if test="soldamount != null">
+        #{soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsCriteria" resultType="java.lang.Long">
+    select count(*) from t_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goods
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsbandid != null">
+        goodsBandID = #{record.goodsbandid,jdbcType=BIGINT},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodssum != null">
+        goodsSum = #{record.goodssum,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketprive != null">
+        marketPrive = #{record.marketprive,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.sendcredit != null">
+        sendCredit = #{record.sendcredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeid != null">
+        storeID = #{record.storeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.shop != null">
+        shop = #{record.shop,jdbcType=VARCHAR},
+      </if>
+      <if test="record.soldamount != null">
+        soldamount = #{record.soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsBandID = #{record.goodsbandid,jdbcType=BIGINT},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      goodsSum = #{record.goodssum,jdbcType=BIGINT},
+      marketPrive = #{record.marketprive,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      sendCredit = #{record.sendcredit,jdbcType=INTEGER},
+      storeID = #{record.storeid,jdbcType=BIGINT},
+      shop = #{record.shop,jdbcType=VARCHAR},
+      soldamount = #{record.soldamount,jdbcType=BIGINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Goods">
+    update t_goods
+    <set>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsbandid != null">
+        goodsBandID = #{goodsbandid,jdbcType=BIGINT},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="goodssum != null">
+        goodsSum = #{goodssum,jdbcType=BIGINT},
+      </if>
+      <if test="marketprive != null">
+        marketPrive = #{marketprive,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="sendcredit != null">
+        sendCredit = #{sendcredit,jdbcType=INTEGER},
+      </if>
+      <if test="storeid != null">
+        storeID = #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="shop != null">
+        shop = #{shop,jdbcType=VARCHAR},
+      </if>
+      <if test="soldamount != null">
+        soldamount = #{soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Goods">
+    update t_goods
+    set goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsBandID = #{goodsbandid,jdbcType=BIGINT},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      goodsSum = #{goodssum,jdbcType=BIGINT},
+      marketPrive = #{marketprive,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      sendCredit = #{sendcredit,jdbcType=INTEGER},
+      storeID = #{storeid,jdbcType=BIGINT},
+      shop = #{shop,jdbcType=VARCHAR},
+      soldamount = #{soldamount,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Goods">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsBandID" jdbcType="BIGINT" property="goodsbandid" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="goodsSum" jdbcType="BIGINT" property="goodssum" />
     <result column="sendCredit" jdbcType="INTEGER" property="sendcredit" />
     <result column="storeID" jdbcType="BIGINT" property="storeid" />
     <result column="shop" jdbcType="VARCHAR" property="shop" />

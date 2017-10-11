@@ -4,9 +4,7 @@ import com.linjun.model.Article;
 import com.linjun.model.ArticleCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ArticleMapper {
     long countByExample(ArticleCriteria example);
 

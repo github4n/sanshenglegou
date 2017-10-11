@@ -4,9 +4,7 @@ import com.linjun.model.Collect;
 import com.linjun.model.CollectCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface CollectMapper {
     long countByExample(CollectCriteria example);
 

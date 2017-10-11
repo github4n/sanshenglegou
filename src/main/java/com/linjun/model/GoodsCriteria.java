@@ -415,6 +415,126 @@ public class GoodsCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andMarketpriveIsNull() {
+            addCriterion("marketPrive is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveIsNotNull() {
+            addCriterion("marketPrive is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveEqualTo(Long value) {
+            addCriterion("marketPrive =", value, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveNotEqualTo(Long value) {
+            addCriterion("marketPrive <>", value, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveGreaterThan(Long value) {
+            addCriterion("marketPrive >", value, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveGreaterThanOrEqualTo(Long value) {
+            addCriterion("marketPrive >=", value, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveLessThan(Long value) {
+            addCriterion("marketPrive <", value, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveLessThanOrEqualTo(Long value) {
+            addCriterion("marketPrive <=", value, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveIn(List<Long> values) {
+            addCriterion("marketPrive in", values, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveNotIn(List<Long> values) {
+            addCriterion("marketPrive not in", values, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveBetween(Long value1, Long value2) {
+            addCriterion("marketPrive between", value1, value2, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMarketpriveNotBetween(Long value1, Long value2) {
+            addCriterion("marketPrive not between", value1, value2, "marketprive");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceIsNull() {
+            addCriterion("memberPrice is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceIsNotNull() {
+            addCriterion("memberPrice is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceEqualTo(Long value) {
+            addCriterion("memberPrice =", value, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceNotEqualTo(Long value) {
+            addCriterion("memberPrice <>", value, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceGreaterThan(Long value) {
+            addCriterion("memberPrice >", value, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceGreaterThanOrEqualTo(Long value) {
+            addCriterion("memberPrice >=", value, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceLessThan(Long value) {
+            addCriterion("memberPrice <", value, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceLessThanOrEqualTo(Long value) {
+            addCriterion("memberPrice <=", value, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceIn(List<Long> values) {
+            addCriterion("memberPrice in", values, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceNotIn(List<Long> values) {
+            addCriterion("memberPrice not in", values, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceBetween(Long value1, Long value2) {
+            addCriterion("memberPrice between", value1, value2, "memberprice");
+            return (Criteria) this;
+        }
+
+        public Criteria andMemberpriceNotBetween(Long value1, Long value2) {
+            addCriterion("memberPrice not between", value1, value2, "memberprice");
+            return (Criteria) this;
+        }
+
         public Criteria andSendcreditIsNull() {
             addCriterion("sendCredit is null");
             return (Criteria) this;

@@ -197,5 +197,11 @@
 			   enableSelectByExample="true"
 			   selectByExampleQueryId="true"
 		></table>
+		<table tableName="t_shoppingcart"
+			   domainObjectName="ShoppingCart" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		></table>
 	</context>
 </generatorConfiguration>  

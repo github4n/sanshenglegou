@@ -4,9 +4,7 @@ import com.linjun.model.CreditManger;
 import com.linjun.model.CreditMangerCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface CreditMangerMapper {
     long countByExample(CreditMangerCriteria example);
 

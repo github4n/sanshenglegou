@@ -5,6 +5,8 @@ public class Logistics {
 
     private Long orderid;
 
+    private Long userid;
+
     private String logisticsname;
 
     private String logisticsstate;
@@ -23,6 +25,14 @@ public class Logistics {
 
     public void setOrderid(Long orderid) {
         this.orderid = orderid;
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public String getLogisticsname() {

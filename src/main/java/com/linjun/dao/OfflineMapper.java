@@ -4,9 +4,7 @@ import com.linjun.model.Offline;
 import com.linjun.model.OfflineCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface OfflineMapper {
     long countByExample(OfflineCriteria example);
 

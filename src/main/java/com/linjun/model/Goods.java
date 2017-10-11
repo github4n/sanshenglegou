@@ -13,6 +13,10 @@ public class Goods {
 
     private Long goodssum;
 
+    private Long marketprive;
+
+    private Long memberprice;
+
     private Integer sendcredit;
 
     private Long storeid;
@@ -61,6 +65,22 @@ public class Goods {
 
     public void setGoodssum(Long goodssum) {
         this.goodssum = goodssum;
+    }
+
+    public Long getMarketprive() {
+        return marketprive;
+    }
+
+    public void setMarketprive(Long marketprive) {
+        this.marketprive = marketprive;
+    }
+
+    public Long getMemberprice() {
+        return memberprice;
+    }
+
+    public void setMemberprice(Long memberprice) {
+        this.memberprice = memberprice;
     }
 
     public Integer getSendcredit() {

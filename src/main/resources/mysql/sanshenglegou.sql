@@ -36,6 +36,7 @@ CREATE TABLE `t_userDetail`(
  CONSTRAINT `userDetailid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+
 DROP TABLE IF EXISTS `t_addressManger`;
 CREATE TABLE `t_addressManger`(
 `id` bigint not null AUTO_INCREMENT,
@@ -204,8 +205,8 @@ CREATE TABLE `t_order`(
 `orderCode` bigint not null,
 `goodsName` varchar(64) not null,
 `goodsID` bigint not null,
-`marketPricce` varchar(32),
-`memberPrice` varchar(32),
+`marketPricce` bigint,
+`memberPrice` bigint,
 `goodSum` int(10) DEFAULT '0',
 `priceSum` int(11),
 `sendTime` DATETIME,
@@ -222,11 +223,14 @@ DROP TABLE IF EXISTS `t_logistics`;
 CREATE TABLE `t_logistics`(
 `id` bigint not null AUTO_INCREMENT,
 `orderId` bigint not null,
+`userID` bigint not null,
 `logisticsName` varchar(32) not null,
 `logisticsState` varchar(64) ,
 PRIMARY KEY(`id`),
 KEY `logisticsid` (`orderId`),
-CONSTRAINT `logisticsid`FOREIGN KEY (`orderId`) REFERENCES `t_order` (`id`)
+KEY `luserid` (`userID`),
+CONSTRAINT `logisticsid`FOREIGN KEY (`orderId`) REFERENCES `t_order` (`id`),
+CONSTRAINT `luserid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `t_orderDetail`;
@@ -275,6 +279,8 @@ CREATE TABLE `t_goods`(
 `goodsBandID` bigint not null,
 `TypeID` bigint not null,
 `goodsSum` bigint,
+`marketPrive` bigint,
+`memberPrice` bigint,
 `sendCredit` int,
 `storeID` bigint not null,
 `shop` varchar(32) not null,
@@ -306,6 +312,20 @@ KEY `evgoods` (`goodsID`),
 KEY `evuserid` (`userID`),
 CONSTRAINT `evgoods` FOREIGN KEY (`goodsID`) REFERENCES `t_goods`(`id`),
 CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `t_shoppingcart`;
+CREATE TABLE `t_shoppingcart`(
+`id` bigint not null AUTO_INCREMENT,
+`goodsID` bigint not null,
+`storeID` bigint not null,
+`storeName` varchar(64),
+`goodsName` varchar(64),
+`memberPrice`bigint,
+`number`bigint,
+ PRIMARY KEY (`id`),
+ KEY `cartid`(`goodsID`),
+ CONSTRAINT `cartid` FOREIGN KEY (`goodsID`) REFERENCES `t_goods`(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

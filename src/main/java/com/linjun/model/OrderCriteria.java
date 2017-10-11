@@ -425,62 +425,52 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceEqualTo(String value) {
+        public Criteria andMarketpricceEqualTo(Long value) {
             addCriterion("marketPricce =", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceNotEqualTo(String value) {
+        public Criteria andMarketpricceNotEqualTo(Long value) {
             addCriterion("marketPricce <>", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceGreaterThan(String value) {
+        public Criteria andMarketpricceGreaterThan(Long value) {
             addCriterion("marketPricce >", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceGreaterThanOrEqualTo(String value) {
+        public Criteria andMarketpricceGreaterThanOrEqualTo(Long value) {
             addCriterion("marketPricce >=", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceLessThan(String value) {
+        public Criteria andMarketpricceLessThan(Long value) {
             addCriterion("marketPricce <", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceLessThanOrEqualTo(String value) {
+        public Criteria andMarketpricceLessThanOrEqualTo(Long value) {
             addCriterion("marketPricce <=", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceLike(String value) {
-            addCriterion("marketPricce like", value, "marketpricce");
-            return (Criteria) this;
-        }
-
-        public Criteria andMarketpricceNotLike(String value) {
-            addCriterion("marketPricce not like", value, "marketpricce");
-            return (Criteria) this;
-        }
-
-        public Criteria andMarketpricceIn(List<String> values) {
+        public Criteria andMarketpricceIn(List<Long> values) {
             addCriterion("marketPricce in", values, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceNotIn(List<String> values) {
+        public Criteria andMarketpricceNotIn(List<Long> values) {
             addCriterion("marketPricce not in", values, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceBetween(String value1, String value2) {
+        public Criteria andMarketpricceBetween(Long value1, Long value2) {
             addCriterion("marketPricce between", value1, value2, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceNotBetween(String value1, String value2) {
+        public Criteria andMarketpricceNotBetween(Long value1, Long value2) {
             addCriterion("marketPricce not between", value1, value2, "marketpricce");
             return (Criteria) this;
         }
@@ -495,62 +485,52 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceEqualTo(String value) {
+        public Criteria andMemberpriceEqualTo(Long value) {
             addCriterion("memberPrice =", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotEqualTo(String value) {
+        public Criteria andMemberpriceNotEqualTo(Long value) {
             addCriterion("memberPrice <>", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThan(String value) {
+        public Criteria andMemberpriceGreaterThan(Long value) {
             addCriterion("memberPrice >", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThanOrEqualTo(String value) {
+        public Criteria andMemberpriceGreaterThanOrEqualTo(Long value) {
             addCriterion("memberPrice >=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThan(String value) {
+        public Criteria andMemberpriceLessThan(Long value) {
             addCriterion("memberPrice <", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThanOrEqualTo(String value) {
+        public Criteria andMemberpriceLessThanOrEqualTo(Long value) {
             addCriterion("memberPrice <=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLike(String value) {
-            addCriterion("memberPrice like", value, "memberprice");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberpriceNotLike(String value) {
-            addCriterion("memberPrice not like", value, "memberprice");
-            return (Criteria) this;
-        }
-
-        public Criteria andMemberpriceIn(List<String> values) {
+        public Criteria andMemberpriceIn(List<Long> values) {
             addCriterion("memberPrice in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotIn(List<String> values) {
+        public Criteria andMemberpriceNotIn(List<Long> values) {
             addCriterion("memberPrice not in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceBetween(String value1, String value2) {
+        public Criteria andMemberpriceBetween(Long value1, Long value2) {
             addCriterion("memberPrice between", value1, value2, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotBetween(String value1, String value2) {
+        public Criteria andMemberpriceNotBetween(Long value1, Long value2) {
             addCriterion("memberPrice not between", value1, value2, "memberprice");
             return (Criteria) this;
         }

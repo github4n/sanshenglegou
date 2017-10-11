@@ -4,9 +4,7 @@ import com.linjun.model.Logistics;
 import com.linjun.model.LogisticsCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface LogisticsMapper {
     long countByExample(LogisticsCriteria example);
 

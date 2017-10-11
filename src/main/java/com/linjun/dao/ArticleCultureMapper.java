@@ -4,9 +4,7 @@ import com.linjun.model.ArticleCulture;
 import com.linjun.model.ArticleCultureCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ArticleCultureMapper {
     long countByExample(ArticleCultureCriteria example);
 

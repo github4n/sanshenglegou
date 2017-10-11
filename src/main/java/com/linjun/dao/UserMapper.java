@@ -4,9 +4,7 @@ import com.linjun.model.User;
 import com.linjun.model.UserCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface UserMapper {
     long countByExample(UserCriteria example);
 

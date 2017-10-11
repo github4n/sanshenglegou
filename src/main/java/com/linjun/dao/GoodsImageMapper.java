@@ -4,9 +4,7 @@ import com.linjun.model.GoodsImage;
 import com.linjun.model.GoodsImageCriteria;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface GoodsImageMapper {
     long countByExample(GoodsImageCriteria example);
 

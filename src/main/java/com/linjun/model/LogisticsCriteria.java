@@ -224,6 +224,66 @@ public class LogisticsCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andUseridIsNull() {
+            addCriterion("userID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridIsNotNull() {
+            addCriterion("userID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridEqualTo(Long value) {
+            addCriterion("userID =", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridNotEqualTo(Long value) {
+            addCriterion("userID <>", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridGreaterThan(Long value) {
+            addCriterion("userID >", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridGreaterThanOrEqualTo(Long value) {
+            addCriterion("userID >=", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridLessThan(Long value) {
+            addCriterion("userID <", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridLessThanOrEqualTo(Long value) {
+            addCriterion("userID <=", value, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridIn(List<Long> values) {
+            addCriterion("userID in", values, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridNotIn(List<Long> values) {
+            addCriterion("userID not in", values, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridBetween(Long value1, Long value2) {
+            addCriterion("userID between", value1, value2, "userid");
+            return (Criteria) this;
+        }
+
+        public Criteria andUseridNotBetween(Long value1, Long value2) {
+            addCriterion("userID not between", value1, value2, "userid");
+            return (Criteria) this;
+        }
+
         public Criteria andLogisticsnameIsNull() {
             addCriterion("logisticsName is null");
             return (Criteria) this;
