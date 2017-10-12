@@ -36,4 +36,19 @@ public class StoreServiceImpl implements StoreService {
     public Store findByid(long id) {
         return storeMapper.selectByPrimaryKey(id);
     }
+
+    public int deleteByuserid(long userid) {
+        StoreCriteria storeCriteria=new StoreCriteria();
+        StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
+        criteria.andStoreuseridEqualTo(userid);
+
+        return storeMapper.deleteByExample(storeCriteria);
+    }
+
+    public Store findBystoreid(long storeuserid) {
+        StoreCriteria storeCriteria=new StoreCriteria();
+        StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
+        criteria.andStoreuseridEqualTo(storeuserid);
+        return (Store) storeMapper.selectByExample(storeCriteria);
+    }
 }

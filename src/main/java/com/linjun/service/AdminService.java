@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface AdminService {
     public int updateAdmin(long id, Admin admin);
-    public  boolean IsExits(String username);
+    public  boolean IsExits(String username,String passworld);
 
 }

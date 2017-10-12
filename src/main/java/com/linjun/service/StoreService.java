@@ -10,4 +10,6 @@ public interface StoreService {
     public  int updatebyid(long id,Store store);
     public List<Store> findAll();
     public  Store findByid(long id);
+    int deleteByuserid(long userid);
+    Store findBystoreid(long storeuserid);
 }

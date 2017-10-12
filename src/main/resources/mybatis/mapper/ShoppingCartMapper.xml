@@ -481,4 +481,244 @@
       number = #{number,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.ShoppingCart">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="storeID" jdbcType="BIGINT" property="storeid" />
+    <result column="storeName" jdbcType="VARCHAR" property="storename" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="number" jdbcType="BIGINT" property="number" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsID, storeID, storeName, goodsName, memberPrice, number
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.ShoppingCartCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_shoppingcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_shoppingcart
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_shoppingcart
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.ShoppingCartCriteria">
+    delete from t_shoppingcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.ShoppingCart">
+    insert into t_shoppingcart (id, goodsID, storeID, 
+      storeName, goodsName, memberPrice, 
+      number)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{storeid,jdbcType=BIGINT}, 
+      #{storename,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, #{memberprice,jdbcType=BIGINT}, 
+      #{number,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.ShoppingCart">
+    insert into t_shoppingcart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="storeid != null">
+        storeID,
+      </if>
+      <if test="storename != null">
+        storeName,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="storeid != null">
+        #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="storename != null">
+        #{storename,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.ShoppingCartCriteria" resultType="java.lang.Long">
+    select count(*) from t_shoppingcart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_shoppingcart
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.storeid != null">
+        storeID = #{record.storeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.storename != null">
+        storeName = #{record.storename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.number != null">
+        number = #{record.number,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_shoppingcart
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      storeID = #{record.storeid,jdbcType=BIGINT},
+      storeName = #{record.storename,jdbcType=VARCHAR},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      number = #{record.number,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.ShoppingCart">
+    update t_shoppingcart
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="storeid != null">
+        storeID = #{storeid,jdbcType=BIGINT},
+      </if>
+      <if test="storename != null">
+        storeName = #{storename,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.ShoppingCart">
+    update t_shoppingcart
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      storeID = #{storeid,jdbcType=BIGINT},
+      storeName = #{storename,jdbcType=VARCHAR},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      number = #{number,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

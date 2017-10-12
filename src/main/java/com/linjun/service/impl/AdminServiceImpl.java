@@ -19,10 +19,11 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.updateByExample(admin,adminCriteria);
     }
 
-    public boolean IsExits(String username) {
+    public boolean IsExits(String username,String passworld) {
         AdminCriteria adminCriteria =new AdminCriteria();
         AdminCriteria.Criteria criteria=adminCriteria.createCriteria();
         criteria.andAccountEqualTo(username);
+        criteria.andPassworldEqualTo(passworld);
         if (adminMapper.selectByExample(adminCriteria)!=null){
             return true;
         }else {
