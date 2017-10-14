@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.ArticleMapper;
 import com.linjun.model.Article;
 import com.linjun.model.ArticleCriteria;
@@ -34,5 +35,15 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleCriteria articleCriteria=new ArticleCriteria();
         ArticleCriteria.Criteria criteria=articleCriteria.createCriteria();
         return articleMapper.selectByExample(articleCriteria);
+    }
+
+    @Override
+    public Article update(Article article) {
+        int result=articleMapper.updateByPrimaryKeySelective(article);
+        if (result>0){
+            return article;
+        }else {
+            throw  new PeopleException("更新失败");
+        }
     }
 }

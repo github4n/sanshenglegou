@@ -13,6 +13,7 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     ArticleService articleService;
+//添加文章
     @PostMapping(value = "/add")
     public JsonResult add(@RequestParam(value = "title",required = false)String title,
                           @RequestParam(value = "content",required = false)String content){
@@ -26,20 +27,19 @@ public class ArticleController {
             return  new JsonResult("500",e.getMessage());
         }
     }
+//    更新文章
     @PutMapping(value = "/update")
-    public  JsonResult update(@RequestParam(value = "id",required = false)long id,
-                              @RequestParam(value = "title",required = false)String title,
-                              @RequestParam(value = "content",required = false)String content){
+    public  JsonResult update(
+            @RequestBody Article article
+    ){
         try{
-            Article article=new Article();
-            article.setTitle(title);
-            article.setContent(content);
-            articleService.updateByuserid(id,article);
+             articleService.update(article);
             return  new JsonResult("200",article);
         }catch (Exception e){
             return new JsonResult("500",e.getMessage());
         }
     }
+//    删除文章
    @DeleteMapping(value = "/delete/{id}")
     public  JsonResult delete(@PathVariable long id){
         try{
@@ -50,6 +50,7 @@ public class ArticleController {
             return new JsonResult("500",e.getMessage());
         }
    }
+//   获得所有文章
    @GetMapping(value = "/findAll")
     public  JsonResult findAll(){
        List<Article> list=articleService.findAll();

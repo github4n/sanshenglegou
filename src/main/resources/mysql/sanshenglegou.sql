@@ -207,6 +207,7 @@ DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order`(
 `id` bigint not null AUTO_INCREMENT,
 `userID` bigint not null,
+`storeID`bigint ,
 `orderCode` bigint not null,
 `goodsName` varchar(64) not null,
 `goodsID` bigint not null,
@@ -221,7 +222,9 @@ CREATE TABLE `t_order`(
 `isPay` tinyint DEFAULT '0',
 PRIMARY KEY (`id`),
 KEY `orderid` (`userID`),
-CONSTRAINT `orderid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
+KEY `orderStore` (`storeID`),
+CONSTRAINT `orderid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`),
+CONSTRAINT `orderStore` FOREIGN KEY (`storeID`) REFERENCES `t_store`(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `t_logistics`;

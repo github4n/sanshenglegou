@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminServiceImpl implements AdminService {
     @Autowired
-    private AdminMapper adminMapper;
-
+     AdminMapper adminMapper;
     public int updateAdmin(long id, Admin admin) {
         AdminCriteria adminCriteria=new AdminCriteria();
         AdminCriteria.Criteria criteria=adminCriteria.createCriteria();

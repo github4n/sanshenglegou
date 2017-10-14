@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.StoreMapper;
 import com.linjun.model.Store;
 import com.linjun.model.StoreCriteria;
@@ -50,5 +51,53 @@ public class StoreServiceImpl implements StoreService {
         StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
         criteria.andStoreuseridEqualTo(storeuserid);
         return (Store) storeMapper.selectByExample(storeCriteria);
+    }
+
+    @Override
+    public Store createStore(Store store) {
+        int result=storeMapper.insertSelective(store);
+        if (result>0){
+            return store;
+        }else {
+            throw new PeopleException("店铺注册失败");
+        }
+    }
+
+    @Override
+    public Store loginByName(Store store) {
+        StoreCriteria storeCriteria=new StoreCriteria();
+        storeCriteria.createCriteria().andStorenameEqualTo(store.getStorename());
+        storeCriteria.createCriteria().andPassworldEqualTo(store.getPassworld());
+        List<Store> storeList=storeMapper.selectByExample(storeCriteria);
+        if (storeList.size()==0){
+            throw new PeopleException("店铺不存在");
+        }else {
+            return storeList.get(0);
+        }
+
+    }
+
+    @Override
+    public Store loginByid(Store store) {
+        StoreCriteria storeCriteria=new StoreCriteria();
+        storeCriteria.createCriteria().andIdEqualTo(store.getId());
+        storeCriteria.createCriteria().andPassworldEqualTo(store.getPassworld());
+        List<Store> storeList=storeMapper.selectByExample(storeCriteria);
+        if (storeList.size()==0){
+            throw new PeopleException("店铺不存在");
+        }else {
+            return storeList.get(0);
+        }
+
+    }
+
+    @Override
+    public Store updateStore(Store store) {
+        int result=storeMapper.updateByPrimaryKeySelective(store);
+        if (result>0){
+            return storeMapper.selectByPrimaryKey(store.getId());
+        }
+
+        return null;
     }
 }

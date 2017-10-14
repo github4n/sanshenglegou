@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.ShoppingCartMapper;
 import com.linjun.model.ShoppingCart;
 import com.linjun.model.ShoppingCartCriteria;
@@ -51,5 +52,17 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
         ShoppingCartCriteria.Criteria criteria=shoppingCartCriteria.createCriteria();
         criteria.andUseridEqualTo(userid);
         return shoppingCartMapper.selectByExample(shoppingCartCriteria);
+    }
+
+    @Override
+    public ShoppingCart addCart(ShoppingCart shoppingCart) {
+        int result=shoppingCartMapper.insertSelective(shoppingCart);
+        if (result>0){
+            return  shoppingCart;
+        }else {
+            throw new PeopleException("加入购物车失败");
+        }
+
+
     }
 }

@@ -9,5 +9,6 @@ public interface ArticleService {
     public  int deleteByuserid(long id);
     public  int updateByuserid(long id,Article article);
     public List<Article> findAll();
+      Article update(Article article);
 
 }

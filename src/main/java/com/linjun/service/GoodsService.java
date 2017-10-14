@@ -10,4 +10,5 @@ public interface GoodsService {
     public List<Goods> findAll();
     public  List<Goods> findByStore(long storeid);
     public  Goods findByid(long ID);
+    Goods addGoods(Goods goods);
 }

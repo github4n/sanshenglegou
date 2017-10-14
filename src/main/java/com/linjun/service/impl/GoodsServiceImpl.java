@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.GoodsMapper;
 import com.linjun.model.Goods;
 import com.linjun.model.GoodsCriteria;
@@ -36,5 +37,15 @@ public class GoodsServiceImpl implements GoodsService {
     public Goods findByid(long ID) {
 
         return goodsMapper.selectByPrimaryKey(ID);
+    }
+
+    @Override
+    public Goods addGoods(Goods goods) {
+        int result=goodsMapper.insertSelective(goods);
+        if (result>0){
+            return  goods;
+        }else {
+            throw new PeopleException("添加商品失败");
+        }
     }
 }

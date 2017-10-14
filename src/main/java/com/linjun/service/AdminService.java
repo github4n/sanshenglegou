@@ -1,6 +1,7 @@
 package com.linjun.service;
 
 import com.linjun.model.Admin;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 

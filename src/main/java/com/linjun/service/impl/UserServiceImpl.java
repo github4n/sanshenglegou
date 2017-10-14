@@ -98,26 +98,28 @@ public class UserServiceImpl implements UserService {
     public User loginByPhone(User user) {
         UserCriteria userCriteria=new UserCriteria();
         userCriteria.createCriteria().andTelEqualTo(user.getTel());
+        userCriteria.createCriteria().andPassworldEqualTo(user.getPassworld());
         List<User> userList=userMapper.selectByExample(userCriteria);
         if (userlist()!=null&&userList.size()==1){
             user=userList.get(0);
             user.setLogin(new Date());
            return updateUser(user);
         }else {
-         throw  new PeopleException("用户未注册");
+         throw  new PeopleException("用户 未注册");
         }
     }
 
     public User loginByUsername(User user) {
         UserCriteria userCriteria=new UserCriteria();
         userCriteria.createCriteria().andUsernameEqualTo(user.getUsername());
+        userCriteria.createCriteria().andPassworldEqualTo(user.getPassworld());
         List<User> userList=userMapper.selectByExample(userCriteria);
         if (userlist()!=null&&userList.size()==1){
             user=userList.get(0);
             user.setLogin(new Date());
             return updateUser(user);
         }else {
-            throw  new PeopleException("用户未注册");
+            throw  new PeopleException("用户未注 册");
         }
     }
 
@@ -132,12 +134,14 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getUserByUserid(long userid) {
-        return null;
+        return userMapper.selectByPrimaryKey(userid);
     }
 
     public List<User> userlist() {
-        List<>
-        return null;
+        UserCriteria userCriteria=new UserCriteria();
+        List<User> userList=userMapper.selectByExample(userCriteria);
+
+        return userList;
     }
 
     public User updateUser(User user) {

@@ -10,4 +10,6 @@ public interface OrderService {
     public List<Order> findByuserid(long id);
     public List<Order>  findAll();
     int update(long userid,long orderId,Order order);
+    Order createOrder(Order order);
+    List<Order> queryOrder(long storid);
 }

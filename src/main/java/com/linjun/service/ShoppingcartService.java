@@ -11,4 +11,5 @@ public interface ShoppingcartService {
     public  List<ShoppingCart> findBygooid(long id);
     public  int updatebyGoodsId(long id,ShoppingCart shoppingCart);
     public  List<ShoppingCart> findByuserid(long userid);
+    ShoppingCart addCart(ShoppingCart shoppingCart);
 }

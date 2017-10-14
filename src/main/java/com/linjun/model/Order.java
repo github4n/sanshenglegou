@@ -7,6 +7,8 @@ public class Order {
 
     private Long userid;
 
+    private Long storeid;
+
     private Long ordercode;
 
     private String goodsname;
@@ -45,6 +47,14 @@ public class Order {
 
     public void setUserid(Long userid) {
         this.userid = userid;
+    }
+
+    public Long getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(Long storeid) {
+        this.storeid = storeid;
     }
 
     public Long getOrdercode() {

@@ -225,6 +225,66 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andStoreidIsNull() {
+            addCriterion("storeID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidIsNotNull() {
+            addCriterion("storeID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidEqualTo(Long value) {
+            addCriterion("storeID =", value, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidNotEqualTo(Long value) {
+            addCriterion("storeID <>", value, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidGreaterThan(Long value) {
+            addCriterion("storeID >", value, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidGreaterThanOrEqualTo(Long value) {
+            addCriterion("storeID >=", value, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidLessThan(Long value) {
+            addCriterion("storeID <", value, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidLessThanOrEqualTo(Long value) {
+            addCriterion("storeID <=", value, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidIn(List<Long> values) {
+            addCriterion("storeID in", values, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidNotIn(List<Long> values) {
+            addCriterion("storeID not in", values, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidBetween(Long value1, Long value2) {
+            addCriterion("storeID between", value1, value2, "storeid");
+            return (Criteria) this;
+        }
+
+        public Criteria andStoreidNotBetween(Long value1, Long value2) {
+            addCriterion("storeID not between", value1, value2, "storeid");
+            return (Criteria) this;
+        }
+
         public Criteria andOrdercodeIsNull() {
             addCriterion("orderCode is null");
             return (Criteria) this;

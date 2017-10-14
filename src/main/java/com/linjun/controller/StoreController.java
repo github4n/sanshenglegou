@@ -3,13 +3,11 @@ package com.linjun.controller;
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
 import com.linjun.entity.PageBean;
+import com.linjun.model.Goods;
 import com.linjun.model.Order;
 import com.linjun.model.Store;
 import com.linjun.model.User;
-import com.linjun.service.OrderDetailService;
-import com.linjun.service.OrderService;
-import com.linjun.service.StoreService;
-import com.linjun.service.UserService;
+import com.linjun.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,31 +25,19 @@ public class StoreController {
     OrderService orderService;
     @Autowired
     OrderDetailService orderDetailService;
+    @Autowired
+    GoodsService goodsService;
+
+
 //    店铺注册
     @PostMapping(value = "/register")
     public JsonResult register(
-            @RequestParam(value = "storeName",required = false)String storeName,
-            @RequestParam(value = "storeAddress",required = false)String storeAddress,
-            @RequestParam(value = "storeType",required = false)String storeType,
-            @RequestParam(value = "storer",required = false)String storer,
-            @RequestParam(value = "scope",required = false)String scope,
-            @RequestParam(value = "introduce",required = false)String introduce,
-            @RequestParam(value = "storeUserID",required = false)long storeUserID,
-            @RequestParam(value = "tel",required = false)String tel
+            @RequestBody Store store
     ){
         try {
-            Store store = new Store();
-            store.setCreatetime(new Date());
-            store.setIntroduce(introduce);
-            store.setScope(scope);
-            store.setStoreaddress(storeAddress);
-            store.setStoretype(storeType);
-            store.setStorer(storer);
-            store.setStorename(storeName);
-            User user = userService.findByKey(storeUserID);
-            store.setPassworld(user.getPassworld());
-            store.setTel(tel);
-            return new JsonResult("200",store);
+          Store store1=  storeService.createStore(store);
+
+            return new JsonResult("200",store1);
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());
         }
@@ -67,6 +53,27 @@ public class StoreController {
        }
 
     }
+
+//通过id登入店铺
+    @GetMapping(value = "/loginByid")
+    public  JsonResult loginByid(
+            @RequestParam(value = "id",required = false)long id,
+            @RequestParam(value = "password",required = false)String password
+    ){
+           try{
+               Store store=new Store();
+               store.setId(id);
+               store.setPassworld(password);
+            Store store1=   storeService.loginByid(store);
+               return new JsonResult("200",store1);
+           }catch (Exception e){
+               return  new JsonResult("500",e.getMessage());
+           }
+
+    }
+
+
+
 //    店铺的登入
     @GetMapping(value = "/login")
     public  JsonResult login(
@@ -88,21 +95,10 @@ public class StoreController {
 //    店铺资料更新
    @PutMapping(value = "/update")
     public  JsonResult update(
-            @RequestParam(value = "id",required = false)long id,
-           @RequestParam(value = "storeAddress",required = false)String storeAddress,
-           @RequestParam(value = "storeType",required = false)String storeType,
-           @RequestParam(value = "scope",required = false)String scope,
-           @RequestParam(value = "introduce",required = false)String introduce,
-           @RequestParam(value = "tel",required = false)String tel
+           @RequestBody Store store
    ){
         try{
-            Store store=new Store();
-            store.setTel(tel);
-            store.setStoretype(storeType);
-            store.setStoreaddress(storeAddress);
-            store.setScope(scope);
-            store.setIntroduce(introduce);
-            storeService.updatebyid(id,store);
+           storeService.updateStore(store);
             return new JsonResult("200",store);
         }catch (Exception e){
           return  new JsonResult("500",e.getMessage());
@@ -116,6 +112,31 @@ public class StoreController {
        PageHelper.startPage(page,10);
        return new JsonResult("200",new PageBean<Order>(orders));
    }
-//
+//查询店铺的订单
+   @GetMapping(value = "/queryOrder")
+    public  JsonResult queryOrder(
+      @RequestParam(value = "storeID",required = false)long storeID,
+      @RequestParam(value = "page",required = false)int page
+   ){
+                List<Order> orderList=orderService.queryOrder(storeID);
+       PageHelper.startPage(page,10);
+       List<Order> list= (List<Order>) new PageBean<Order>(orderList);
+       return new JsonResult("200",list) ;
+
+   }
+//上架商品
+    @PostMapping(value = "/addGoods")
+    public JsonResult addGoods(
+            @RequestBody Goods goods
+            ){
+          try{
+              Goods goods1=goodsService.addGoods(goods);
+              return new JsonResult("200",goods1);
+          }catch (Exception e){
+              return  new JsonResult("500",e.getMessage());
+          }
+    }
+
+
 
 }

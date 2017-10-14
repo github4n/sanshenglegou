@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.linjun.dao.ShoppingCartMapper">
-  <resultMap id="BaseResultMap" type="com.linjun.model.ShoppingCart">
+<mapper namespace="com.linjun.dao.CreditDetailMapper">
+  <resultMap id="BaseResultMap" type="com.linjun.model.CreditDetail">
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
-    <result column="storeID" jdbcType="BIGINT" property="storeid" />
+    <result column="creditID" jdbcType="BIGINT" property="creditid" />
     <result column="userID" jdbcType="BIGINT" property="userid" />
-    <result column="storeName" jdbcType="VARCHAR" property="storename" />
-    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
-    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
-    <result column="number" jdbcType="BIGINT" property="number" />
+    <result column="addCredit" jdbcType="BIGINT" property="addcredit" />
+    <result column="consumCredit" jdbcType="BIGINT" property="consumcredit" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,16 +67,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, goodsID, storeID, userID, storeName, goodsName, memberPrice, number
+    id, creditID, userID, addCredit, consumCredit
   </sql>
-  <select id="selectByExample" parameterType="com.linjun.model.ShoppingCartCriteria" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.linjun.model.CreditDetailCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from t_shoppingcart
+    from t_creditDetail
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -90,114 +87,85 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from t_shoppingcart
+    from t_creditDetail
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_shoppingcart
+    delete from t_creditDetail
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.linjun.model.ShoppingCartCriteria">
-    delete from t_shoppingcart
+  <delete id="deleteByExample" parameterType="com.linjun.model.CreditDetailCriteria">
+    delete from t_creditDetail
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.linjun.model.ShoppingCart">
-    insert into t_shoppingcart (id, goodsID, storeID, 
-      userID, storeName, goodsName, 
-      memberPrice, number)
-    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{storeid,jdbcType=BIGINT}, 
-      #{userid,jdbcType=BIGINT}, #{storename,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, 
-      #{memberprice,jdbcType=BIGINT}, #{number,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.linjun.model.CreditDetail">
+    insert into t_creditDetail (id, creditID, userID, 
+      addCredit, consumCredit)
+    values (#{id,jdbcType=BIGINT}, #{creditid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{addcredit,jdbcType=BIGINT}, #{consumcredit,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.linjun.model.ShoppingCart">
-    insert into t_shoppingcart
+  <insert id="insertSelective" parameterType="com.linjun.model.CreditDetail">
+    insert into t_creditDetail
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="goodsid != null">
-        goodsID,
-      </if>
-      <if test="storeid != null">
-        storeID,
+      <if test="creditid != null">
+        creditID,
       </if>
       <if test="userid != null">
         userID,
       </if>
-      <if test="storename != null">
-        storeName,
+      <if test="addcredit != null">
+        addCredit,
       </if>
-      <if test="goodsname != null">
-        goodsName,
-      </if>
-      <if test="memberprice != null">
-        memberPrice,
-      </if>
-      <if test="number != null">
-        number,
+      <if test="consumcredit != null">
+        consumCredit,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="goodsid != null">
-        #{goodsid,jdbcType=BIGINT},
-      </if>
-      <if test="storeid != null">
-        #{storeid,jdbcType=BIGINT},
+      <if test="creditid != null">
+        #{creditid,jdbcType=BIGINT},
       </if>
       <if test="userid != null">
         #{userid,jdbcType=BIGINT},
       </if>
-      <if test="storename != null">
-        #{storename,jdbcType=VARCHAR},
+      <if test="addcredit != null">
+        #{addcredit,jdbcType=BIGINT},
       </if>
-      <if test="goodsname != null">
-        #{goodsname,jdbcType=VARCHAR},
-      </if>
-      <if test="memberprice != null">
-        #{memberprice,jdbcType=BIGINT},
-      </if>
-      <if test="number != null">
-        #{number,jdbcType=BIGINT},
+      <if test="consumcredit != null">
+        #{consumcredit,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.linjun.model.ShoppingCartCriteria" resultType="java.lang.Long">
-    select count(*) from t_shoppingcart
+  <select id="countByExample" parameterType="com.linjun.model.CreditDetailCriteria" resultType="java.lang.Long">
+    select count(*) from t_creditDetail
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update t_shoppingcart
+    update t_creditDetail
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.goodsid != null">
-        goodsID = #{record.goodsid,jdbcType=BIGINT},
-      </if>
-      <if test="record.storeid != null">
-        storeID = #{record.storeid,jdbcType=BIGINT},
+      <if test="record.creditid != null">
+        creditID = #{record.creditid,jdbcType=BIGINT},
       </if>
       <if test="record.userid != null">
         userID = #{record.userid,jdbcType=BIGINT},
       </if>
-      <if test="record.storename != null">
-        storeName = #{record.storename,jdbcType=VARCHAR},
+      <if test="record.addcredit != null">
+        addCredit = #{record.addcredit,jdbcType=BIGINT},
       </if>
-      <if test="record.goodsname != null">
-        goodsName = #{record.goodsname,jdbcType=VARCHAR},
-      </if>
-      <if test="record.memberprice != null">
-        memberPrice = #{record.memberprice,jdbcType=BIGINT},
-      </if>
-      <if test="record.number != null">
-        number = #{record.number,jdbcType=BIGINT},
+      <if test="record.consumcredit != null">
+        consumCredit = #{record.consumcredit,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -205,55 +173,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update t_shoppingcart
+    update t_creditDetail
     set id = #{record.id,jdbcType=BIGINT},
-      goodsID = #{record.goodsid,jdbcType=BIGINT},
-      storeID = #{record.storeid,jdbcType=BIGINT},
+      creditID = #{record.creditid,jdbcType=BIGINT},
       userID = #{record.userid,jdbcType=BIGINT},
-      storeName = #{record.storename,jdbcType=VARCHAR},
-      goodsName = #{record.goodsname,jdbcType=VARCHAR},
-      memberPrice = #{record.memberprice,jdbcType=BIGINT},
-      number = #{record.number,jdbcType=BIGINT}
+      addCredit = #{record.addcredit,jdbcType=BIGINT},
+      consumCredit = #{record.consumcredit,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.ShoppingCart">
-    update t_shoppingcart
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.CreditDetail">
+    update t_creditDetail
     <set>
-      <if test="goodsid != null">
-        goodsID = #{goodsid,jdbcType=BIGINT},
-      </if>
-      <if test="storeid != null">
-        storeID = #{storeid,jdbcType=BIGINT},
+      <if test="creditid != null">
+        creditID = #{creditid,jdbcType=BIGINT},
       </if>
       <if test="userid != null">
         userID = #{userid,jdbcType=BIGINT},
       </if>
-      <if test="storename != null">
-        storeName = #{storename,jdbcType=VARCHAR},
+      <if test="addcredit != null">
+        addCredit = #{addcredit,jdbcType=BIGINT},
       </if>
-      <if test="goodsname != null">
-        goodsName = #{goodsname,jdbcType=VARCHAR},
-      </if>
-      <if test="memberprice != null">
-        memberPrice = #{memberprice,jdbcType=BIGINT},
-      </if>
-      <if test="number != null">
-        number = #{number,jdbcType=BIGINT},
+      <if test="consumcredit != null">
+        consumCredit = #{consumcredit,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.linjun.model.ShoppingCart">
-    update t_shoppingcart
-    set goodsID = #{goodsid,jdbcType=BIGINT},
-      storeID = #{storeid,jdbcType=BIGINT},
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.CreditDetail">
+    update t_creditDetail
+    set creditID = #{creditid,jdbcType=BIGINT},
       userID = #{userid,jdbcType=BIGINT},
-      storeName = #{storename,jdbcType=VARCHAR},
-      goodsName = #{goodsname,jdbcType=VARCHAR},
-      memberPrice = #{memberprice,jdbcType=BIGINT},
-      number = #{number,jdbcType=BIGINT}
+      addCredit = #{addcredit,jdbcType=BIGINT},
+      consumCredit = #{consumcredit,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

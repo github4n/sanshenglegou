@@ -12,4 +12,9 @@ public interface StoreService {
     public  Store findByid(long id);
     int deleteByuserid(long userid);
     Store findBystoreid(long storeuserid);
+    Store createStore(Store store);
+    Store loginByName(Store store);
+    Store loginByid(Store store);
+    Store updateStore(Store store);
+
 }
