@@ -37,4 +37,14 @@ public class OrderServiceImpl implements OrderService {
         OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
         return orderMapper.selectByExample(orderCriteria);
     }
+
+    public int update(long userid, long orderId, Order order) {
+
+        OrderCriteria orderCriteria=new OrderCriteria();
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        criteria.andIdEqualTo(orderId);
+
+        return orderMapper.updateByExample(order,orderCriteria);
+    }
 }

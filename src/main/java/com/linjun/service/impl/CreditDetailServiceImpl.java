@@ -1,0 +1,41 @@
+package com.linjun.service.impl;
+
+import com.linjun.dao.CreditDetailMapper;
+import com.linjun.model.CreditDetail;
+import com.linjun.model.CreditDetailCriteria;
+import com.linjun.service.CreditDetialService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+@Service
+public class CreditDetailServiceImpl implements CreditDetialService {
+    @Autowired
+    CreditDetailMapper creditDetailMapper;
+    public boolean add(CreditDetail creditDetial) {
+        return creditDetailMapper.insertSelective(creditDetial)>0;
+    }
+    public int update(long id, CreditDetail creditDetial) {
+        CreditDetailCriteria creditDetailCriteria=new CreditDetailCriteria();
+        CreditDetailCriteria.Criteria criteria=creditDetailCriteria.createCriteria();
+        criteria.andUseridEqualTo(id);
+        return creditDetailMapper.deleteByExample(creditDetailCriteria);
+    }
+
+    public int deletebyid(long creditid) {
+
+        CreditDetailCriteria creditDetailCriteria=new CreditDetailCriteria();
+        CreditDetailCriteria.Criteria criteria=creditDetailCriteria.createCriteria();
+        criteria.andUseridEqualTo(creditid);
+
+        return creditDetailMapper.deleteByExample(creditDetailCriteria);
+    }
+
+    public List<CreditDetail> findbyuserid(long userid) {
+
+        CreditDetailCriteria creditDetailCriteria=new CreditDetailCriteria();
+        CreditDetailCriteria.Criteria criteria=creditDetailCriteria.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        return creditDetailMapper.selectByExample(creditDetailCriteria);
+    }
+}

@@ -2,12 +2,12 @@ package com.linjun.service;
 
 import com.linjun.common.domain.PageList;
 import com.linjun.model.User;
-import com.sun.tools.corba.se.idl.StringGen;
+
 
 import java.util.List;
 
 public interface UserService {
-    public int add(User user);
+    public User add(User user);
     public List<User> findAll();
     public  User findByKey(long id);
     public  User findByusername(String username);
@@ -18,4 +18,14 @@ public interface UserService {
 
     PageList<User> search(String username,Integer page);
     PageList<User> searchSize(String username,Integer page);
+    User loginByPhone(User user);
+    User loginByUsername(User user);
+    User registerByPhone(User user);
+    User getUserByUserid(long userid);
+    List<User> userlist ();
+    User updateUser(User user);
+
+
+
+
 }

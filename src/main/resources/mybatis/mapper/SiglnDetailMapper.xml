@@ -1126,4 +1126,1354 @@
       dataCreate = #{datacreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.SiglnDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="signID" jdbcType="BIGINT" property="signid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="expencePiont" jdbcType="INTEGER" property="expencepiont" />
+    <result column="tradePoint" jdbcType="INTEGER" property="tradepoint" />
+    <result column="dataCreate" jdbcType="TIMESTAMP" property="datacreate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, signID, userID, expencePiont, tradePoint, dataCreate
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.SiglnDetailCriteria">
+    delete from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail (id, signID, userID, 
+      expencePiont, tradePoint, dataCreate
+      )
+    values (#{id,jdbcType=BIGINT}, #{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{expencepiont,jdbcType=INTEGER}, #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="signid != null">
+        signID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="expencepiont != null">
+        expencePiont,
+      </if>
+      <if test="tradepoint != null">
+        tradePoint,
+      </if>
+      <if test="datacreate != null">
+        dataCreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="signid != null">
+        #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultType="java.lang.Long">
+    select count(*) from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_siglnDetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.signid != null">
+        signID = #{record.signid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.expencepiont != null">
+        expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="record.tradepoint != null">
+        tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.datacreate != null">
+        dataCreate = #{record.datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_siglnDetail
+    set id = #{record.id,jdbcType=BIGINT},
+      signID = #{record.signid,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      dataCreate = #{record.datacreate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    <set>
+      <if test="signid != null">
+        signID = #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        expencePiont = #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        tradePoint = #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        dataCreate = #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    set signID = #{signid,jdbcType=BIGINT},
+      userID = #{userid,jdbcType=BIGINT},
+      expencePiont = #{expencepiont,jdbcType=INTEGER},
+      tradePoint = #{tradepoint,jdbcType=INTEGER},
+      dataCreate = #{datacreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.SiglnDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="signID" jdbcType="BIGINT" property="signid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="expencePiont" jdbcType="INTEGER" property="expencepiont" />
+    <result column="tradePoint" jdbcType="INTEGER" property="tradepoint" />
+    <result column="dataCreate" jdbcType="TIMESTAMP" property="datacreate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, signID, userID, expencePiont, tradePoint, dataCreate
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.SiglnDetailCriteria">
+    delete from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail (id, signID, userID, 
+      expencePiont, tradePoint, dataCreate
+      )
+    values (#{id,jdbcType=BIGINT}, #{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{expencepiont,jdbcType=INTEGER}, #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="signid != null">
+        signID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="expencepiont != null">
+        expencePiont,
+      </if>
+      <if test="tradepoint != null">
+        tradePoint,
+      </if>
+      <if test="datacreate != null">
+        dataCreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="signid != null">
+        #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultType="java.lang.Long">
+    select count(*) from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_siglnDetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.signid != null">
+        signID = #{record.signid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.expencepiont != null">
+        expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="record.tradepoint != null">
+        tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.datacreate != null">
+        dataCreate = #{record.datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_siglnDetail
+    set id = #{record.id,jdbcType=BIGINT},
+      signID = #{record.signid,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      dataCreate = #{record.datacreate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    <set>
+      <if test="signid != null">
+        signID = #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        expencePiont = #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        tradePoint = #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        dataCreate = #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    set signID = #{signid,jdbcType=BIGINT},
+      userID = #{userid,jdbcType=BIGINT},
+      expencePiont = #{expencepiont,jdbcType=INTEGER},
+      tradePoint = #{tradepoint,jdbcType=INTEGER},
+      dataCreate = #{datacreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.SiglnDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="signID" jdbcType="BIGINT" property="signid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="expencePiont" jdbcType="INTEGER" property="expencepiont" />
+    <result column="tradePoint" jdbcType="INTEGER" property="tradepoint" />
+    <result column="dataCreate" jdbcType="TIMESTAMP" property="datacreate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, signID, userID, expencePiont, tradePoint, dataCreate
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.SiglnDetailCriteria">
+    delete from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail (id, signID, userID, 
+      expencePiont, tradePoint, dataCreate
+      )
+    values (#{id,jdbcType=BIGINT}, #{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{expencepiont,jdbcType=INTEGER}, #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="signid != null">
+        signID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="expencepiont != null">
+        expencePiont,
+      </if>
+      <if test="tradepoint != null">
+        tradePoint,
+      </if>
+      <if test="datacreate != null">
+        dataCreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="signid != null">
+        #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultType="java.lang.Long">
+    select count(*) from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_siglnDetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.signid != null">
+        signID = #{record.signid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.expencepiont != null">
+        expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="record.tradepoint != null">
+        tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.datacreate != null">
+        dataCreate = #{record.datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_siglnDetail
+    set id = #{record.id,jdbcType=BIGINT},
+      signID = #{record.signid,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      dataCreate = #{record.datacreate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    <set>
+      <if test="signid != null">
+        signID = #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        expencePiont = #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        tradePoint = #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        dataCreate = #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    set signID = #{signid,jdbcType=BIGINT},
+      userID = #{userid,jdbcType=BIGINT},
+      expencePiont = #{expencepiont,jdbcType=INTEGER},
+      tradePoint = #{tradepoint,jdbcType=INTEGER},
+      dataCreate = #{datacreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.SiglnDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="signID" jdbcType="BIGINT" property="signid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="expencePiont" jdbcType="INTEGER" property="expencepiont" />
+    <result column="tradePoint" jdbcType="INTEGER" property="tradepoint" />
+    <result column="dataCreate" jdbcType="TIMESTAMP" property="datacreate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, signID, userID, expencePiont, tradePoint, dataCreate
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.SiglnDetailCriteria">
+    delete from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail (id, signID, userID, 
+      expencePiont, tradePoint, dataCreate
+      )
+    values (#{id,jdbcType=BIGINT}, #{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{expencepiont,jdbcType=INTEGER}, #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="signid != null">
+        signID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="expencepiont != null">
+        expencePiont,
+      </if>
+      <if test="tradepoint != null">
+        tradePoint,
+      </if>
+      <if test="datacreate != null">
+        dataCreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="signid != null">
+        #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultType="java.lang.Long">
+    select count(*) from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_siglnDetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.signid != null">
+        signID = #{record.signid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.expencepiont != null">
+        expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="record.tradepoint != null">
+        tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.datacreate != null">
+        dataCreate = #{record.datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_siglnDetail
+    set id = #{record.id,jdbcType=BIGINT},
+      signID = #{record.signid,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      dataCreate = #{record.datacreate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    <set>
+      <if test="signid != null">
+        signID = #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        expencePiont = #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        tradePoint = #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        dataCreate = #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    set signID = #{signid,jdbcType=BIGINT},
+      userID = #{userid,jdbcType=BIGINT},
+      expencePiont = #{expencepiont,jdbcType=INTEGER},
+      tradePoint = #{tradepoint,jdbcType=INTEGER},
+      dataCreate = #{datacreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.SiglnDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="signID" jdbcType="BIGINT" property="signid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="expencePiont" jdbcType="INTEGER" property="expencepiont" />
+    <result column="tradePoint" jdbcType="INTEGER" property="tradepoint" />
+    <result column="dataCreate" jdbcType="TIMESTAMP" property="datacreate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, signID, userID, expencePiont, tradePoint, dataCreate
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.SiglnDetailCriteria">
+    delete from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail (id, signID, userID, 
+      expencePiont, tradePoint, dataCreate
+      )
+    values (#{id,jdbcType=BIGINT}, #{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{expencepiont,jdbcType=INTEGER}, #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="signid != null">
+        signID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="expencepiont != null">
+        expencePiont,
+      </if>
+      <if test="tradepoint != null">
+        tradePoint,
+      </if>
+      <if test="datacreate != null">
+        dataCreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="signid != null">
+        #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultType="java.lang.Long">
+    select count(*) from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_siglnDetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.signid != null">
+        signID = #{record.signid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.expencepiont != null">
+        expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="record.tradepoint != null">
+        tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.datacreate != null">
+        dataCreate = #{record.datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_siglnDetail
+    set id = #{record.id,jdbcType=BIGINT},
+      signID = #{record.signid,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      dataCreate = #{record.datacreate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    <set>
+      <if test="signid != null">
+        signID = #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        expencePiont = #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        tradePoint = #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        dataCreate = #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    set signID = #{signid,jdbcType=BIGINT},
+      userID = #{userid,jdbcType=BIGINT},
+      expencePiont = #{expencepiont,jdbcType=INTEGER},
+      tradePoint = #{tradepoint,jdbcType=INTEGER},
+      dataCreate = #{datacreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.SiglnDetail">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="signID" jdbcType="BIGINT" property="signid" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="expencePiont" jdbcType="INTEGER" property="expencepiont" />
+    <result column="tradePoint" jdbcType="INTEGER" property="tradepoint" />
+    <result column="dataCreate" jdbcType="TIMESTAMP" property="datacreate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, signID, userID, expencePiont, tradePoint, dataCreate
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_siglnDetail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.SiglnDetailCriteria">
+    delete from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail (id, signID, userID, 
+      expencePiont, tradePoint, dataCreate
+      )
+    values (#{id,jdbcType=BIGINT}, #{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{expencepiont,jdbcType=INTEGER}, #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.SiglnDetail">
+    insert into t_siglnDetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="signid != null">
+        signID,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="expencepiont != null">
+        expencePiont,
+      </if>
+      <if test="tradepoint != null">
+        tradePoint,
+      </if>
+      <if test="datacreate != null">
+        dataCreate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="signid != null">
+        #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.SiglnDetailCriteria" resultType="java.lang.Long">
+    select count(*) from t_siglnDetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_siglnDetail
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.signid != null">
+        signID = #{record.signid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.expencepiont != null">
+        expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="record.tradepoint != null">
+        tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="record.datacreate != null">
+        dataCreate = #{record.datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_siglnDetail
+    set id = #{record.id,jdbcType=BIGINT},
+      signID = #{record.signid,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      expencePiont = #{record.expencepiont,jdbcType=INTEGER},
+      tradePoint = #{record.tradepoint,jdbcType=INTEGER},
+      dataCreate = #{record.datacreate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    <set>
+      <if test="signid != null">
+        signID = #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="expencepiont != null">
+        expencePiont = #{expencepiont,jdbcType=INTEGER},
+      </if>
+      <if test="tradepoint != null">
+        tradePoint = #{tradepoint,jdbcType=INTEGER},
+      </if>
+      <if test="datacreate != null">
+        dataCreate = #{datacreate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.SiglnDetail">
+    update t_siglnDetail
+    set signID = #{signid,jdbcType=BIGINT},
+      userID = #{userid,jdbcType=BIGINT},
+      expencePiont = #{expencepiont,jdbcType=INTEGER},
+      tradePoint = #{tradepoint,jdbcType=INTEGER},
+      dataCreate = #{datacreate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

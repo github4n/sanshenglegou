@@ -4,8 +4,8 @@ CREATE TABLE `t_admin` (
 `id` bigint not null AUTO_INCREMENT,
 `account` varchar(32) not null,
 `passworld` varchar(64) not null,
-`grade` tinyint not null DEFAULT '0',
-`jurisdiction` tinyint not null DEFAULT '0',
+`grade` tinyint  DEFAULT '0',
+`jurisdiction` tinyint  DEFAULT '0',
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
@@ -15,27 +15,16 @@ CREATE TABLE `t_user`(
 `username` varchar(64) not null,
 `passworld` varchar(64) not null,
 `token` varchar(128) not null,
-`role` tinyint not null,
+`role` tinyint ,
+ `sex` varchar(32) ,
+ `tel` varchar(64) ,
+  `email` varchar(64),
+ `state` tinyint,
 `createTime` DATETIME not null,
 `login` DATETIME ,
  `ip` varchar(64) not null,
  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `t_userDetail`;
-CREATE TABLE `t_userDetail`(
- `id` bigint not null AUTO_INCREMENT,
- `userID` bigint not null,
- `state` tinyint not null,
- `email` varchar(64) not null,
- `tel` varchar(64) not null,
- `sex` varchar(32) not null,
- `class` smallint not null,
- PRIMARY KEY (`id`),
- KEY `userDetailid` (`userID`),
- CONSTRAINT `userDetailid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
 
 DROP TABLE IF EXISTS `t_addressManger`;
 CREATE TABLE `t_addressManger`(
@@ -46,8 +35,8 @@ CREATE TABLE `t_addressManger`(
 `province` varchar(32) not null,
 `city` varchar(32) not null,
 `county` varchar (32) not null,
-`addressDetail` varchar(128) not null,
-`isDefault` tinyint not null,
+`addressDetail` varchar(128) ,
+`isDefault` tinyint ,
 PRIMARY KEY (`id`),
 KEY `addressid` (`userID`),
 CONSTRAINT `addressid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
@@ -64,6 +53,22 @@ CREATE TABLE `t_creditManger`(
 KEY `credit` (`userID`),
 CONSTRAINT `credit` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `t_creditDetail`;
+CREATE TABLE `t_creditDetail`(
+  `id` bigint not null AUTO_INCREMENT,
+  `creditID` bigint not null,
+  `userID` bigint not null,
+  `addCredit` bigint,
+  `consumCredit` bigint,
+  PRIMARY KEY (`id`),
+  KEY `creditdetailid` (`creditID`),
+  KEY `cdetail` (`userID`),
+  CONSTRAINT `creditdetailid` FOREIGN KEY (`creditID`) REFERENCES `t_creditManger`(`id`),
+  CONSTRAINT `cdetail` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
 
 DROP TABLE IF EXISTS `t_collect`;
 CREATE TABLE `t_collect`(
@@ -319,13 +324,16 @@ CREATE TABLE `t_shoppingcart`(
 `id` bigint not null AUTO_INCREMENT,
 `goodsID` bigint not null,
 `storeID` bigint not null,
+`userID` bigint not null,
 `storeName` varchar(64),
 `goodsName` varchar(64),
 `memberPrice`bigint,
 `number`bigint,
  PRIMARY KEY (`id`),
  KEY `cartid`(`goodsID`),
- CONSTRAINT `cartid` FOREIGN KEY (`goodsID`) REFERENCES `t_goods`(`id`)
+ KEY `shopcartid` (`userID`),
+ CONSTRAINT `cartid` FOREIGN KEY (`goodsID`) REFERENCES `t_goods`(`id`),
+ CONSTRAINT `shopcartid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 

@@ -7,6 +7,8 @@ public class ShoppingCart {
 
     private Long storeid;
 
+    private Long userid;
+
     private String storename;
 
     private String goodsname;
@@ -37,6 +39,14 @@ public class ShoppingCart {
 
     public void setStoreid(Long storeid) {
         this.storeid = storeid;
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public String getStorename() {

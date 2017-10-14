@@ -966,4 +966,1162 @@
       isKey = #{iskey,jdbcType=TINYINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsAttribute">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="attributeName" jdbcType="VARCHAR" property="attributename" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="isKey" jdbcType="TINYINT" property="iskey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, attributeName, TypeID, isKey
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsAttributeCriteria">
+    delete from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute (id, attributeName, TypeID, 
+      isKey)
+    values (#{id,jdbcType=BIGINT}, #{attributename,jdbcType=VARCHAR}, #{typeid,jdbcType=BIGINT}, 
+      #{iskey,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attributename != null">
+        attributeName,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="iskey != null">
+        isKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attributename != null">
+        #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        #{iskey,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsAttribute
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.attributename != null">
+        attributeName = #{record.attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iskey != null">
+        isKey = #{record.iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsAttribute
+    set id = #{record.id,jdbcType=BIGINT},
+      attributeName = #{record.attributename,jdbcType=VARCHAR},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      isKey = #{record.iskey,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    <set>
+      <if test="attributename != null">
+        attributeName = #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        isKey = #{iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    set attributeName = #{attributename,jdbcType=VARCHAR},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      isKey = #{iskey,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsAttribute">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="attributeName" jdbcType="VARCHAR" property="attributename" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="isKey" jdbcType="TINYINT" property="iskey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, attributeName, TypeID, isKey
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsAttributeCriteria">
+    delete from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute (id, attributeName, TypeID, 
+      isKey)
+    values (#{id,jdbcType=BIGINT}, #{attributename,jdbcType=VARCHAR}, #{typeid,jdbcType=BIGINT}, 
+      #{iskey,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attributename != null">
+        attributeName,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="iskey != null">
+        isKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attributename != null">
+        #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        #{iskey,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsAttribute
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.attributename != null">
+        attributeName = #{record.attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iskey != null">
+        isKey = #{record.iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsAttribute
+    set id = #{record.id,jdbcType=BIGINT},
+      attributeName = #{record.attributename,jdbcType=VARCHAR},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      isKey = #{record.iskey,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    <set>
+      <if test="attributename != null">
+        attributeName = #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        isKey = #{iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    set attributeName = #{attributename,jdbcType=VARCHAR},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      isKey = #{iskey,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsAttribute">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="attributeName" jdbcType="VARCHAR" property="attributename" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="isKey" jdbcType="TINYINT" property="iskey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, attributeName, TypeID, isKey
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsAttributeCriteria">
+    delete from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute (id, attributeName, TypeID, 
+      isKey)
+    values (#{id,jdbcType=BIGINT}, #{attributename,jdbcType=VARCHAR}, #{typeid,jdbcType=BIGINT}, 
+      #{iskey,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attributename != null">
+        attributeName,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="iskey != null">
+        isKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attributename != null">
+        #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        #{iskey,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsAttribute
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.attributename != null">
+        attributeName = #{record.attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iskey != null">
+        isKey = #{record.iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsAttribute
+    set id = #{record.id,jdbcType=BIGINT},
+      attributeName = #{record.attributename,jdbcType=VARCHAR},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      isKey = #{record.iskey,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    <set>
+      <if test="attributename != null">
+        attributeName = #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        isKey = #{iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    set attributeName = #{attributename,jdbcType=VARCHAR},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      isKey = #{iskey,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsAttribute">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="attributeName" jdbcType="VARCHAR" property="attributename" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="isKey" jdbcType="TINYINT" property="iskey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, attributeName, TypeID, isKey
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsAttributeCriteria">
+    delete from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute (id, attributeName, TypeID, 
+      isKey)
+    values (#{id,jdbcType=BIGINT}, #{attributename,jdbcType=VARCHAR}, #{typeid,jdbcType=BIGINT}, 
+      #{iskey,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attributename != null">
+        attributeName,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="iskey != null">
+        isKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attributename != null">
+        #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        #{iskey,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsAttribute
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.attributename != null">
+        attributeName = #{record.attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iskey != null">
+        isKey = #{record.iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsAttribute
+    set id = #{record.id,jdbcType=BIGINT},
+      attributeName = #{record.attributename,jdbcType=VARCHAR},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      isKey = #{record.iskey,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    <set>
+      <if test="attributename != null">
+        attributeName = #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        isKey = #{iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    set attributeName = #{attributename,jdbcType=VARCHAR},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      isKey = #{iskey,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsAttribute">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="attributeName" jdbcType="VARCHAR" property="attributename" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="isKey" jdbcType="TINYINT" property="iskey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, attributeName, TypeID, isKey
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsAttributeCriteria">
+    delete from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute (id, attributeName, TypeID, 
+      isKey)
+    values (#{id,jdbcType=BIGINT}, #{attributename,jdbcType=VARCHAR}, #{typeid,jdbcType=BIGINT}, 
+      #{iskey,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attributename != null">
+        attributeName,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="iskey != null">
+        isKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attributename != null">
+        #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        #{iskey,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsAttribute
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.attributename != null">
+        attributeName = #{record.attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iskey != null">
+        isKey = #{record.iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsAttribute
+    set id = #{record.id,jdbcType=BIGINT},
+      attributeName = #{record.attributename,jdbcType=VARCHAR},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      isKey = #{record.iskey,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    <set>
+      <if test="attributename != null">
+        attributeName = #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        isKey = #{iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    set attributeName = #{attributename,jdbcType=VARCHAR},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      isKey = #{iskey,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsAttribute">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="attributeName" jdbcType="VARCHAR" property="attributename" />
+    <result column="TypeID" jdbcType="BIGINT" property="typeid" />
+    <result column="isKey" jdbcType="TINYINT" property="iskey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, attributeName, TypeID, isKey
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsAttribute
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsAttributeCriteria">
+    delete from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute (id, attributeName, TypeID, 
+      isKey)
+    values (#{id,jdbcType=BIGINT}, #{attributename,jdbcType=VARCHAR}, #{typeid,jdbcType=BIGINT}, 
+      #{iskey,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsAttribute">
+    insert into t_goodsAttribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="attributename != null">
+        attributeName,
+      </if>
+      <if test="typeid != null">
+        TypeID,
+      </if>
+      <if test="iskey != null">
+        isKey,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="attributename != null">
+        #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        #{iskey,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsAttributeCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsAttribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsAttribute
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.attributename != null">
+        attributeName = #{record.attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeid != null">
+        TypeID = #{record.typeid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iskey != null">
+        isKey = #{record.iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsAttribute
+    set id = #{record.id,jdbcType=BIGINT},
+      attributeName = #{record.attributename,jdbcType=VARCHAR},
+      TypeID = #{record.typeid,jdbcType=BIGINT},
+      isKey = #{record.iskey,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    <set>
+      <if test="attributename != null">
+        attributeName = #{attributename,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null">
+        TypeID = #{typeid,jdbcType=BIGINT},
+      </if>
+      <if test="iskey != null">
+        isKey = #{iskey,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsAttribute">
+    update t_goodsAttribute
+    set attributeName = #{attributename,jdbcType=VARCHAR},
+      TypeID = #{typeid,jdbcType=BIGINT},
+      isKey = #{iskey,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

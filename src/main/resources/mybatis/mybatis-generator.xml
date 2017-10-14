@@ -185,8 +185,8 @@
 			   enableSelectByExample="true"
 			   selectByExampleQueryId="true"
 		></table>
-	<table tableName="t_userDetail"
-		   domainObjectName="UserDetail" enableCountByExample="true"
+	<table tableName="t_creditDetail"
+		   domainObjectName="CreditDetail" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"

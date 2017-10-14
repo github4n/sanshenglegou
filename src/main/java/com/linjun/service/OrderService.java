@@ -9,4 +9,5 @@ public interface OrderService {
     public  int deletebyuserid(long id,long goodsID);
     public List<Order> findByuserid(long id);
     public List<Order>  findAll();
+    int update(long userid,long orderId,Order order);
 }

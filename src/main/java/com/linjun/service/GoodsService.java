@@ -9,4 +9,5 @@ public interface GoodsService {
     public int delete(long id);
     public List<Goods> findAll();
     public  List<Goods> findByStore(long storeid);
+    public  Goods findByid(long ID);
 }

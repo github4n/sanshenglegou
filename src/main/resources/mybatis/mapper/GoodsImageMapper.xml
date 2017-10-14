@@ -1041,4 +1041,1252 @@
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsImage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="IamgeAddress" jdbcType="VARCHAR" property="iamgeaddress" />
+    <result column="isKeyIamge" jdbcType="TINYINT" property="iskeyiamge" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsID, IamgeAddress, isKeyIamge, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsImageCriteria">
+    delete from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage (id, goodsID, IamgeAddress, 
+      isKeyIamge, createTime)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, 
+      #{iskeyiamge,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress,
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsImage
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iamgeaddress != null">
+        IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iskeyiamge != null">
+        isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsImage
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsImage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="IamgeAddress" jdbcType="VARCHAR" property="iamgeaddress" />
+    <result column="isKeyIamge" jdbcType="TINYINT" property="iskeyiamge" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsID, IamgeAddress, isKeyIamge, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsImageCriteria">
+    delete from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage (id, goodsID, IamgeAddress, 
+      isKeyIamge, createTime)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, 
+      #{iskeyiamge,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress,
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsImage
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iamgeaddress != null">
+        IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iskeyiamge != null">
+        isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsImage
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsImage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="IamgeAddress" jdbcType="VARCHAR" property="iamgeaddress" />
+    <result column="isKeyIamge" jdbcType="TINYINT" property="iskeyiamge" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsID, IamgeAddress, isKeyIamge, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsImageCriteria">
+    delete from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage (id, goodsID, IamgeAddress, 
+      isKeyIamge, createTime)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, 
+      #{iskeyiamge,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress,
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsImage
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iamgeaddress != null">
+        IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iskeyiamge != null">
+        isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsImage
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsImage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="IamgeAddress" jdbcType="VARCHAR" property="iamgeaddress" />
+    <result column="isKeyIamge" jdbcType="TINYINT" property="iskeyiamge" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsID, IamgeAddress, isKeyIamge, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsImageCriteria">
+    delete from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage (id, goodsID, IamgeAddress, 
+      isKeyIamge, createTime)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, 
+      #{iskeyiamge,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress,
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsImage
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iamgeaddress != null">
+        IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iskeyiamge != null">
+        isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsImage
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsImage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="IamgeAddress" jdbcType="VARCHAR" property="iamgeaddress" />
+    <result column="isKeyIamge" jdbcType="TINYINT" property="iskeyiamge" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsID, IamgeAddress, isKeyIamge, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsImageCriteria">
+    delete from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage (id, goodsID, IamgeAddress, 
+      isKeyIamge, createTime)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, 
+      #{iskeyiamge,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress,
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsImage
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iamgeaddress != null">
+        IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iskeyiamge != null">
+        isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsImage
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.GoodsImage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="IamgeAddress" jdbcType="VARCHAR" property="iamgeaddress" />
+    <result column="isKeyIamge" jdbcType="TINYINT" property="iskeyiamge" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, goodsID, IamgeAddress, isKeyIamge, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.GoodsImageCriteria">
+    delete from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage (id, goodsID, IamgeAddress, 
+      isKeyIamge, createTime)
+    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, 
+      #{iskeyiamge,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.GoodsImage">
+    insert into t_goodsImage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress,
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.GoodsImageCriteria" resultType="java.lang.Long">
+    select count(*) from t_goodsImage
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_goodsImage
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.iamgeaddress != null">
+        IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iskeyiamge != null">
+        isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_goodsImage
+    set id = #{record.id,jdbcType=BIGINT},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{record.iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{record.iskeyiamge,jdbcType=TINYINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

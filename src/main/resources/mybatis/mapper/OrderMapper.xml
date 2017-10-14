@@ -1057,6 +1057,2106 @@
     <result column="orderCode" jdbcType="BIGINT" property="ordercode" />
     <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
     <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="marketPricce" jdbcType="BIGINT" property="marketpricce" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="goodSum" jdbcType="INTEGER" property="goodsum" />
+    <result column="priceSum" jdbcType="INTEGER" property="pricesum" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="isreceive" jdbcType="TINYINT" property="isreceive" />
+    <result column="isPay" jdbcType="TINYINT" property="ispay" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, orderCode, goodsName, goodsID, marketPricce, memberPrice, goodSum, priceSum, 
+    sendTime, logistics, payTime, isreceive, isPay
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.OrderCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.OrderCriteria">
+    delete from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Order">
+    insert into t_order (id, userID, orderCode, 
+      goodsName, goodsID, marketPricce, 
+      memberPrice, goodSum, priceSum, 
+      sendTime, logistics, payTime, 
+      isreceive, isPay)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{marketpricce,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{goodsum,jdbcType=INTEGER}, #{pricesum,jdbcType=INTEGER}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{isreceive,jdbcType=TINYINT}, #{ispay,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="marketpricce != null">
+        marketPricce,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="goodsum != null">
+        goodSum,
+      </if>
+      <if test="pricesum != null">
+        priceSum,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="logistics != null">
+        logistics,
+      </if>
+      <if test="paytime != null">
+        payTime,
+      </if>
+      <if test="isreceive != null">
+        isreceive,
+      </if>
+      <if test="ispay != null">
+        isPay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.OrderCriteria" resultType="java.lang.Long">
+    select count(*) from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordercode != null">
+        orderCode = #{record.ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketpricce != null">
+        marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsum != null">
+        goodSum = #{record.goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricesum != null">
+        priceSum = #{record.pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendtime != null">
+        sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logistics != null">
+        logistics = #{record.logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null">
+        payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isreceive != null">
+        isreceive = #{record.isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="record.ispay != null">
+        isPay = #{record.ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      orderCode = #{record.ordercode,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      goodSum = #{record.goodsum,jdbcType=INTEGER},
+      priceSum = #{record.pricesum,jdbcType=INTEGER},
+      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      logistics = #{record.logistics,jdbcType=VARCHAR},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      isreceive = #{record.isreceive,jdbcType=TINYINT},
+      isPay = #{record.ispay,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Order">
+    update t_order
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        marketPricce = #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        goodSum = #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        priceSum = #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        logistics = #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        isreceive = #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        isPay = #{ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Order">
+    update t_order
+    set userID = #{userid,jdbcType=BIGINT},
+      orderCode = #{ordercode,jdbcType=BIGINT},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsID = #{goodsid,jdbcType=BIGINT},
+      marketPricce = #{marketpricce,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      goodSum = #{goodsum,jdbcType=INTEGER},
+      priceSum = #{pricesum,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      logistics = #{logistics,jdbcType=VARCHAR},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      isreceive = #{isreceive,jdbcType=TINYINT},
+      isPay = #{ispay,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="orderCode" jdbcType="BIGINT" property="ordercode" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="marketPricce" jdbcType="BIGINT" property="marketpricce" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="goodSum" jdbcType="INTEGER" property="goodsum" />
+    <result column="priceSum" jdbcType="INTEGER" property="pricesum" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="isreceive" jdbcType="TINYINT" property="isreceive" />
+    <result column="isPay" jdbcType="TINYINT" property="ispay" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, orderCode, goodsName, goodsID, marketPricce, memberPrice, goodSum, priceSum, 
+    sendTime, logistics, payTime, isreceive, isPay
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.OrderCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.OrderCriteria">
+    delete from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Order">
+    insert into t_order (id, userID, orderCode, 
+      goodsName, goodsID, marketPricce, 
+      memberPrice, goodSum, priceSum, 
+      sendTime, logistics, payTime, 
+      isreceive, isPay)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{marketpricce,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{goodsum,jdbcType=INTEGER}, #{pricesum,jdbcType=INTEGER}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{isreceive,jdbcType=TINYINT}, #{ispay,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="marketpricce != null">
+        marketPricce,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="goodsum != null">
+        goodSum,
+      </if>
+      <if test="pricesum != null">
+        priceSum,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="logistics != null">
+        logistics,
+      </if>
+      <if test="paytime != null">
+        payTime,
+      </if>
+      <if test="isreceive != null">
+        isreceive,
+      </if>
+      <if test="ispay != null">
+        isPay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.OrderCriteria" resultType="java.lang.Long">
+    select count(*) from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordercode != null">
+        orderCode = #{record.ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketpricce != null">
+        marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsum != null">
+        goodSum = #{record.goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricesum != null">
+        priceSum = #{record.pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendtime != null">
+        sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logistics != null">
+        logistics = #{record.logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null">
+        payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isreceive != null">
+        isreceive = #{record.isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="record.ispay != null">
+        isPay = #{record.ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      orderCode = #{record.ordercode,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      goodSum = #{record.goodsum,jdbcType=INTEGER},
+      priceSum = #{record.pricesum,jdbcType=INTEGER},
+      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      logistics = #{record.logistics,jdbcType=VARCHAR},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      isreceive = #{record.isreceive,jdbcType=TINYINT},
+      isPay = #{record.ispay,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Order">
+    update t_order
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        marketPricce = #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        goodSum = #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        priceSum = #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        logistics = #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        isreceive = #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        isPay = #{ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Order">
+    update t_order
+    set userID = #{userid,jdbcType=BIGINT},
+      orderCode = #{ordercode,jdbcType=BIGINT},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsID = #{goodsid,jdbcType=BIGINT},
+      marketPricce = #{marketpricce,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      goodSum = #{goodsum,jdbcType=INTEGER},
+      priceSum = #{pricesum,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      logistics = #{logistics,jdbcType=VARCHAR},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      isreceive = #{isreceive,jdbcType=TINYINT},
+      isPay = #{ispay,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="orderCode" jdbcType="BIGINT" property="ordercode" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="marketPricce" jdbcType="BIGINT" property="marketpricce" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="goodSum" jdbcType="INTEGER" property="goodsum" />
+    <result column="priceSum" jdbcType="INTEGER" property="pricesum" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="isreceive" jdbcType="TINYINT" property="isreceive" />
+    <result column="isPay" jdbcType="TINYINT" property="ispay" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, orderCode, goodsName, goodsID, marketPricce, memberPrice, goodSum, priceSum, 
+    sendTime, logistics, payTime, isreceive, isPay
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.OrderCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.OrderCriteria">
+    delete from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Order">
+    insert into t_order (id, userID, orderCode, 
+      goodsName, goodsID, marketPricce, 
+      memberPrice, goodSum, priceSum, 
+      sendTime, logistics, payTime, 
+      isreceive, isPay)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{marketpricce,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{goodsum,jdbcType=INTEGER}, #{pricesum,jdbcType=INTEGER}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{isreceive,jdbcType=TINYINT}, #{ispay,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="marketpricce != null">
+        marketPricce,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="goodsum != null">
+        goodSum,
+      </if>
+      <if test="pricesum != null">
+        priceSum,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="logistics != null">
+        logistics,
+      </if>
+      <if test="paytime != null">
+        payTime,
+      </if>
+      <if test="isreceive != null">
+        isreceive,
+      </if>
+      <if test="ispay != null">
+        isPay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.OrderCriteria" resultType="java.lang.Long">
+    select count(*) from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordercode != null">
+        orderCode = #{record.ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketpricce != null">
+        marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsum != null">
+        goodSum = #{record.goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricesum != null">
+        priceSum = #{record.pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendtime != null">
+        sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logistics != null">
+        logistics = #{record.logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null">
+        payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isreceive != null">
+        isreceive = #{record.isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="record.ispay != null">
+        isPay = #{record.ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      orderCode = #{record.ordercode,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      goodSum = #{record.goodsum,jdbcType=INTEGER},
+      priceSum = #{record.pricesum,jdbcType=INTEGER},
+      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      logistics = #{record.logistics,jdbcType=VARCHAR},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      isreceive = #{record.isreceive,jdbcType=TINYINT},
+      isPay = #{record.ispay,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Order">
+    update t_order
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        marketPricce = #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        goodSum = #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        priceSum = #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        logistics = #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        isreceive = #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        isPay = #{ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Order">
+    update t_order
+    set userID = #{userid,jdbcType=BIGINT},
+      orderCode = #{ordercode,jdbcType=BIGINT},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsID = #{goodsid,jdbcType=BIGINT},
+      marketPricce = #{marketpricce,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      goodSum = #{goodsum,jdbcType=INTEGER},
+      priceSum = #{pricesum,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      logistics = #{logistics,jdbcType=VARCHAR},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      isreceive = #{isreceive,jdbcType=TINYINT},
+      isPay = #{ispay,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="orderCode" jdbcType="BIGINT" property="ordercode" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="marketPricce" jdbcType="BIGINT" property="marketpricce" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="goodSum" jdbcType="INTEGER" property="goodsum" />
+    <result column="priceSum" jdbcType="INTEGER" property="pricesum" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="isreceive" jdbcType="TINYINT" property="isreceive" />
+    <result column="isPay" jdbcType="TINYINT" property="ispay" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, orderCode, goodsName, goodsID, marketPricce, memberPrice, goodSum, priceSum, 
+    sendTime, logistics, payTime, isreceive, isPay
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.OrderCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.OrderCriteria">
+    delete from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Order">
+    insert into t_order (id, userID, orderCode, 
+      goodsName, goodsID, marketPricce, 
+      memberPrice, goodSum, priceSum, 
+      sendTime, logistics, payTime, 
+      isreceive, isPay)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{marketpricce,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{goodsum,jdbcType=INTEGER}, #{pricesum,jdbcType=INTEGER}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{isreceive,jdbcType=TINYINT}, #{ispay,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="marketpricce != null">
+        marketPricce,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="goodsum != null">
+        goodSum,
+      </if>
+      <if test="pricesum != null">
+        priceSum,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="logistics != null">
+        logistics,
+      </if>
+      <if test="paytime != null">
+        payTime,
+      </if>
+      <if test="isreceive != null">
+        isreceive,
+      </if>
+      <if test="ispay != null">
+        isPay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.OrderCriteria" resultType="java.lang.Long">
+    select count(*) from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordercode != null">
+        orderCode = #{record.ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketpricce != null">
+        marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsum != null">
+        goodSum = #{record.goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricesum != null">
+        priceSum = #{record.pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendtime != null">
+        sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logistics != null">
+        logistics = #{record.logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null">
+        payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isreceive != null">
+        isreceive = #{record.isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="record.ispay != null">
+        isPay = #{record.ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      orderCode = #{record.ordercode,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      goodSum = #{record.goodsum,jdbcType=INTEGER},
+      priceSum = #{record.pricesum,jdbcType=INTEGER},
+      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      logistics = #{record.logistics,jdbcType=VARCHAR},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      isreceive = #{record.isreceive,jdbcType=TINYINT},
+      isPay = #{record.ispay,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Order">
+    update t_order
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        marketPricce = #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        goodSum = #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        priceSum = #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        logistics = #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        isreceive = #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        isPay = #{ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Order">
+    update t_order
+    set userID = #{userid,jdbcType=BIGINT},
+      orderCode = #{ordercode,jdbcType=BIGINT},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsID = #{goodsid,jdbcType=BIGINT},
+      marketPricce = #{marketpricce,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      goodSum = #{goodsum,jdbcType=INTEGER},
+      priceSum = #{pricesum,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      logistics = #{logistics,jdbcType=VARCHAR},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      isreceive = #{isreceive,jdbcType=TINYINT},
+      isPay = #{ispay,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="orderCode" jdbcType="BIGINT" property="ordercode" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="marketPricce" jdbcType="BIGINT" property="marketpricce" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="goodSum" jdbcType="INTEGER" property="goodsum" />
+    <result column="priceSum" jdbcType="INTEGER" property="pricesum" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="isreceive" jdbcType="TINYINT" property="isreceive" />
+    <result column="isPay" jdbcType="TINYINT" property="ispay" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, orderCode, goodsName, goodsID, marketPricce, memberPrice, goodSum, priceSum, 
+    sendTime, logistics, payTime, isreceive, isPay
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.OrderCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.OrderCriteria">
+    delete from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Order">
+    insert into t_order (id, userID, orderCode, 
+      goodsName, goodsID, marketPricce, 
+      memberPrice, goodSum, priceSum, 
+      sendTime, logistics, payTime, 
+      isreceive, isPay)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{marketpricce,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{goodsum,jdbcType=INTEGER}, #{pricesum,jdbcType=INTEGER}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{isreceive,jdbcType=TINYINT}, #{ispay,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="marketpricce != null">
+        marketPricce,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="goodsum != null">
+        goodSum,
+      </if>
+      <if test="pricesum != null">
+        priceSum,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="logistics != null">
+        logistics,
+      </if>
+      <if test="paytime != null">
+        payTime,
+      </if>
+      <if test="isreceive != null">
+        isreceive,
+      </if>
+      <if test="ispay != null">
+        isPay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.OrderCriteria" resultType="java.lang.Long">
+    select count(*) from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordercode != null">
+        orderCode = #{record.ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketpricce != null">
+        marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsum != null">
+        goodSum = #{record.goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricesum != null">
+        priceSum = #{record.pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendtime != null">
+        sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logistics != null">
+        logistics = #{record.logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null">
+        payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isreceive != null">
+        isreceive = #{record.isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="record.ispay != null">
+        isPay = #{record.ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      orderCode = #{record.ordercode,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      goodSum = #{record.goodsum,jdbcType=INTEGER},
+      priceSum = #{record.pricesum,jdbcType=INTEGER},
+      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      logistics = #{record.logistics,jdbcType=VARCHAR},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      isreceive = #{record.isreceive,jdbcType=TINYINT},
+      isPay = #{record.ispay,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Order">
+    update t_order
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        marketPricce = #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        goodSum = #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        priceSum = #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        logistics = #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        isreceive = #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        isPay = #{ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Order">
+    update t_order
+    set userID = #{userid,jdbcType=BIGINT},
+      orderCode = #{ordercode,jdbcType=BIGINT},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsID = #{goodsid,jdbcType=BIGINT},
+      marketPricce = #{marketpricce,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      goodSum = #{goodsum,jdbcType=INTEGER},
+      priceSum = #{pricesum,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      logistics = #{logistics,jdbcType=VARCHAR},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      isreceive = #{isreceive,jdbcType=TINYINT},
+      isPay = #{ispay,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="orderCode" jdbcType="BIGINT" property="ordercode" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
+    <result column="marketPricce" jdbcType="BIGINT" property="marketpricce" />
+    <result column="memberPrice" jdbcType="BIGINT" property="memberprice" />
+    <result column="goodSum" jdbcType="INTEGER" property="goodsum" />
+    <result column="priceSum" jdbcType="INTEGER" property="pricesum" />
+    <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
+    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="isreceive" jdbcType="TINYINT" property="isreceive" />
+    <result column="isPay" jdbcType="TINYINT" property="ispay" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, orderCode, goodsName, goodsID, marketPricce, memberPrice, goodSum, priceSum, 
+    sendTime, logistics, payTime, isreceive, isPay
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.OrderCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.OrderCriteria">
+    delete from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Order">
+    insert into t_order (id, userID, orderCode, 
+      goodsName, goodsID, marketPricce, 
+      memberPrice, goodSum, priceSum, 
+      sendTime, logistics, payTime, 
+      isreceive, isPay)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{marketpricce,jdbcType=BIGINT}, 
+      #{memberprice,jdbcType=BIGINT}, #{goodsum,jdbcType=INTEGER}, #{pricesum,jdbcType=INTEGER}, 
+      #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{isreceive,jdbcType=TINYINT}, #{ispay,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Order">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="ordercode != null">
+        orderCode,
+      </if>
+      <if test="goodsname != null">
+        goodsName,
+      </if>
+      <if test="goodsid != null">
+        goodsID,
+      </if>
+      <if test="marketpricce != null">
+        marketPricce,
+      </if>
+      <if test="memberprice != null">
+        memberPrice,
+      </if>
+      <if test="goodsum != null">
+        goodSum,
+      </if>
+      <if test="pricesum != null">
+        priceSum,
+      </if>
+      <if test="sendtime != null">
+        sendTime,
+      </if>
+      <if test="logistics != null">
+        logistics,
+      </if>
+      <if test="paytime != null">
+        payTime,
+      </if>
+      <if test="isreceive != null">
+        isreceive,
+      </if>
+      <if test="ispay != null">
+        isPay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.OrderCriteria" resultType="java.lang.Long">
+    select count(*) from t_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ordercode != null">
+        orderCode = #{record.ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsname != null">
+        goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsid != null">
+        goodsID = #{record.goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.marketpricce != null">
+        marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="record.memberprice != null">
+        memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsum != null">
+        goodSum = #{record.goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="record.pricesum != null">
+        priceSum = #{record.pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendtime != null">
+        sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logistics != null">
+        logistics = #{record.logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paytime != null">
+        payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isreceive != null">
+        isreceive = #{record.isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="record.ispay != null">
+        isPay = #{record.ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_order
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      orderCode = #{record.ordercode,jdbcType=BIGINT},
+      goodsName = #{record.goodsname,jdbcType=VARCHAR},
+      goodsID = #{record.goodsid,jdbcType=BIGINT},
+      marketPricce = #{record.marketpricce,jdbcType=BIGINT},
+      memberPrice = #{record.memberprice,jdbcType=BIGINT},
+      goodSum = #{record.goodsum,jdbcType=INTEGER},
+      priceSum = #{record.pricesum,jdbcType=INTEGER},
+      sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
+      logistics = #{record.logistics,jdbcType=VARCHAR},
+      payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      isreceive = #{record.isreceive,jdbcType=TINYINT},
+      isPay = #{record.ispay,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Order">
+    update t_order
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="ordercode != null">
+        orderCode = #{ordercode,jdbcType=BIGINT},
+      </if>
+      <if test="goodsname != null">
+        goodsName = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="marketpricce != null">
+        marketPricce = #{marketpricce,jdbcType=BIGINT},
+      </if>
+      <if test="memberprice != null">
+        memberPrice = #{memberprice,jdbcType=BIGINT},
+      </if>
+      <if test="goodsum != null">
+        goodSum = #{goodsum,jdbcType=INTEGER},
+      </if>
+      <if test="pricesum != null">
+        priceSum = #{pricesum,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null">
+        sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        logistics = #{logistics,jdbcType=VARCHAR},
+      </if>
+      <if test="paytime != null">
+        payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null">
+        isreceive = #{isreceive,jdbcType=TINYINT},
+      </if>
+      <if test="ispay != null">
+        isPay = #{ispay,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Order">
+    update t_order
+    set userID = #{userid,jdbcType=BIGINT},
+      orderCode = #{ordercode,jdbcType=BIGINT},
+      goodsName = #{goodsname,jdbcType=VARCHAR},
+      goodsID = #{goodsid,jdbcType=BIGINT},
+      marketPricce = #{marketpricce,jdbcType=BIGINT},
+      memberPrice = #{memberprice,jdbcType=BIGINT},
+      goodSum = #{goodsum,jdbcType=INTEGER},
+      priceSum = #{pricesum,jdbcType=INTEGER},
+      sendTime = #{sendtime,jdbcType=TIMESTAMP},
+      logistics = #{logistics,jdbcType=VARCHAR},
+      payTime = #{paytime,jdbcType=TIMESTAMP},
+      isreceive = #{isreceive,jdbcType=TINYINT},
+      isPay = #{ispay,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.Order">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="orderCode" jdbcType="BIGINT" property="ordercode" />
+    <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
+    <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
     <result column="marketPricce" jdbcType="VARCHAR" property="marketpricce" />
     <result column="memberPrice" jdbcType="VARCHAR" property="memberprice" />
     <result column="goodSum" jdbcType="INTEGER" property="goodsum" />

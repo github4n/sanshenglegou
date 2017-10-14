@@ -13,6 +13,14 @@ public class User {
 
     private Byte role;
 
+    private String sex;
+
+    private String tel;
+
+    private String email;
+
+    private Byte state;
+
     private Date createtime;
 
     private Date login;
@@ -57,6 +65,38 @@ public class User {
 
     public void setRole(Byte role) {
         this.role = role;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex == null ? null : sex.trim();
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel == null ? null : tel.trim();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email == null ? null : email.trim();
+    }
+
+    public Byte getState() {
+        return state;
+    }
+
+    public void setState(Byte state) {
+        this.state = state;
     }
 
     public Date getCreatetime() {

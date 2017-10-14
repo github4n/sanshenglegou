@@ -16,11 +16,11 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
         return shoppingCartMapper.insertSelective(shoppingCart)>0;
     }
 
-    public int deletebygoodsid(long goodsID) {
+    public int deletebygoodsid(long goodsID,long userid) {
         ShoppingCartCriteria shoppingCartCriteria=new ShoppingCartCriteria();
         ShoppingCartCriteria.Criteria criteria=shoppingCartCriteria.createCriteria();
         criteria.andGoodsidEqualTo(goodsID);
-
+        criteria.andUseridEqualTo(userid);
         return shoppingCartMapper.deleteByExample(shoppingCartCriteria);
     }
 
@@ -43,5 +43,13 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
         ShoppingCartCriteria.Criteria criteria=shoppingCartCriteria.createCriteria();
         criteria.andIdEqualTo(id);
         return shoppingCartMapper.updateByExampleSelective(shoppingCart,shoppingCartCriteria);
+    }
+
+    public List<ShoppingCart> findByuserid(long userid) {
+
+        ShoppingCartCriteria shoppingCartCriteria=new ShoppingCartCriteria();
+        ShoppingCartCriteria.Criteria criteria=shoppingCartCriteria.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        return shoppingCartMapper.selectByExample(shoppingCartCriteria);
     }
 }

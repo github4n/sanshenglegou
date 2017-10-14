@@ -27,6 +27,7 @@ public class StoreController {
     OrderService orderService;
     @Autowired
     OrderDetailService orderDetailService;
+//    店铺注册
     @PostMapping(value = "/register")
     public JsonResult register(
             @RequestParam(value = "storeName",required = false)String storeName,
@@ -66,6 +67,7 @@ public class StoreController {
        }
 
     }
+//    店铺的登入
     @GetMapping(value = "/login")
     public  JsonResult login(
             @RequestParam(value = "username",required = false)String username,
@@ -83,6 +85,7 @@ public class StoreController {
             return new JsonResult("600","用户名不存在");
         }
     }
+//    店铺资料更新
    @PutMapping(value = "/update")
     public  JsonResult update(
             @RequestParam(value = "id",required = false)long id,
@@ -113,6 +116,6 @@ public class StoreController {
        PageHelper.startPage(page,10);
        return new JsonResult("200",new PageBean<Order>(orders));
    }
-
+//
 
 }

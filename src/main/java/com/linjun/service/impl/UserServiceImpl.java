@@ -2,6 +2,7 @@ package com.linjun.service.impl;
 
 import com.linjun.common.domain.PageBounds;
 import com.linjun.common.domain.PageList;
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.UserMapper;
 import com.linjun.model.User;
 import com.linjun.model.UserCriteria;
@@ -9,6 +10,7 @@ import com.linjun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +19,15 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
-    public int add(User user) {
-        return userMapper.insertSelective(user);
+    public User add(User user) {
+        user.setLogin(new Date());
+        int result=userMapper.insertSelective(user);
+        if (result>0){
+            return updateUser(user);
+        }else {
+            throw new PeopleException("添加失败");
+        }
     }
-
     public List<User> findAll() {
         UserCriteria userCriteria=new UserCriteria();
         return userMapper.selectByExample(userCriteria) ;
@@ -86,5 +93,60 @@ public class UserServiceImpl implements UserService {
 
     public PageList<User> searchSize(String username, Integer page) {
         return null;
+    }
+
+    public User loginByPhone(User user) {
+        UserCriteria userCriteria=new UserCriteria();
+        userCriteria.createCriteria().andTelEqualTo(user.getTel());
+        List<User> userList=userMapper.selectByExample(userCriteria);
+        if (userlist()!=null&&userList.size()==1){
+            user=userList.get(0);
+            user.setLogin(new Date());
+           return updateUser(user);
+        }else {
+         throw  new PeopleException("用户未注册");
+        }
+    }
+
+    public User loginByUsername(User user) {
+        UserCriteria userCriteria=new UserCriteria();
+        userCriteria.createCriteria().andUsernameEqualTo(user.getUsername());
+        List<User> userList=userMapper.selectByExample(userCriteria);
+        if (userlist()!=null&&userList.size()==1){
+            user=userList.get(0);
+            user.setLogin(new Date());
+            return updateUser(user);
+        }else {
+            throw  new PeopleException("用户未注册");
+        }
+    }
+
+    public User registerByPhone(User user) {
+        UserCriteria userCriteria=new UserCriteria();
+        userCriteria.createCriteria().andTelEqualTo(user.getTel());
+        if (userMapper.selectByExample(userCriteria).size()>0){
+            throw  new PeopleException("用户已经注册");
+        }
+
+        return add(user);
+    }
+
+    public User getUserByUserid(long userid) {
+        return null;
+    }
+
+    public List<User> userlist() {
+        List<>
+        return null;
+    }
+
+    public User updateUser(User user) {
+      int result=userMapper.updateByPrimaryKeySelective(user);
+      if (result>0){
+    return userMapper.selectByPrimaryKey(user.getId());
+      }else {
+          throw new PeopleException("用户更新失败");
+      }
+
     }
 }

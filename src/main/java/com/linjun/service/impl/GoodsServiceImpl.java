@@ -32,4 +32,9 @@ public class GoodsServiceImpl implements GoodsService {
         criteria.andStoreidEqualTo(storeid);
         return goodsMapper.selectByExample(goodsCriteria);
     }
+
+    public Goods findByid(long ID) {
+
+        return goodsMapper.selectByPrimaryKey(ID);
+    }
 }
