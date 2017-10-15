@@ -11,4 +11,8 @@ public interface GoodsService {
     public  List<Goods> findByStore(long storeid);
     public  Goods findByid(long ID);
     Goods addGoods(Goods goods);
+    List<Goods> mainstore();
+    List<Goods> yiwu();
+    List<Goods>  composite();
+    List<Goods> Villages();
 }

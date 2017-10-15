@@ -48,4 +48,40 @@ public class GoodsServiceImpl implements GoodsService {
             throw new PeopleException("添加商品失败");
         }
     }
+
+    @Override
+    public List<Goods> mainstore() {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andTypeidEqualTo((long) 1);
+
+        List<Goods> mainstorelist=goodsMapper.selectByExample(goodsCriteria);
+        return mainstorelist;
+    }
+
+    @Override
+    public List<Goods> yiwu() {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andTypeidEqualTo((long) 2);
+
+        List<Goods> yiwulist=goodsMapper.selectByExample(goodsCriteria);
+        return yiwulist;
+    }
+
+    @Override
+    public List<Goods> composite() {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andTypeidEqualTo((long) 1);
+
+        List<Goods> compositelist=goodsMapper.selectByExample(goodsCriteria);
+        return compositelist;
+    }
+
+    @Override
+    public List<Goods> Villages() {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andTypeidEqualTo((long) 1);
+
+        List<Goods> vilagelist=goodsMapper.selectByExample(goodsCriteria);
+        return vilagelist;
+    }
 }
