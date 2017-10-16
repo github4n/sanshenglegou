@@ -111,6 +111,7 @@ public class StoreController {
        PageHelper.startPage(page,10);
        return new JsonResult("200",new PageBean<Order>(orders));
    }
+
 //查询店铺的订单
    @GetMapping(value = "/queryOrder")
     public  JsonResult queryOrder(
