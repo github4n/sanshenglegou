@@ -46,4 +46,9 @@ public class AddressMongerServiceImpl implements AddressMongerService {
         criteria.andReceivepeopleEqualTo(name);
         return addressMangerMapper.deleteByExample(addressMangerCriteria);
     }
+
+    @Override
+    public AddressManger findbyid(long id) {
+        return addressMangerMapper.selectByPrimaryKey(id);
+    }
 }

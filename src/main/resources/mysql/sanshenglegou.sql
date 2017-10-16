@@ -207,14 +207,15 @@ DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order`(
 `id` bigint not null AUTO_INCREMENT,
 `userID` bigint not null,
-`storeID`bigint ,
+`storeID` bigint not null,
 `orderCode` bigint not null,
 `goodsName` varchar(64) not null,
 `goodsID` bigint not null,
-`marketPricce` bigint,
-`memberPrice` bigint,
+`addressID`bigint,
+`marketPricce` FLOAT(5,2),
+`memberPrice` FLOAT(5,2),
 `goodSum` int(10) DEFAULT '0',
-`priceSum` int(11),
+`priceSum` FLOAT(5,2),
 `sendTime` DATETIME,
 `logistics` varchar(32),
 `payTime` DATETIME,
@@ -222,9 +223,7 @@ CREATE TABLE `t_order`(
 `isPay` tinyint DEFAULT '0',
 PRIMARY KEY (`id`),
 KEY `orderid` (`userID`),
-KEY `orderStore` (`storeID`),
-CONSTRAINT `orderid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`),
-CONSTRAINT `orderStore` FOREIGN KEY (`storeID`) REFERENCES `t_store`(`id`)
+CONSTRAINT `orderid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `t_logistics`;
@@ -287,12 +286,13 @@ CREATE TABLE `t_goods`(
 `goodsBandID` bigint not null,
 `TypeID` bigint not null,
 `goodsSum` bigint,
-`marketPrive` bigint,
-`memberPrice` bigint,
+`marketPrive` FLOAT(5,2),
+`memberPrice` FLOAT(5,2),
 `sendCredit` int,
 `storeID` bigint not null,
 `shop` varchar(32) not null,
 `soldamount` bigint ,
+`isstart` tinyint DEFAULT "1",
 `createTime` DATETIME,
 PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -330,7 +330,7 @@ CREATE TABLE `t_shoppingcart`(
 `userID` bigint not null,
 `storeName` varchar(64),
 `goodsName` varchar(64),
-`memberPrice`bigint,
+`memberPrice`FLOAT(5,2),
 `number`bigint,
  PRIMARY KEY (`id`),
  KEY `cartid`(`goodsID`),

@@ -475,6 +475,66 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andAddressidIsNull() {
+            addCriterion("addressID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidIsNotNull() {
+            addCriterion("addressID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidEqualTo(Long value) {
+            addCriterion("addressID =", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidNotEqualTo(Long value) {
+            addCriterion("addressID <>", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidGreaterThan(Long value) {
+            addCriterion("addressID >", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidGreaterThanOrEqualTo(Long value) {
+            addCriterion("addressID >=", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidLessThan(Long value) {
+            addCriterion("addressID <", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidLessThanOrEqualTo(Long value) {
+            addCriterion("addressID <=", value, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidIn(List<Long> values) {
+            addCriterion("addressID in", values, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidNotIn(List<Long> values) {
+            addCriterion("addressID not in", values, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidBetween(Long value1, Long value2) {
+            addCriterion("addressID between", value1, value2, "addressid");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddressidNotBetween(Long value1, Long value2) {
+            addCriterion("addressID not between", value1, value2, "addressid");
+            return (Criteria) this;
+        }
+
         public Criteria andMarketpricceIsNull() {
             addCriterion("marketPricce is null");
             return (Criteria) this;
@@ -485,52 +545,52 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceEqualTo(Long value) {
+        public Criteria andMarketpricceEqualTo(Float value) {
             addCriterion("marketPricce =", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceNotEqualTo(Long value) {
+        public Criteria andMarketpricceNotEqualTo(Float value) {
             addCriterion("marketPricce <>", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceGreaterThan(Long value) {
+        public Criteria andMarketpricceGreaterThan(Float value) {
             addCriterion("marketPricce >", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceGreaterThanOrEqualTo(Long value) {
+        public Criteria andMarketpricceGreaterThanOrEqualTo(Float value) {
             addCriterion("marketPricce >=", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceLessThan(Long value) {
+        public Criteria andMarketpricceLessThan(Float value) {
             addCriterion("marketPricce <", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceLessThanOrEqualTo(Long value) {
+        public Criteria andMarketpricceLessThanOrEqualTo(Float value) {
             addCriterion("marketPricce <=", value, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceIn(List<Long> values) {
+        public Criteria andMarketpricceIn(List<Float> values) {
             addCriterion("marketPricce in", values, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceNotIn(List<Long> values) {
+        public Criteria andMarketpricceNotIn(List<Float> values) {
             addCriterion("marketPricce not in", values, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceBetween(Long value1, Long value2) {
+        public Criteria andMarketpricceBetween(Float value1, Float value2) {
             addCriterion("marketPricce between", value1, value2, "marketpricce");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpricceNotBetween(Long value1, Long value2) {
+        public Criteria andMarketpricceNotBetween(Float value1, Float value2) {
             addCriterion("marketPricce not between", value1, value2, "marketpricce");
             return (Criteria) this;
         }
@@ -545,52 +605,52 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceEqualTo(Long value) {
+        public Criteria andMemberpriceEqualTo(Float value) {
             addCriterion("memberPrice =", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotEqualTo(Long value) {
+        public Criteria andMemberpriceNotEqualTo(Float value) {
             addCriterion("memberPrice <>", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThan(Long value) {
+        public Criteria andMemberpriceGreaterThan(Float value) {
             addCriterion("memberPrice >", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThanOrEqualTo(Long value) {
+        public Criteria andMemberpriceGreaterThanOrEqualTo(Float value) {
             addCriterion("memberPrice >=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThan(Long value) {
+        public Criteria andMemberpriceLessThan(Float value) {
             addCriterion("memberPrice <", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThanOrEqualTo(Long value) {
+        public Criteria andMemberpriceLessThanOrEqualTo(Float value) {
             addCriterion("memberPrice <=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceIn(List<Long> values) {
+        public Criteria andMemberpriceIn(List<Float> values) {
             addCriterion("memberPrice in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotIn(List<Long> values) {
+        public Criteria andMemberpriceNotIn(List<Float> values) {
             addCriterion("memberPrice not in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceBetween(Long value1, Long value2) {
+        public Criteria andMemberpriceBetween(Float value1, Float value2) {
             addCriterion("memberPrice between", value1, value2, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotBetween(Long value1, Long value2) {
+        public Criteria andMemberpriceNotBetween(Float value1, Float value2) {
             addCriterion("memberPrice not between", value1, value2, "memberprice");
             return (Criteria) this;
         }
@@ -665,52 +725,52 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andPricesumEqualTo(Integer value) {
+        public Criteria andPricesumEqualTo(Float value) {
             addCriterion("priceSum =", value, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumNotEqualTo(Integer value) {
+        public Criteria andPricesumNotEqualTo(Float value) {
             addCriterion("priceSum <>", value, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumGreaterThan(Integer value) {
+        public Criteria andPricesumGreaterThan(Float value) {
             addCriterion("priceSum >", value, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumGreaterThanOrEqualTo(Integer value) {
+        public Criteria andPricesumGreaterThanOrEqualTo(Float value) {
             addCriterion("priceSum >=", value, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumLessThan(Integer value) {
+        public Criteria andPricesumLessThan(Float value) {
             addCriterion("priceSum <", value, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumLessThanOrEqualTo(Integer value) {
+        public Criteria andPricesumLessThanOrEqualTo(Float value) {
             addCriterion("priceSum <=", value, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumIn(List<Integer> values) {
+        public Criteria andPricesumIn(List<Float> values) {
             addCriterion("priceSum in", values, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumNotIn(List<Integer> values) {
+        public Criteria andPricesumNotIn(List<Float> values) {
             addCriterion("priceSum not in", values, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumBetween(Integer value1, Integer value2) {
+        public Criteria andPricesumBetween(Float value1, Float value2) {
             addCriterion("priceSum between", value1, value2, "pricesum");
             return (Criteria) this;
         }
 
-        public Criteria andPricesumNotBetween(Integer value1, Integer value2) {
+        public Criteria andPricesumNotBetween(Float value1, Float value2) {
             addCriterion("priceSum not between", value1, value2, "pricesum");
             return (Criteria) this;
         }

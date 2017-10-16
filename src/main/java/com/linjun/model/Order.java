@@ -15,13 +15,15 @@ public class Order {
 
     private Long goodsid;
 
-    private Long marketpricce;
+    private Long addressid;
 
-    private Long memberprice;
+    private Float marketpricce;
+
+    private Float memberprice;
 
     private Integer goodsum;
 
-    private Integer pricesum;
+    private Float pricesum;
 
     private Date sendtime;
 
@@ -81,19 +83,27 @@ public class Order {
         this.goodsid = goodsid;
     }
 
-    public Long getMarketpricce() {
+    public Long getAddressid() {
+        return addressid;
+    }
+
+    public void setAddressid(Long addressid) {
+        this.addressid = addressid;
+    }
+
+    public Float getMarketpricce() {
         return marketpricce;
     }
 
-    public void setMarketpricce(Long marketpricce) {
+    public void setMarketpricce(Float marketpricce) {
         this.marketpricce = marketpricce;
     }
 
-    public Long getMemberprice() {
+    public Float getMemberprice() {
         return memberprice;
     }
 
-    public void setMemberprice(Long memberprice) {
+    public void setMemberprice(Float memberprice) {
         this.memberprice = memberprice;
     }
 
@@ -105,11 +115,11 @@ public class Order {
         this.goodsum = goodsum;
     }
 
-    public Integer getPricesum() {
+    public Float getPricesum() {
         return pricesum;
     }
 
-    public void setPricesum(Integer pricesum) {
+    public void setPricesum(Float pricesum) {
         this.pricesum = pricesum;
     }
 

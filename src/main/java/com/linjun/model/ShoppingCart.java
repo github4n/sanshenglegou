@@ -13,7 +13,7 @@ public class ShoppingCart {
 
     private String goodsname;
 
-    private Long memberprice;
+    private Float memberprice;
 
     private Long number;
 
@@ -65,11 +65,11 @@ public class ShoppingCart {
         this.goodsname = goodsname == null ? null : goodsname.trim();
     }
 
-    public Long getMemberprice() {
+    public Float getMemberprice() {
         return memberprice;
     }
 
-    public void setMemberprice(Long memberprice) {
+    public void setMemberprice(Float memberprice) {
         this.memberprice = memberprice;
     }
 

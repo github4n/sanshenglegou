@@ -3,14 +3,12 @@ package com.linjun.controller;
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
 import com.linjun.entity.PageBean;
-import com.linjun.model.Goods;
-import com.linjun.model.Order;
-import com.linjun.model.Store;
-import com.linjun.model.User;
+import com.linjun.model.*;
 import com.linjun.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +25,8 @@ public class StoreController {
     OrderDetailService orderDetailService;
     @Autowired
     GoodsService goodsService;
-
+    @Autowired
+    AddressMongerService addressMongerService;
 
 //    店铺注册
     @PostMapping(value = "/register")
@@ -119,8 +118,25 @@ public class StoreController {
       @RequestParam(value = "page",required = false)int page
    ){
                 List<Order> orderList=orderService.queryOrder(storeID);
+                OrderList orderList1=new OrderList();
+       List<OrderList> lists=new ArrayList<OrderList>();
+       for (Order list:orderList) {
+           orderList1.setId(list.getId());
+           orderList1.setIspay(list.getIspay());
+           orderList1.setOrderCode(list.getOrdercode());
+           orderList1.setAmount(list.getGoodsum());
+           orderList1.setPeople(addressMongerService.findbyid(list.getAddressid()).getReceivepeople());
+           orderList1.setTel(addressMongerService.findbyid(list.getAddressid()).getReceivetel());
+           orderList1.setPrice(list.getMemberprice());
+           orderList1.setStorename(list.getGoodsname());
+           orderList1.setPricesum(list.getPricesum());
+           orderList1.setSendtime(list.getSendtime());
+           lists.add(orderList1);
+       }
        PageHelper.startPage(page,10);
-       List<Order> list= (List<Order>) new PageBean<Order>(orderList);
+       List<OrderList> list= (List<OrderList>) new PageBean<OrderList>(lists);
+
+
        return new JsonResult("200",list) ;
 
    }

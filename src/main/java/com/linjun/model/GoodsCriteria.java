@@ -425,52 +425,52 @@ public class GoodsCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveEqualTo(Long value) {
+        public Criteria andMarketpriveEqualTo(Float value) {
             addCriterion("marketPrive =", value, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveNotEqualTo(Long value) {
+        public Criteria andMarketpriveNotEqualTo(Float value) {
             addCriterion("marketPrive <>", value, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveGreaterThan(Long value) {
+        public Criteria andMarketpriveGreaterThan(Float value) {
             addCriterion("marketPrive >", value, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveGreaterThanOrEqualTo(Long value) {
+        public Criteria andMarketpriveGreaterThanOrEqualTo(Float value) {
             addCriterion("marketPrive >=", value, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveLessThan(Long value) {
+        public Criteria andMarketpriveLessThan(Float value) {
             addCriterion("marketPrive <", value, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveLessThanOrEqualTo(Long value) {
+        public Criteria andMarketpriveLessThanOrEqualTo(Float value) {
             addCriterion("marketPrive <=", value, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveIn(List<Long> values) {
+        public Criteria andMarketpriveIn(List<Float> values) {
             addCriterion("marketPrive in", values, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveNotIn(List<Long> values) {
+        public Criteria andMarketpriveNotIn(List<Float> values) {
             addCriterion("marketPrive not in", values, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveBetween(Long value1, Long value2) {
+        public Criteria andMarketpriveBetween(Float value1, Float value2) {
             addCriterion("marketPrive between", value1, value2, "marketprive");
             return (Criteria) this;
         }
 
-        public Criteria andMarketpriveNotBetween(Long value1, Long value2) {
+        public Criteria andMarketpriveNotBetween(Float value1, Float value2) {
             addCriterion("marketPrive not between", value1, value2, "marketprive");
             return (Criteria) this;
         }
@@ -485,52 +485,52 @@ public class GoodsCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceEqualTo(Long value) {
+        public Criteria andMemberpriceEqualTo(Float value) {
             addCriterion("memberPrice =", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotEqualTo(Long value) {
+        public Criteria andMemberpriceNotEqualTo(Float value) {
             addCriterion("memberPrice <>", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThan(Long value) {
+        public Criteria andMemberpriceGreaterThan(Float value) {
             addCriterion("memberPrice >", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThanOrEqualTo(Long value) {
+        public Criteria andMemberpriceGreaterThanOrEqualTo(Float value) {
             addCriterion("memberPrice >=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThan(Long value) {
+        public Criteria andMemberpriceLessThan(Float value) {
             addCriterion("memberPrice <", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThanOrEqualTo(Long value) {
+        public Criteria andMemberpriceLessThanOrEqualTo(Float value) {
             addCriterion("memberPrice <=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceIn(List<Long> values) {
+        public Criteria andMemberpriceIn(List<Float> values) {
             addCriterion("memberPrice in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotIn(List<Long> values) {
+        public Criteria andMemberpriceNotIn(List<Float> values) {
             addCriterion("memberPrice not in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceBetween(Long value1, Long value2) {
+        public Criteria andMemberpriceBetween(Float value1, Float value2) {
             addCriterion("memberPrice between", value1, value2, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotBetween(Long value1, Long value2) {
+        public Criteria andMemberpriceNotBetween(Float value1, Float value2) {
             addCriterion("memberPrice not between", value1, value2, "memberprice");
             return (Criteria) this;
         }
@@ -782,6 +782,66 @@ public class GoodsCriteria {
 
         public Criteria andSoldamountNotBetween(Long value1, Long value2) {
             addCriterion("soldamount not between", value1, value2, "soldamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartIsNull() {
+            addCriterion("isstart is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartIsNotNull() {
+            addCriterion("isstart is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartEqualTo(Byte value) {
+            addCriterion("isstart =", value, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartNotEqualTo(Byte value) {
+            addCriterion("isstart <>", value, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartGreaterThan(Byte value) {
+            addCriterion("isstart >", value, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartGreaterThanOrEqualTo(Byte value) {
+            addCriterion("isstart >=", value, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartLessThan(Byte value) {
+            addCriterion("isstart <", value, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartLessThanOrEqualTo(Byte value) {
+            addCriterion("isstart <=", value, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartIn(List<Byte> values) {
+            addCriterion("isstart in", values, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartNotIn(List<Byte> values) {
+            addCriterion("isstart not in", values, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartBetween(Byte value1, Byte value2) {
+            addCriterion("isstart between", value1, value2, "isstart");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsstartNotBetween(Byte value1, Byte value2) {
+            addCriterion("isstart not between", value1, value2, "isstart");
             return (Criteria) this;
         }
 

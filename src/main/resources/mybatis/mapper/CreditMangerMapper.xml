@@ -209,4 +209,1044 @@
       getCredit = #{getcredit,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.CreditManger">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="creditSum" jdbcType="BIGINT" property="creditsum" />
+    <result column="consumedCredit" jdbcType="BIGINT" property="consumedcredit" />
+    <result column="getCredit" jdbcType="BIGINT" property="getcredit" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, creditSum, consumedCredit, getCredit
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.CreditMangerCriteria">
+    delete from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger (id, userID, creditSum, 
+      consumedCredit, getCredit)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{creditsum,jdbcType=BIGINT}, 
+      #{consumedcredit,jdbcType=BIGINT}, #{getcredit,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="creditsum != null">
+        creditSum,
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit,
+      </if>
+      <if test="getcredit != null">
+        getCredit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        #{getcredit,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultType="java.lang.Long">
+    select count(*) from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_creditManger
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.creditsum != null">
+        creditSum = #{record.creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="record.consumedcredit != null">
+        consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="record.getcredit != null">
+        getCredit = #{record.getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_creditManger
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      creditSum = #{record.creditsum,jdbcType=BIGINT},
+      consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      getCredit = #{record.getcredit,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        creditSum = #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        getCredit = #{getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    set userID = #{userid,jdbcType=BIGINT},
+      creditSum = #{creditsum,jdbcType=BIGINT},
+      consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      getCredit = #{getcredit,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.CreditManger">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="creditSum" jdbcType="BIGINT" property="creditsum" />
+    <result column="consumedCredit" jdbcType="BIGINT" property="consumedcredit" />
+    <result column="getCredit" jdbcType="BIGINT" property="getcredit" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, creditSum, consumedCredit, getCredit
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.CreditMangerCriteria">
+    delete from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger (id, userID, creditSum, 
+      consumedCredit, getCredit)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{creditsum,jdbcType=BIGINT}, 
+      #{consumedcredit,jdbcType=BIGINT}, #{getcredit,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="creditsum != null">
+        creditSum,
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit,
+      </if>
+      <if test="getcredit != null">
+        getCredit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        #{getcredit,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultType="java.lang.Long">
+    select count(*) from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_creditManger
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.creditsum != null">
+        creditSum = #{record.creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="record.consumedcredit != null">
+        consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="record.getcredit != null">
+        getCredit = #{record.getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_creditManger
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      creditSum = #{record.creditsum,jdbcType=BIGINT},
+      consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      getCredit = #{record.getcredit,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        creditSum = #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        getCredit = #{getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    set userID = #{userid,jdbcType=BIGINT},
+      creditSum = #{creditsum,jdbcType=BIGINT},
+      consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      getCredit = #{getcredit,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.CreditManger">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="creditSum" jdbcType="BIGINT" property="creditsum" />
+    <result column="consumedCredit" jdbcType="BIGINT" property="consumedcredit" />
+    <result column="getCredit" jdbcType="BIGINT" property="getcredit" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, creditSum, consumedCredit, getCredit
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.CreditMangerCriteria">
+    delete from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger (id, userID, creditSum, 
+      consumedCredit, getCredit)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{creditsum,jdbcType=BIGINT}, 
+      #{consumedcredit,jdbcType=BIGINT}, #{getcredit,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="creditsum != null">
+        creditSum,
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit,
+      </if>
+      <if test="getcredit != null">
+        getCredit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        #{getcredit,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultType="java.lang.Long">
+    select count(*) from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_creditManger
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.creditsum != null">
+        creditSum = #{record.creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="record.consumedcredit != null">
+        consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="record.getcredit != null">
+        getCredit = #{record.getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_creditManger
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      creditSum = #{record.creditsum,jdbcType=BIGINT},
+      consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      getCredit = #{record.getcredit,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        creditSum = #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        getCredit = #{getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    set userID = #{userid,jdbcType=BIGINT},
+      creditSum = #{creditsum,jdbcType=BIGINT},
+      consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      getCredit = #{getcredit,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.CreditManger">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="creditSum" jdbcType="BIGINT" property="creditsum" />
+    <result column="consumedCredit" jdbcType="BIGINT" property="consumedcredit" />
+    <result column="getCredit" jdbcType="BIGINT" property="getcredit" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, creditSum, consumedCredit, getCredit
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.CreditMangerCriteria">
+    delete from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger (id, userID, creditSum, 
+      consumedCredit, getCredit)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{creditsum,jdbcType=BIGINT}, 
+      #{consumedcredit,jdbcType=BIGINT}, #{getcredit,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="creditsum != null">
+        creditSum,
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit,
+      </if>
+      <if test="getcredit != null">
+        getCredit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        #{getcredit,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultType="java.lang.Long">
+    select count(*) from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_creditManger
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.creditsum != null">
+        creditSum = #{record.creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="record.consumedcredit != null">
+        consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="record.getcredit != null">
+        getCredit = #{record.getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_creditManger
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      creditSum = #{record.creditsum,jdbcType=BIGINT},
+      consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      getCredit = #{record.getcredit,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        creditSum = #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        getCredit = #{getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    set userID = #{userid,jdbcType=BIGINT},
+      creditSum = #{creditsum,jdbcType=BIGINT},
+      consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      getCredit = #{getcredit,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.linjun.model.CreditManger">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="creditSum" jdbcType="BIGINT" property="creditsum" />
+    <result column="consumedCredit" jdbcType="BIGINT" property="consumedcredit" />
+    <result column="getCredit" jdbcType="BIGINT" property="getcredit" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, creditSum, consumedCredit, getCredit
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_creditManger
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.CreditMangerCriteria">
+    delete from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger (id, userID, creditSum, 
+      consumedCredit, getCredit)
+    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{creditsum,jdbcType=BIGINT}, 
+      #{consumedcredit,jdbcType=BIGINT}, #{getcredit,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.CreditManger">
+    insert into t_creditManger
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="creditsum != null">
+        creditSum,
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit,
+      </if>
+      <if test="getcredit != null">
+        getCredit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        #{getcredit,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.CreditMangerCriteria" resultType="java.lang.Long">
+    select count(*) from t_creditManger
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_creditManger
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.creditsum != null">
+        creditSum = #{record.creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="record.consumedcredit != null">
+        consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="record.getcredit != null">
+        getCredit = #{record.getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_creditManger
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      creditSum = #{record.creditsum,jdbcType=BIGINT},
+      consumedCredit = #{record.consumedcredit,jdbcType=BIGINT},
+      getCredit = #{record.getcredit,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="creditsum != null">
+        creditSum = #{creditsum,jdbcType=BIGINT},
+      </if>
+      <if test="consumedcredit != null">
+        consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      </if>
+      <if test="getcredit != null">
+        getCredit = #{getcredit,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.CreditManger">
+    update t_creditManger
+    set userID = #{userid,jdbcType=BIGINT},
+      creditSum = #{creditsum,jdbcType=BIGINT},
+      consumedCredit = #{consumedcredit,jdbcType=BIGINT},
+      getCredit = #{getcredit,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>

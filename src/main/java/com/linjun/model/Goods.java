@@ -13,9 +13,9 @@ public class Goods {
 
     private Long goodssum;
 
-    private Long marketprive;
+    private Float marketprive;
 
-    private Long memberprice;
+    private Float memberprice;
 
     private Integer sendcredit;
 
@@ -24,6 +24,8 @@ public class Goods {
     private String shop;
 
     private Long soldamount;
+
+    private Byte isstart;
 
     private Date createtime;
 
@@ -67,19 +69,19 @@ public class Goods {
         this.goodssum = goodssum;
     }
 
-    public Long getMarketprive() {
+    public Float getMarketprive() {
         return marketprive;
     }
 
-    public void setMarketprive(Long marketprive) {
+    public void setMarketprive(Float marketprive) {
         this.marketprive = marketprive;
     }
 
-    public Long getMemberprice() {
+    public Float getMemberprice() {
         return memberprice;
     }
 
-    public void setMemberprice(Long memberprice) {
+    public void setMemberprice(Float memberprice) {
         this.memberprice = memberprice;
     }
 
@@ -113,6 +115,14 @@ public class Goods {
 
     public void setSoldamount(Long soldamount) {
         this.soldamount = soldamount;
+    }
+
+    public Byte getIsstart() {
+        return isstart;
+    }
+
+    public void setIsstart(Byte isstart) {
+        this.isstart = isstart;
     }
 
     public Date getCreatetime() {

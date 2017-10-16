@@ -494,52 +494,52 @@ public class ShoppingCartCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceEqualTo(Long value) {
+        public Criteria andMemberpriceEqualTo(Float value) {
             addCriterion("memberPrice =", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotEqualTo(Long value) {
+        public Criteria andMemberpriceNotEqualTo(Float value) {
             addCriterion("memberPrice <>", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThan(Long value) {
+        public Criteria andMemberpriceGreaterThan(Float value) {
             addCriterion("memberPrice >", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceGreaterThanOrEqualTo(Long value) {
+        public Criteria andMemberpriceGreaterThanOrEqualTo(Float value) {
             addCriterion("memberPrice >=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThan(Long value) {
+        public Criteria andMemberpriceLessThan(Float value) {
             addCriterion("memberPrice <", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceLessThanOrEqualTo(Long value) {
+        public Criteria andMemberpriceLessThanOrEqualTo(Float value) {
             addCriterion("memberPrice <=", value, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceIn(List<Long> values) {
+        public Criteria andMemberpriceIn(List<Float> values) {
             addCriterion("memberPrice in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotIn(List<Long> values) {
+        public Criteria andMemberpriceNotIn(List<Float> values) {
             addCriterion("memberPrice not in", values, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceBetween(Long value1, Long value2) {
+        public Criteria andMemberpriceBetween(Float value1, Float value2) {
             addCriterion("memberPrice between", value1, value2, "memberprice");
             return (Criteria) this;
         }
 
-        public Criteria andMemberpriceNotBetween(Long value1, Long value2) {
+        public Criteria andMemberpriceNotBetween(Float value1, Float value2) {
             addCriterion("memberPrice not between", value1, value2, "memberprice");
             return (Criteria) this;
         }
