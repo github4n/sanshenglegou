@@ -34,4 +34,9 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
         GoodsType goodsType= (GoodsType) goodsTypeMapper.selectByExample(goodsTypeCriteria);
         return goodsType.getFathertypeid();
     }
+
+    @Override
+    public GoodsType findById(long id) {
+        return goodsTypeMapper.selectByPrimaryKey(id);
+    }
 }

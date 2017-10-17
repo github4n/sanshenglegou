@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.OrderDetailMapper;
 import com.linjun.model.OrderDetail;
 import com.linjun.model.OrderDetailCriteria;
@@ -13,8 +14,14 @@ import java.util.List;
 public class OrderDetailServiceImpl implements OrderDetailService {
     @Autowired
     OrderDetailMapper orderDetailMapper;
-    public boolean add(OrderDetail orderDetail) {
-        return orderDetailMapper.insertSelective(orderDetail)>0;
+    public OrderDetail add(OrderDetail orderDetail) {
+        int result=orderDetailMapper.insertSelective(orderDetail);
+        if (result>0){
+            return orderDetail;
+        }else {
+            throw new PeopleException("添加失败");
+        }
+
     }
 
     public int deletebyid(long orderid) {

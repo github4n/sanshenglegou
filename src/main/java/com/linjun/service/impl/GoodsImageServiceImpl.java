@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.GoodsImageMapper;
 import com.linjun.model.GoodsImage;
 import com.linjun.model.GoodsImageCriteria;
@@ -38,5 +39,21 @@ public class GoodsImageServiceImpl implements GoodsImageService {
         GoodsImageCriteria.Criteria criteria=goodsImageCriteria.createCriteria();
         criteria.andGoodsidEqualTo(goodsid);
         return goodsImageMapper.selectByExample(goodsImageCriteria);
+    }
+
+    @Override
+    public GoodsImage findMainImage(long goodsid) {
+        GoodsImageCriteria goodsImageCriteria=new GoodsImageCriteria();
+        goodsImageCriteria.createCriteria().andGoodsidEqualTo(goodsid);
+        goodsImageCriteria.createCriteria().andIskeyiamgeEqualTo((byte) 1);
+        List<GoodsImage> list=goodsImageMapper.selectByExample(goodsImageCriteria);
+        if (list!=null&&list.size()==1){
+            GoodsImage goodsImage=list.get(0);
+           return goodsImage ;
+        }else {
+
+            throw new PeopleException("主图查询失败");
+        }
+
     }
 }

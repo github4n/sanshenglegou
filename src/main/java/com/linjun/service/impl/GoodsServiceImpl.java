@@ -84,4 +84,16 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> vilagelist=goodsMapper.selectByExample(goodsCriteria);
         return vilagelist;
     }
+
+    @Override
+    public List<Goods> findByStoreID(long storeID) {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andStoreidEqualTo(storeID);
+        List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
+        if (list.size()!=0){
+            return list;
+        }else {
+            throw new PeopleException("查询失败");
+        }
+    }
 }

@@ -7,4 +7,5 @@ public interface GoodsTypeService {
     public  int deleteByid(long id);
     public  int update(long id,GoodsType goodsType);
     public Long findByfather(long id);
+    GoodsType findById(long id);
 }

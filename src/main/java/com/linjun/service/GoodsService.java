@@ -15,4 +15,5 @@ public interface GoodsService {
     List<Goods> yiwu();
     List<Goods>  composite();
     List<Goods> Villages();
+    List<Goods> findByStoreID(long storeID);
 }

@@ -27,6 +27,10 @@ public class StoreController {
     GoodsService goodsService;
     @Autowired
     AddressMongerService addressMongerService;
+    @Autowired
+    GoodsImageService goodsImageService;
+    @Autowired
+    GoodsTypeService goodsTypeService;
 
 //    店铺注册
     @PostMapping(value = "/register")
@@ -152,6 +156,33 @@ public class StoreController {
           }catch (Exception e){
               return  new JsonResult("500",e.getMessage());
           }
+    }
+//店铺的商品
+    @GetMapping(value = "/getGoods")
+    public  JsonResult getGoods(
+            @RequestParam(value = "storeID",required = false)long storeID,
+            @RequestParam(value = "page",required = false)int page){
+                List<Goods> list=goodsService.findByStoreID(storeID);
+              List<GoodsList> goodsLists=new ArrayList<GoodsList>();
+              GoodsList storedata=new GoodsList();
+       try {
+           for (Goods data : list) {
+               storedata.setId(data.getId());
+               storedata.setGoodsName(data.getGoodsname());
+               storedata.setImageAddress(goodsImageService.findMainImage(data.getId()).getIamgeaddress());
+               storedata.setIsstart(data.getIsstart());
+               storedata.setMarketPrice(data.getMarketprive());
+               storedata.setMemberPrice(data.getMemberprice());
+               storedata.setSoldamount(data.getSoldamount());
+               storedata.setTypeName(goodsTypeService.findById(data.getTypeid()).getTypename());
+               goodsLists.add(storedata);
+           }
+           PageHelper.startPage(page, 10);
+           List<GoodsList> lists = (List<GoodsList>) new PageBean<GoodsList>(goodsLists);
+     return  new JsonResult("200",lists);
+       }catch (Exception e){
+           return  new JsonResult("500",e.getMessage());
+       }
     }
 
 

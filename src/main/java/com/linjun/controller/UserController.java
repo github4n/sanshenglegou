@@ -31,6 +31,8 @@ public class UserController {
 ShoppingcartService shoppingcartService;
 @Autowired
 RecommendService recommendService;
+@Autowired
+OrderDetailService orderDetailService;
 
 // 用户注册
  @PostMapping(value = "/register")
@@ -200,11 +202,15 @@ RecommendService recommendService;
 //生成用户订单
  @PostMapping(value = "/creatOrder")
    public JsonResult creatOrder(
-   @RequestBody Order order
+   @RequestParam(value = "goodsid")long goodsid
  ) {
           try{
-             orderService.createOrder(order);
-           return  new JsonResult("200",order);
+
+
+
+
+
+           return  new JsonResult("200","");
           }catch (Exception e){
            return  new JsonResult("500",e.getMessage());
           }
@@ -233,7 +239,6 @@ RecommendService recommendService;
          ShoppingCart shoppingCart1=  shoppingcartService.addCart(shoppingCart);
          return  new JsonResult("200",shoppingCart1);
      }catch (Exception e){
-
       return new JsonResult("500",e.getMessage());
      }
   }
