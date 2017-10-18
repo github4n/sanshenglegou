@@ -67,4 +67,18 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orderList=orderMapper.selectByExample(orderCriteria);
         return orderList;
     }
+
+    @Override
+    public Order findByOrder(long id, long goodsID) {
+        OrderCriteria orderCriteria=new OrderCriteria();
+        orderCriteria.createCriteria().andUseridEqualTo(id);
+        orderCriteria.createCriteria().andGoodsidEqualTo(goodsID);
+        List<Order> list=orderMapper.selectByExample(orderCriteria);
+        if (list!=null&&list.size()==1){
+            Order order=list.get(0);
+            return order;
+        }else{
+            throw new PeopleException("查询指定订单失败");
+        }
+    }
 }

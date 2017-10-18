@@ -12,4 +12,5 @@ public interface OrderService {
     int update(long userid,long orderId,Order order);
     Order createOrder(Order order);
     List<Order> queryOrder(long storid);
+    Order findByOrder(long id,long goodsID);
 }

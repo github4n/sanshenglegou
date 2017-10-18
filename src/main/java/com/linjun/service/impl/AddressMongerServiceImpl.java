@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.AddressMangerMapper;
 import com.linjun.model.AddressManger;
 import com.linjun.model.AddressMangerCriteria;
@@ -50,5 +51,20 @@ public class AddressMongerServiceImpl implements AddressMongerService {
     @Override
     public AddressManger findbyid(long id) {
         return addressMangerMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public AddressManger findByUserid(long userid) {
+        AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();
+        AddressMangerCriteria.Criteria criteria=addressMangerCriteria.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        criteria.andIsdefaultEqualTo((byte) 1);
+        List<AddressManger> list=addressMangerMapper.selectByExample(addressMangerCriteria);
+        if (list!=null&&list.size()==1){
+            AddressManger addressManger=list.get(0);
+            return addressManger;
+        }else {
+            throw new PeopleException("查询失败");
+        }
     }
 }

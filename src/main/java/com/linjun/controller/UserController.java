@@ -33,6 +33,8 @@ ShoppingcartService shoppingcartService;
 RecommendService recommendService;
 @Autowired
 OrderDetailService orderDetailService;
+@Autowired
+AddressMongerService addressMongerService;
 
 // 用户注册
  @PostMapping(value = "/register")
@@ -51,6 +53,9 @@ OrderDetailService orderDetailService;
    user.setTel(tel);
    user.setToken(token);
    userService.add(user);
+
+
+
    return new JsonResult("200", "注册成功",user);
   }catch (Exception e){
    return new JsonResult("500",e.getMessage());
@@ -75,6 +80,23 @@ OrderDetailService orderDetailService;
      }
   return str;
  }
+private  int rands(){
+    int[] array = {0,1,2,3,4,5,6,7,8,9};
+    Random rand = new Random();
+    for (int i = 10; i > 1; i--) {
+        int index = rand.nextInt(i);
+        int tmp = array[index];
+        array[index] = array[i - 1];
+        array[i - 1] = tmp;
+    }
+    int result = 0;
+    for(int i = 0; i < 6; i++)
+        result = result * 10 + array[i];
+    return result;
+}
+
+
+
 
 
  @PostMapping(value = "/registerByTel")
@@ -127,12 +149,10 @@ OrderDetailService orderDetailService;
            user.setPassworld(password);
            try{
                User usesr=  userService.loginByUsername(user);
-               return  new JsonResult("200",user);
+               return  new JsonResult("200",usesr);
            }catch (Exception e){
                return new JsonResult("500",e.getMessage());
            }
-
-
    }
 //  用户信息获取
  @GetMapping(value = "getUserInformation")
@@ -189,28 +209,47 @@ OrderDetailService orderDetailService;
  @DeleteMapping(value = "/delete")
  public JsonResult delete(
          @RequestParam(value = "userID",required = false)long userID,
-         @RequestParam(value = "orderID",required = false)long gooid
+         @RequestParam(value = "orderID",required = false)long orderID
  ){
      try{
-      orderService.deletebyuserid(userID,gooid);
+         Order order=orderService.findByOrder(userID,orderID);
+         orderDetailService.deletebyid(order.getId());
+      orderService.deletebyuserid(userID,orderID);
       return  new JsonResult("200","删除成功");
      }catch (Exception e){
       return  new JsonResult("500",e.getMessage());
      }
  }
-
 //生成用户订单
  @PostMapping(value = "/creatOrder")
    public JsonResult creatOrder(
-   @RequestParam(value = "goodsid")long goodsid
+   @RequestParam(value = "goodsid")long goodsid,
+   @RequestParam(value = "userid")long userid,
+   @RequestParam(value = "goodsum")int goodsum
  ) {
           try{
-
-
-
-
-
-           return  new JsonResult("200","");
+        Goods goods;
+        goods=goodsService.findByid(goodsid);
+          Order order=new Order();
+          order.setUserid(userid);
+          order.setGoodsum(goodsum);
+          order.setIspay((byte) 0);
+          order.setIsreceive((byte) 0);
+          order.setGoodsname(goods.getGoodsname());
+          order.setGoodsid(goodsid);
+          order.setMarketpricce(goods.getMarketprive());
+          order.setMemberprice(goods.getMemberprice());
+          order.setOrdercode((long) rands());
+          order.setStoreid(goods.getStoreid());
+          order.setSendtime(new Date());
+        AddressManger addressManger=addressMongerService.findByUserid(userid);
+          order.setAddressid(addressManger.getId());
+          Order order1=orderService.createOrder(order);
+          OrderDetail orderDetail=new OrderDetail();
+          orderDetail.setOrderstate(String.valueOf(1));
+          orderDetail.setOrderid(order1.getId());
+              OrderDetail orderDetail1=orderDetailService.add(orderDetail);
+           return  new JsonResult("200","成功");
           }catch (Exception e){
            return  new JsonResult("500",e.getMessage());
           }
@@ -228,7 +267,6 @@ OrderDetailService orderDetailService;
        orderService.update(userID,orderID,order);
        return  new JsonResult("200","更新成功");
     }
-
 
 //加入购物车功能
   @PostMapping(value = "/creatshopping")
