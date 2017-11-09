@@ -235,66 +235,6 @@ public class GoodsCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andGoodsbandidIsNull() {
-            addCriterion("goodsBandID is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidIsNotNull() {
-            addCriterion("goodsBandID is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidEqualTo(Long value) {
-            addCriterion("goodsBandID =", value, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidNotEqualTo(Long value) {
-            addCriterion("goodsBandID <>", value, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidGreaterThan(Long value) {
-            addCriterion("goodsBandID >", value, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidGreaterThanOrEqualTo(Long value) {
-            addCriterion("goodsBandID >=", value, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidLessThan(Long value) {
-            addCriterion("goodsBandID <", value, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidLessThanOrEqualTo(Long value) {
-            addCriterion("goodsBandID <=", value, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidIn(List<Long> values) {
-            addCriterion("goodsBandID in", values, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidNotIn(List<Long> values) {
-            addCriterion("goodsBandID not in", values, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidBetween(Long value1, Long value2) {
-            addCriterion("goodsBandID between", value1, value2, "goodsbandid");
-            return (Criteria) this;
-        }
-
-        public Criteria andGoodsbandidNotBetween(Long value1, Long value2) {
-            addCriterion("goodsBandID not between", value1, value2, "goodsbandid");
-            return (Criteria) this;
-        }
-
         public Criteria andTypeidIsNull() {
             addCriterion("TypeID is null");
             return (Criteria) this;

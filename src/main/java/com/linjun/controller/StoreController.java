@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
+import com.linjun.pojo.GoodsList;
+import com.linjun.pojo.OrderList;
 import com.linjun.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +41,13 @@ public class StoreController {
     ){
         try {
           Store store1=  storeService.createStore(store);
-
             return new JsonResult("200",store1);
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());
         }
+
     }
+//    店铺注销
     @DeleteMapping(value = "/delete")
     public  JsonResult delete(
        @RequestParam(value = "userid",required = false)long userid
@@ -74,7 +77,23 @@ public class StoreController {
            }
 
     }
+//    通过手机号码登入店铺
+    @PostMapping(value = "/loginByPhone")
+    public JsonResult loginByPhone(
+            @RequestBody String phone,
+            @RequestBody String passworld
+    ){
+      try{
+          Store store=new Store();
+          store.setTel(phone);
+          store.setPassworld(passworld);
+          Store store1=storeService.loginByPhone(store);
+          return new JsonResult("200",store1);
 
+      }catch (Exception e){
+       return  new JsonResult("500",e.getMessage());
+      }
+    }
 
 
 //    店铺的登入
@@ -112,8 +131,8 @@ public class StoreController {
             @RequestParam(value = "page",required = false)int page
    ){
     List<Order> orders= orderService.findAll();
-       PageHelper.startPage(page,10);
-       return new JsonResult("200",new PageBean<Order>(orders));
+
+       return new JsonResult("200",orders);
    }
 
 //查询店铺的订单
@@ -122,29 +141,32 @@ public class StoreController {
       @RequestParam(value = "storeID",required = false)long storeID,
       @RequestParam(value = "page",required = false)int page
    ){
-                List<Order> orderList=orderService.queryOrder(storeID);
-                OrderList orderList1=new OrderList();
-       List<OrderList> lists=new ArrayList<OrderList>();
-       for (Order list:orderList) {
-           orderList1.setId(list.getId());
-           orderList1.setIspay(list.getIspay());
-           orderList1.setOrderCode(list.getOrdercode());
-           orderList1.setAmount(list.getGoodsum());
-           orderList1.setPeople(addressMongerService.findbyid(list.getAddressid()).getReceivepeople());
-           orderList1.setTel(addressMongerService.findbyid(list.getAddressid()).getReceivetel());
-           orderList1.setPrice(list.getMemberprice());
-           orderList1.setStorename(list.getGoodsname());
-           orderList1.setPricesum(list.getPricesum());
-           orderList1.setSendtime(list.getSendtime());
-           lists.add(orderList1);
-       }
-       PageHelper.startPage(page,10);
-       List<OrderList> list= (List<OrderList>) new PageBean<OrderList>(lists);
+                try{
 
-
-       return new JsonResult("200",list) ;
+                    PageBean<Order> orderList=orderService.findAllOStore(storeID,page,10);
+                    OrderList orderList1=new OrderList();
+                    List<OrderList> lists=new ArrayList<OrderList>();
+                    for (Order list:orderList.getList()) {
+                        orderList1.setId(list.getId());
+                        orderList1.setIspay(list.getIspay());
+                        orderList1.setOrderCode(list.getOrdercode());
+                        orderList1.setAmount(list.getGoodsum());
+                        orderList1.setPeople(addressMongerService.findbyid(list.getAddressid()).getReceivepeople());
+                        orderList1.setTel(addressMongerService.findbyid(list.getAddressid()).getReceivetel());
+                        orderList1.setPrice(list.getMemberprice());
+                        orderList1.setStorename(list.getGoodsname());
+                        orderList1.setPricesum(list.getPricesum());
+                        orderList1.setSendtime(list.getSendtime());
+                        lists.add(orderList1);
+                }
+                PageBean<OrderList> orderli=new PageBean<OrderList>(orderList.getTotal(),orderList.getPageNum(),orderList.getPageSize(),orderList.getPages(),orderList.getSize(),lists);
+                    return new JsonResult("200",orderli);
+       }catch (Exception e){
+                    return  new JsonResult("500",e.getMessage());
+                }
 
    }
+
 //上架商品
     @PostMapping(value = "/addGoods")
     public JsonResult addGoods(
@@ -177,13 +199,38 @@ public class StoreController {
                storedata.setTypeName(goodsTypeService.findById(data.getTypeid()).getTypename());
                goodsLists.add(storedata);
            }
-           PageHelper.startPage(page, 10);
-           List<GoodsList> lists = (List<GoodsList>) new PageBean<GoodsList>(goodsLists);
-     return  new JsonResult("200",lists);
+
+     return  new JsonResult("200",storedata);
        }catch (Exception e){
            return  new JsonResult("500",e.getMessage());
        }
     }
+//    获取今日订单 今日成交订单的数量
+ @GetMapping(value = "/getTodayOrder")
+ public  JsonResult getTodayOrder(
+         @RequestParam(value = "storeID")long storeID
+ ) {
+     List<Integer> list = orderService.getTodayOrder(storeID);
+     if (list != null) {
+         return new JsonResult("200", list);
+     } else {
+         return new JsonResult("500", "失败");
+     }
+ }
+//  一周的订单量
+     @GetMapping(value = "/getWeekDayOrder")
+    public  JsonResult getWeekDayOrder(
+           @RequestParam(value = "storeID")long storeID
+             ){
+         try{
+        int[] weekday= orderService.getWeekDayOrder(storeID);
+        return  new JsonResult("200",weekday);
+         }catch (Exception e){
+             return  new JsonResult("500","失败");
+         }
+
+     }
+
 
 
 

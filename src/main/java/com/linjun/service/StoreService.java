@@ -1,5 +1,6 @@
 package com.linjun.service;
 
+import com.linjun.entity.PageBean;
 import com.linjun.model.Store;
 
 import java.util.List;
@@ -15,6 +16,8 @@ public interface StoreService {
     Store createStore(Store store);
     Store loginByName(Store store);
     Store loginByid(Store store);
+    Store loginByPhone(Store store);
     Store updateStore(Store store);
-
+    PageBean<Store> findAllStore(int cuurrentPage, int pageSize);
+    long countStore();
 }

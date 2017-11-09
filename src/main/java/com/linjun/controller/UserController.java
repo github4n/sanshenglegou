@@ -10,6 +10,7 @@ import jdk.nashorn.internal.runtime.ECMAException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.spring.web.json.Json;
+import sun.jvm.hotspot.debugger.Address;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -204,6 +205,7 @@ private  int rands(){
  ){
   List<Order> orderList=orderService.findByuserid(userID);
   return  new JsonResult("200",orderList);
+
  }
 //  删除订单
  @DeleteMapping(value = "/delete")
@@ -305,6 +307,52 @@ private  int rands(){
            return  new JsonResult("500",e.getMessage());
        }
     }
+
+//添加地址管理
+    @PostMapping(value = "addAdressManger")
+    public  JsonResult addAddressManger(
+            @RequestBody AddressManger addressManger
+    ){
+                try {
+                    AddressManger addressManger1 = addressMongerService.add(addressManger);
+                    return  new JsonResult("200",addressManger1);
+                }catch (Exception e){
+                    return  new JsonResult("500","查询失败");
+                }
+
+    }
+
+
+//删除地址
+    @DeleteMapping(value = "deleteAddress")
+    public  JsonResult deleteAddressManger(
+            @RequestParam(value = "userid")long userid,
+            @RequestParam(value = "addressID")long addressID
+    ){
+         int reasult=addressMongerService.delelet(userid,addressID);
+         if (reasult>0){
+             List<AddressManger> list=addressMongerService.findByuser(userid);
+
+
+             return  new JsonResult("200",list);
+         }else{
+             return  new JsonResult("500","删除地址失败");
+         }
+    }
+//    获取用户地址列表
+    @GetMapping(value = "/getAddressList")
+    public  JsonResult getAddressList(
+            @RequestParam(value = "userID")long userid
+    ){
+          List<AddressManger> list=addressMongerService.findByuser(userid);
+          if (list!=null&&list.size()>=0){
+            return new JsonResult("200",list);
+          }else {
+              return  new JsonResult("500","获取地址失败");
+          }
+
+    }
+
 
 
 }

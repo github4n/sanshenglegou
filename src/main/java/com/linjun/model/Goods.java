@@ -7,8 +7,6 @@ public class Goods {
 
     private String goodsname;
 
-    private Long goodsbandid;
-
     private Long typeid;
 
     private Long goodssum;
@@ -43,14 +41,6 @@ public class Goods {
 
     public void setGoodsname(String goodsname) {
         this.goodsname = goodsname == null ? null : goodsname.trim();
-    }
-
-    public Long getGoodsbandid() {
-        return goodsbandid;
-    }
-
-    public void setGoodsbandid(Long goodsbandid) {
-        this.goodsbandid = goodsbandid;
     }
 
     public Long getTypeid() {

@@ -96,4 +96,13 @@ public class GoodsServiceImpl implements GoodsService {
             throw new PeopleException("查询失败");
         }
     }
+
+    @Override
+    public List<Goods> findByID(long id) {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andTypeidEqualTo(id);
+        return goodsMapper.selectByExample(goodsCriteria);
+    }
+
+
 }

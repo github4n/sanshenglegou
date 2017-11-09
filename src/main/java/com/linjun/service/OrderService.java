@@ -1,5 +1,6 @@
 package com.linjun.service;
 
+import com.linjun.entity.PageBean;
 import com.linjun.model.Order;
 
 import java.util.List;
@@ -13,4 +14,9 @@ public interface OrderService {
     Order createOrder(Order order);
     List<Order> queryOrder(long storid);
     Order findByOrder(long id,long goodsID);
+    List<Integer> getTodayOrder(long storeid);
+    int[] getWeekDayOrder(long storeid);
+    PageBean<Order> findAllOrder(int cuurrentPage,int pagesize);
+    long countOrder();
+    PageBean<Order> findAllOStore(long storid,int cuurrentPage,int pagesize);
 }

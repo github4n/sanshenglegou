@@ -16,6 +16,7 @@
 package com.linjun.entity;
 
 import com.github.pagehelper.Page;
+import com.linjun.pojo.OrderList;
 
 import java.io.Serializable;
 import java.util.List;
@@ -40,18 +41,22 @@ public class PageBean<T> implements Serializable {
      * 而出现一些问题。
      *
      * @param list page结果
+     * @param total
+     * @param pageNum
+     * @param pageSize
+     * @param size
+     * @param lists
      */
-    public PageBean(List<T> list) {
-        if (list instanceof Page) {
-            Page<T> page = (Page<T>) list;
-            this.pageNum = page.getPageNum();
-            this.pageSize = page.getPageSize();
-            this.total = page.getTotal();
-            this.pages = page.getPages();
-            this.list = page;
-            this.size = page.size();
-        }
-    }
+
+     public PageBean(long total,int pageNum,int pageSize,int pages,int size,List<T> list){
+        this.total=total;
+        this.pageNum=pageNum;
+        this.pageSize=pageSize;
+        this.pages=pages;
+        this.size=size;
+        this.list=list;
+  }
+
 
     public long getTotal() {
         return total;

@@ -16,4 +16,5 @@ public interface GoodsService {
     List<Goods>  composite();
     List<Goods> Villages();
     List<Goods> findByStoreID(long storeID);
+    List<Goods> findByID(long id);
 }

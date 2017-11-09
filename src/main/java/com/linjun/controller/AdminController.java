@@ -31,7 +31,7 @@ public class AdminController {
     StoreService storeService;
 
 //    管理员登入
-    @GetMapping(value = "login")
+    @GetMapping(value = "/login")
     public JsonResult login(@RequestParam(value = "admin",required = false)String admin,
                             @RequestParam(value = "passworld",required = false)String passworld){
      boolean a=adminService.IsExits(admin,passworld);
@@ -47,8 +47,7 @@ public class AdminController {
         try{
             PageHelper.startPage(page,10);
             List<User> listall=userService.findAll();
-            List<User> list= (List<User>) new PageBean<User>(listall);
-            return new JsonResult("200",new PageBean<User>(listall));
+            return new JsonResult("200",listall);
         }catch (Exception e){
             return new JsonResult("500",e.getMessage());
         }
@@ -63,8 +62,8 @@ public class AdminController {
       try{
           List<Order> orderList=orderService.findAll();
         PageHelper.startPage(page,10);
-        List<Order> list= (List<Order>) new PageBean<Order>(orderList);
-          return new JsonResult("200",list);
+
+          return new JsonResult("200",orderList);
       }catch (Exception e){
           return  new JsonResult("500",e.getMessage());
       }
@@ -75,17 +74,20 @@ public class AdminController {
             @RequestParam(value = "page",required = false)int page
     ){
         try {
-            List<Store> storeList=storeService.findAll();
-            PageHelper.startPage(page,10);
-            List<Store> list= (List<Store>) new PageBean<Store>(storeList);
-            return  new JsonResult("200",list);
+//            PageHelper.startPage(page,2);
+//            List<Store> storeList=storeService.findAll();
+
+
+            return  new JsonResult("200",storeService.findAllStore(page,2));
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());
         }
-
-
     }
-
+   @GetMapping(value = "/getstorelist")
+    public  JsonResult getstorelist(){
+       List<Store> stores=storeService.findAll();
+       return  new JsonResult("200",stores);
+   }
 
 
 }

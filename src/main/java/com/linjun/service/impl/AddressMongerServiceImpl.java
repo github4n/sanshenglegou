@@ -13,8 +13,13 @@ import java.util.List;
 public class AddressMongerServiceImpl implements AddressMongerService {
     @Autowired
     AddressMangerMapper addressMangerMapper;
-    public boolean add(AddressManger addressManger) {
-        return addressMangerMapper.insertSelective(addressManger)>0;
+    public AddressManger add(AddressManger addressManger) {
+        int result=addressMangerMapper.insertSelective(addressManger);
+        if (result>0){
+            return addressManger;
+        }else {
+            throw  new PeopleException("添加失败");
+        }
     }
 
     public int deleteByuserid(long userid) {
@@ -66,5 +71,13 @@ public class AddressMongerServiceImpl implements AddressMongerService {
         }else {
             throw new PeopleException("查询失败");
         }
+    }
+
+    @Override
+    public int delelet(long userid, long id) {
+        AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();
+        addressMangerCriteria.createCriteria().andUseridEqualTo(userid);
+        addressMangerCriteria.createCriteria().andIdEqualTo(id);
+        return addressMangerMapper.deleteByExample(addressMangerCriteria);
     }
 }

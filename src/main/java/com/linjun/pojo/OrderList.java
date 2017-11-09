@@ -1,4 +1,4 @@
-package com.linjun.model;
+package com.linjun.pojo;
 
 import java.util.Date;
 
