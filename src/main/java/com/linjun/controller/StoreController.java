@@ -144,9 +144,9 @@ public class StoreController {
                 try{
 
                     PageBean<Order> orderList=orderService.findAllOStore(storeID,page,10);
-                    OrderList orderList1=new OrderList();
                     List<OrderList> lists=new ArrayList<OrderList>();
                     for (Order list:orderList.getList()) {
+                        OrderList orderList1=new OrderList();
                         orderList1.setId(list.getId());
                         orderList1.setIspay(list.getIspay());
                         orderList1.setOrderCode(list.getOrdercode());
@@ -184,11 +184,11 @@ public class StoreController {
     public  JsonResult getGoods(
             @RequestParam(value = "storeID",required = false)long storeID,
             @RequestParam(value = "page",required = false)int page){
-                List<Goods> list=goodsService.findByStoreID(storeID);
-              List<GoodsList> goodsLists=new ArrayList<GoodsList>();
-              GoodsList storedata=new GoodsList();
+                PageBean<Goods>  goodslist=goodsService.findBySID(storeID,page,10);
+             List<GoodsList> goodsLists=new ArrayList<GoodsList>();
        try {
-           for (Goods data : list) {
+           for (Goods data : goodslist.getList()) {
+               GoodsList storedata=new GoodsList();
                storedata.setId(data.getId());
                storedata.setGoodsName(data.getGoodsname());
                storedata.setImageAddress(goodsImageService.findMainImage(data.getId()).getIamgeaddress());
@@ -199,8 +199,10 @@ public class StoreController {
                storedata.setTypeName(goodsTypeService.findById(data.getTypeid()).getTypename());
                goodsLists.add(storedata);
            }
+           PageBean<GoodsList> goodslists=new PageBean<GoodsList>(goodslist.getTotal(),goodslist.getPageNum(),goodslist.getPageSize(),goodslist.getPages(),goodslist.getSize(),goodsLists);
 
-     return  new JsonResult("200",storedata);
+
+           return  new JsonResult("200",goodslists);
        }catch (Exception e){
            return  new JsonResult("500",e.getMessage());
        }

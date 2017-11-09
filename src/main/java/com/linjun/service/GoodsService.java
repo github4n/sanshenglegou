@@ -1,5 +1,6 @@
 package com.linjun.service;
 
+import com.linjun.entity.PageBean;
 import com.linjun.model.Goods;
 
 import java.util.List;
@@ -17,4 +18,7 @@ public interface GoodsService {
     List<Goods> Villages();
     List<Goods> findByStoreID(long storeID);
     List<Goods> findByID(long id);
+    long countGoods();
+    long countInStore(long storeId);
+    PageBean<Goods> findBySID(long storeId,int cuurrentPage,int pagesize);
 }

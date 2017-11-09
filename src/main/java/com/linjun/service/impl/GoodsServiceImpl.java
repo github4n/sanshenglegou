@@ -1,9 +1,13 @@
 package com.linjun.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.GoodsMapper;
+import com.linjun.entity.PageBean;
 import com.linjun.model.Goods;
 import com.linjun.model.GoodsCriteria;
+import com.linjun.model.Order;
+import com.linjun.model.OrderCriteria;
 import com.linjun.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -102,6 +106,47 @@ public class GoodsServiceImpl implements GoodsService {
         GoodsCriteria goodsCriteria=new GoodsCriteria();
         goodsCriteria.createCriteria().andTypeidEqualTo(id);
         return goodsMapper.selectByExample(goodsCriteria);
+    }
+
+    @Override
+    public long countGoods() {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        return goodsMapper.countByExample(goodsCriteria);
+    }
+
+    @Override
+    public long countInStore(long storeId) {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andStoreidEqualTo(storeId);
+        return goodsMapper.countByExample(goodsCriteria);
+    }
+
+    @Override
+    public PageBean<Goods> findBySID(long storeId, int cuurrentPage, int pagesize) {
+
+           PageHelper.startPage(cuurrentPage,pagesize);
+           GoodsCriteria goodsCriteria=new GoodsCriteria();
+           goodsCriteria.createCriteria().andStoreidEqualTo(storeId);
+           List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
+           long total=countInStore(storeId);
+           int pages,sise;
+           if (total%cuurrentPage==0){
+               pages= (int) (total/cuurrentPage);
+           }else {
+               pages= (int) (total/cuurrentPage)+1;
+           }
+           if (pages*pagesize==total){
+               sise=cuurrentPage*pagesize;
+           }else {
+               if (cuurrentPage<pages){
+                   sise=cuurrentPage*pagesize;
+               }else {
+                   sise= (int) total;
+               }
+           }
+           PageBean<Goods> lists=new PageBean<Goods>(total,cuurrentPage,pagesize,pages,sise,list);
+           return lists;
+
     }
 
 
