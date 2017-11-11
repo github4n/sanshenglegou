@@ -113,25 +113,28 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.Order">
-    insert into t_order (id, userID, storeID, 
-      orderCode, goodsName, goodsID, 
-      addressID, marketPricce, memberPrice, 
-      goodSum, priceSum, sendTime, 
-      logistics, payTime, isreceive, 
-      isPay)
-    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{storeid,jdbcType=BIGINT}, 
-      #{ordercode,jdbcType=BIGINT}, #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, 
-      #{addressid,jdbcType=BIGINT}, #{marketpricce,jdbcType=REAL}, #{memberprice,jdbcType=REAL}, 
-      #{goodsum,jdbcType=INTEGER}, #{pricesum,jdbcType=REAL}, #{sendtime,jdbcType=TIMESTAMP}, 
-      #{logistics,jdbcType=VARCHAR}, #{paytime,jdbcType=TIMESTAMP}, #{isreceive,jdbcType=TINYINT}, 
-      #{ispay,jdbcType=TINYINT})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_order (userID, storeID, orderCode, 
+      goodsName, goodsID, addressID, 
+      marketPricce, memberPrice, goodSum, 
+      priceSum, sendTime, logistics, 
+      payTime, isreceive, isPay
+      )
+    values (#{userid,jdbcType=BIGINT}, #{storeid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
+      #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{addressid,jdbcType=BIGINT}, 
+      #{marketpricce,jdbcType=REAL}, #{memberprice,jdbcType=REAL}, #{goodsum,jdbcType=INTEGER}, 
+      #{pricesum,jdbcType=REAL}, #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, 
+      #{paytime,jdbcType=TIMESTAMP}, #{isreceive,jdbcType=TINYINT}, #{ispay,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Order">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="userid != null">
         userID,
       </if>
@@ -179,9 +182,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userid != null">
         #{userid,jdbcType=BIGINT},
       </if>

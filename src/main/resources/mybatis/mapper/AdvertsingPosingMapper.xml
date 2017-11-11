@@ -100,17 +100,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.AdvertsingPosing">
-    insert into t_AdvertsingPosing (id, description, imageId, 
-      isEnable)
-    values (#{id,jdbcType=BIGINT}, #{description,jdbcType=VARCHAR}, #{imageid,jdbcType=BIGINT}, 
-      #{isenable,jdbcType=CHAR})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_AdvertsingPosing (description, imageId, isEnable
+      )
+    values (#{description,jdbcType=VARCHAR}, #{imageid,jdbcType=BIGINT}, #{isenable,jdbcType=CHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.AdvertsingPosing">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_AdvertsingPosing
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="description != null">
         description,
       </if>
@@ -122,9 +125,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>

@@ -100,17 +100,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.Article">
-    insert into t_article (id, content, title, 
-      looksum)
-    values (#{id,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{looksum,jdbcType=BIGINT})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_article (content, title, looksum
+      )
+    values (#{content,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{looksum,jdbcType=BIGINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Article">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_article
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="content != null">
         content,
       </if>
@@ -122,9 +125,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>

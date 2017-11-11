@@ -18,5 +18,6 @@ public interface OrderService {
     int[] getWeekDayOrder(long storeid);
     PageBean<Order> findAllOrder(int cuurrentPage,int pagesize);
     long countOrder();
+      Order updateOrder(Order order);
     PageBean<Order> findAllOStore(long storid,int cuurrentPage,int pagesize);
 }

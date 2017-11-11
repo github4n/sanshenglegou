@@ -2,6 +2,7 @@ package com.linjun.service.impl;
 
 import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.OrderDetailMapper;
+import com.linjun.model.Order;
 import com.linjun.model.OrderDetail;
 import com.linjun.model.OrderDetailCriteria;
 import com.linjun.service.OrderDetailService;
@@ -17,13 +18,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public OrderDetail add(OrderDetail orderDetail) {
         int result=orderDetailMapper.insertSelective(orderDetail);
         if (result>0){
-            return orderDetail;
+            return orderDetailMapper.selectByPrimaryKey((long) result);
         }else {
             throw new PeopleException("添加失败");
         }
-
     }
-
     public int deletebyid(long orderid) {
         OrderDetailCriteria orderDetailCriteria=new OrderDetailCriteria();
         OrderDetailCriteria.Criteria criteria=orderDetailCriteria.createCriteria();
@@ -44,5 +43,17 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         OrderDetailCriteria.Criteria criteria=orderDetailCriteria.createCriteria();
         criteria.andOrderidEqualTo(orderid);
         return orderDetailMapper.selectByExample(orderDetailCriteria);
+    }
+
+    @Override
+    public OrderDetail updateOrderDetail(OrderDetail orderDetail) {
+        int result=orderDetailMapper.updateByPrimaryKeySelective(orderDetail);
+        if (result>0){
+            OrderDetail orderDetail1=orderDetailMapper.selectByPrimaryKey(orderDetail.getId());
+            return orderDetail1;
+
+        }else {
+            throw new PeopleException("更新物流失败");
+        }
     }
 }

@@ -100,17 +100,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.GoodsType">
-    insert into t_goodsType (id, TypeName, fatherTypeID, 
-      isFather)
-    values (#{id,jdbcType=BIGINT}, #{typename,jdbcType=VARCHAR}, #{fathertypeid,jdbcType=BIGINT}, 
-      #{isfather,jdbcType=TINYINT})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_goodsType (TypeName, fatherTypeID, isFather
+      )
+    values (#{typename,jdbcType=VARCHAR}, #{fathertypeid,jdbcType=BIGINT}, #{isfather,jdbcType=TINYINT}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.GoodsType">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_goodsType
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="typename != null">
         TypeName,
       </if>
@@ -122,9 +125,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="typename != null">
         #{typename,jdbcType=VARCHAR},
       </if>

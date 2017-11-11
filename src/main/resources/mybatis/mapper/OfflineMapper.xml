@@ -102,19 +102,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.Offline">
-    insert into t_offLine (id, userID, offlinrUserID, 
-      fatherUserID, isFather, createTime
-      )
-    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{offlinruserid,jdbcType=BIGINT}, 
-      #{fatheruserid,jdbcType=BIGINT}, #{isfather,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}
-      )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_offLine (userID, offlinrUserID, fatherUserID, 
+      isFather, createTime)
+    values (#{userid,jdbcType=BIGINT}, #{offlinruserid,jdbcType=BIGINT}, #{fatheruserid,jdbcType=BIGINT}, 
+      #{isfather,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Offline">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_offLine
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="userid != null">
         userID,
       </if>
@@ -132,9 +133,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userid != null">
         #{userid,jdbcType=BIGINT},
       </if>

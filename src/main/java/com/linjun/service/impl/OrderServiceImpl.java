@@ -62,8 +62,7 @@ public class OrderServiceImpl implements OrderService {
     public Order createOrder(Order order) {
         int result = orderMapper.insertSelective(order);
         if (result > 0) {
-
-            return order;
+            return orderMapper.selectByPrimaryKey((long) result);
         } else {
             throw new PeopleException("创建订单失败");
         }
@@ -170,6 +169,17 @@ public class OrderServiceImpl implements OrderService {
         OrderCriteria orderCriteria=new OrderCriteria();
         return orderMapper.countByExample(orderCriteria);
     }
+
+    @Override
+    public Order updateOrder( Order order) {
+        int result= orderMapper.updateByPrimaryKeySelective(order);
+        if (result>0){
+            return orderMapper.selectByPrimaryKey(order.getId());
+        }else {
+            throw new PeopleException("更新失败");
+        }
+    }
+
 
     @Override
     public PageBean<Order> findAllOStore(long storid, int cuurrentPage, int pagesize) {

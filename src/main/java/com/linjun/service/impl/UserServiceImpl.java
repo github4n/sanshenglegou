@@ -1,6 +1,5 @@
 package com.linjun.service.impl;
 
-import com.linjun.common.domain.PageBounds;
 import com.linjun.common.domain.PageList;
 import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.UserMapper;

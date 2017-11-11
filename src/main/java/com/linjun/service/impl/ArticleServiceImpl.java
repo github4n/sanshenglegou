@@ -26,14 +26,12 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleCriteria articleCriteria=new ArticleCriteria();
         ArticleCriteria.Criteria criteria=articleCriteria.createCriteria();
         criteria.andIdEqualTo(id);
-
         return articleMapper.updateByExample(article,articleCriteria);
     }
 
     public List<Article> findAll() {
 
         ArticleCriteria articleCriteria=new ArticleCriteria();
-        ArticleCriteria.Criteria criteria=articleCriteria.createCriteria();
         return articleMapper.selectByExample(articleCriteria);
     }
 
@@ -41,9 +39,19 @@ public class ArticleServiceImpl implements ArticleService {
     public Article update(Article article) {
         int result=articleMapper.updateByPrimaryKeySelective(article);
         if (result>0){
-            return article;
+            return articleMapper.selectByPrimaryKey(article.getId());
         }else {
             throw  new PeopleException("更新失败");
+        }
+    }
+
+    @Override
+    public Article addArticle(Article article) {
+        int result=articleMapper.insertSelective(article);
+        if (result>0){
+            return articleMapper.selectByPrimaryKey((long) result);
+        }else {
+            throw  new PeopleException("增加文章失败");
         }
     }
 }

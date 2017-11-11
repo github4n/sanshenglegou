@@ -104,19 +104,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.Advertsing">
-    insert into t_Advertsing (id, name, body, 
-      linkUrl, imageId, stardate, 
-      enddate, dataCreate)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, 
-      #{linkurl,jdbcType=VARCHAR}, #{imageid,jdbcType=BIGINT}, #{stardate,jdbcType=TIMESTAMP}, 
-      #{enddate,jdbcType=TIMESTAMP}, #{datacreate,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_Advertsing (name, body, linkUrl, 
+      imageId, stardate, enddate, 
+      dataCreate)
+    values (#{name,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, #{linkurl,jdbcType=VARCHAR}, 
+      #{imageid,jdbcType=BIGINT}, #{stardate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
+      #{datacreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Advertsing">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_Advertsing
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="name != null">
         name,
       </if>
@@ -140,9 +143,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>

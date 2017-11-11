@@ -52,156 +52,209 @@
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_admin"
 		   domainObjectName="Admin" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_Advertsing"
 		   domainObjectName="Advertsing" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_AdvertsinglnPosing"
 		   domainObjectName="AdvertsinglnPosing" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_AdvertsingPosing"
 		   domainObjectName="AdvertsingPosing" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_article"
 		   domainObjectName="Article" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_articleculture"
 		   domainObjectName="ArticleCulture" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_collect"
 		   domainObjectName="Collect" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_creditManger"
 		   domainObjectName="CreditManger" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_evaluate"
 		   domainObjectName="Evaluate" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_goods"
 		   domainObjectName="Goods" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_goodsAttribute"
 		   domainObjectName="GoodsAttribute" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_goodsBand"
 		   domainObjectName="GoodsBand" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_goodsimage"
 		   domainObjectName="GoodsImage" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_goodsType"
 		   domainObjectName="GoodsType" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_logistics"
 		   domainObjectName="Logistics" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_offline"
 		   domainObjectName="Offline" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_order"
 		   domainObjectName="Order" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_orderDetail"
 		   domainObjectName="OrderDetail" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_recommend"
 		   domainObjectName="Recommend" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_sign"
 		   domainObjectName="Sign" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 	<table tableName="t_siglnDetail"
 		   domainObjectName="SiglnDetail" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 		<table tableName="t_user"
 			   domainObjectName="User" enableCountByExample="true"
 			   enableUpdateByExample="true" enableDeleteByExample="true"
 			   enableSelectByExample="true"
 			   selectByExampleQueryId="true"
-		></table>
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
 	<table tableName="t_creditDetail"
 		   domainObjectName="CreditDetail" enableCountByExample="true"
 		   enableUpdateByExample="true" enableDeleteByExample="true"
 		   enableSelectByExample="true"
 		   selectByExampleQueryId="true"
-	></table>
+	>
+		<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+	</table>
 		<table tableName="t_store"
 			   domainObjectName="Store" enableCountByExample="true"
 			   enableUpdateByExample="true" enableDeleteByExample="true"
 			   enableSelectByExample="true"
 			   selectByExampleQueryId="true"
-		></table>
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
 		<table tableName="t_shoppingcart"
 			   domainObjectName="ShoppingCart" enableCountByExample="true"
 			   enableUpdateByExample="true" enableDeleteByExample="true"
 			   enableSelectByExample="true"
 			   selectByExampleQueryId="true"
-		></table>
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
 	</context>
 </generatorConfiguration>  

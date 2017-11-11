@@ -17,26 +17,19 @@ import java.util.List;
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
     GoodsMapper goodsMapper;
-    public boolean add(Goods goods) {
-        return goodsMapper.insertSelective(goods)>0;
+
+
+    public boolean delete(long id) {
+        int result=goodsMapper.deleteByPrimaryKey(id);
+        if (result>0){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 
-    public int delete(long id) {
-        return goodsMapper.deleteByPrimaryKey(id);
-    }
 
-    public List<Goods> findAll() {
-        GoodsCriteria goodsCriteria=new GoodsCriteria();
-        GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
-        return goodsMapper.selectByExample(goodsCriteria);
-    }
-
-    public List<Goods> findByStore(long storeid) {
-        GoodsCriteria goodsCriteria=new GoodsCriteria();
-        GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
-        criteria.andStoreidEqualTo(storeid);
-        return goodsMapper.selectByExample(goodsCriteria);
-    }
 
     public Goods findByid(long ID) {
 
@@ -45,67 +38,41 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public Goods addGoods(Goods goods) {
-        int result=goodsMapper.insertSelective(goods);
+        long result=goodsMapper.insertSelective(goods);
         if (result>0){
-            return  goods;
+            return  goodsMapper.selectByPrimaryKey(result);
         }else {
             throw new PeopleException("添加商品失败");
         }
     }
 
-    @Override
-    public List<Goods> mainstore() {
-        GoodsCriteria goodsCriteria=new GoodsCriteria();
-        goodsCriteria.createCriteria().andTypeidEqualTo((long) 1);
-
-        List<Goods> mainstorelist=goodsMapper.selectByExample(goodsCriteria);
-        return mainstorelist;
-    }
 
     @Override
-    public List<Goods> yiwu() {
+    public PageBean<Goods> findByID(long id,int cuurrentPage, int pagesize) {
+        PageHelper.startPage(cuurrentPage,pagesize);
         GoodsCriteria goodsCriteria=new GoodsCriteria();
-        goodsCriteria.createCriteria().andTypeidEqualTo((long) 2);
-
-        List<Goods> yiwulist=goodsMapper.selectByExample(goodsCriteria);
-        return yiwulist;
-    }
-
-    @Override
-    public List<Goods> composite() {
-        GoodsCriteria goodsCriteria=new GoodsCriteria();
-        goodsCriteria.createCriteria().andTypeidEqualTo((long) 1);
-
-        List<Goods> compositelist=goodsMapper.selectByExample(goodsCriteria);
-        return compositelist;
-    }
-
-    @Override
-    public List<Goods> Villages() {
-        GoodsCriteria goodsCriteria=new GoodsCriteria();
-        goodsCriteria.createCriteria().andTypeidEqualTo((long) 1);
-
-        List<Goods> vilagelist=goodsMapper.selectByExample(goodsCriteria);
-        return vilagelist;
-    }
-
-    @Override
-    public List<Goods> findByStoreID(long storeID) {
-        GoodsCriteria goodsCriteria=new GoodsCriteria();
-        goodsCriteria.createCriteria().andStoreidEqualTo(storeID);
-        List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
-        if (list.size()!=0){
-            return list;
-        }else {
-            throw new PeopleException("查询失败");
-        }
-    }
-
-    @Override
-    public List<Goods> findByID(long id) {
-        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andIsstartEqualTo((byte)1);
         goodsCriteria.createCriteria().andTypeidEqualTo(id);
-        return goodsMapper.selectByExample(goodsCriteria);
+        List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
+          long total=countInType(id);
+        int pages,sise;
+        if (total%cuurrentPage==0){
+            pages= (int) (total/cuurrentPage);
+        }else {
+            pages= (int) (total/cuurrentPage)+1;
+        }
+        if (pages*pagesize==total){
+            sise=cuurrentPage*pagesize;
+        }else {
+            if (cuurrentPage<pages){
+                sise=cuurrentPage*pagesize;
+            }else {
+                sise= (int) total;
+            }
+        }
+        PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagesize,pages,sise,list);
+
+        return goodslist;
     }
 
     @Override
@@ -118,6 +85,15 @@ public class GoodsServiceImpl implements GoodsService {
     public long countInStore(long storeId) {
         GoodsCriteria goodsCriteria=new GoodsCriteria();
         goodsCriteria.createCriteria().andStoreidEqualTo(storeId);
+        return goodsMapper.countByExample(goodsCriteria);
+    }
+
+    @Override
+    public long countInType(long typeID) {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andTypeidEqualTo(typeID);
+        goodsCriteria.createCriteria().andIsstartEqualTo((byte) 1);
+
         return goodsMapper.countByExample(goodsCriteria);
     }
 
@@ -147,6 +123,31 @@ public class GoodsServiceImpl implements GoodsService {
            PageBean<Goods> lists=new PageBean<Goods>(total,cuurrentPage,pagesize,pages,sise,list);
            return lists;
 
+    }
+
+    @Override
+    public PageBean<Goods> goodsAll(int cuurrentPage, int pagessize) {
+        PageHelper.startPage(cuurrentPage,pagessize);
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
+        long total=countGoods();
+        int pages,sise;
+        if (total%cuurrentPage==0){
+            pages= (int) (total/cuurrentPage);
+        }else {
+            pages= (int) (total/cuurrentPage)+1;
+        }
+        if (pages*pagessize==total){
+            sise=cuurrentPage*pagessize;
+        }else {
+            if (cuurrentPage<pages){
+                sise=cuurrentPage*pagessize;
+            }else {
+                sise= (int) total;
+            }
+        }
+        PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagessize,pages,sise,list);
+        return goodslist;
     }
 
 

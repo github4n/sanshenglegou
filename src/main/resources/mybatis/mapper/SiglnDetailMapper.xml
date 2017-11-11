@@ -102,19 +102,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.SiglnDetail">
-    insert into t_siglnDetail (id, signID, userID, 
-      expencePiont, tradePoint, dataCreate
-      )
-    values (#{id,jdbcType=BIGINT}, #{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
-      #{expencepiont,jdbcType=INTEGER}, #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP}
-      )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_siglnDetail (signID, userID, expencePiont, 
+      tradePoint, dataCreate)
+    values (#{signid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{expencepiont,jdbcType=INTEGER}, 
+      #{tradepoint,jdbcType=INTEGER}, #{datacreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.SiglnDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_siglnDetail
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="signid != null">
         signID,
       </if>
@@ -132,9 +133,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="signid != null">
         #{signid,jdbcType=BIGINT},
       </if>

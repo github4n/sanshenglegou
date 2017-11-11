@@ -100,17 +100,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.Collect">
-    insert into t_collect (id, userID, goodsID, 
-      createTime)
-    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, 
-      #{createtime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_collect (userID, goodsID, createTime
+      )
+    values (#{userid,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Collect">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_collect
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="userid != null">
         userID,
       </if>
@@ -122,9 +125,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userid != null">
         #{userid,jdbcType=BIGINT},
       </if>

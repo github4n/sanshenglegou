@@ -101,17 +101,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.Sign">
-    insert into t_sign (id, userID, expersum, 
-      monthSignCount, lastSiglns)
-    values (#{id,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{expersum,jdbcType=BIGINT}, 
-      #{monthsigncount,jdbcType=INTEGER}, #{lastsiglns,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_sign (userID, expersum, monthSignCount, 
+      lastSiglns)
+    values (#{userid,jdbcType=BIGINT}, #{expersum,jdbcType=BIGINT}, #{monthsigncount,jdbcType=INTEGER}, 
+      #{lastsiglns,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Sign">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_sign
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="userid != null">
         userID,
       </if>
@@ -126,9 +129,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="userid != null">
         #{userid,jdbcType=BIGINT},
       </if>

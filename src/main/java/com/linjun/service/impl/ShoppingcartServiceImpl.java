@@ -58,7 +58,7 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
     public ShoppingCart addCart(ShoppingCart shoppingCart) {
         int result=shoppingCartMapper.insertSelective(shoppingCart);
         if (result>0){
-            return  shoppingCart;
+            return  shoppingCartMapper.selectByPrimaryKey((long) result);
         }else {
             throw new PeopleException("加入购物车失败");
         }

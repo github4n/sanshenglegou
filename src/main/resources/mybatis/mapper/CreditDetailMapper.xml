@@ -101,17 +101,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.CreditDetail">
-    insert into t_creditDetail (id, creditID, userID, 
-      addCredit, consumCredit)
-    values (#{id,jdbcType=BIGINT}, #{creditid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
-      #{addcredit,jdbcType=BIGINT}, #{consumcredit,jdbcType=BIGINT})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_creditDetail (creditID, userID, addCredit, 
+      consumCredit)
+    values (#{creditid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{addcredit,jdbcType=BIGINT}, 
+      #{consumcredit,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.CreditDetail">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_creditDetail
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="creditid != null">
         creditID,
       </if>
@@ -126,9 +129,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="creditid != null">
         #{creditid,jdbcType=BIGINT},
       </if>

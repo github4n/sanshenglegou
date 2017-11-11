@@ -9,5 +9,5 @@ public interface OrderDetailService {
     public  int deletebyid(long orderid);
     public  int updateByid(long orderid,OrderDetail orderDetail);
     public List<OrderDetail> findByid(long orderid);
-
+    OrderDetail updateOrderDetail(OrderDetail orderDetail);
 }

@@ -10,5 +10,6 @@ public interface ArticleService {
     public  int updateByuserid(long id,Article article);
     public List<Article> findAll();
       Article update(Article article);
+      Article addArticle(Article article);
 
 }

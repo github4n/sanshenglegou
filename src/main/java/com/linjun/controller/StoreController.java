@@ -2,17 +2,30 @@ package com.linjun.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
+import com.linjun.config.QiNiuconfig;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
 import com.linjun.pojo.GoodsList;
 import com.linjun.pojo.OrderList;
 import com.linjun.service.*;
+import com.qiniu.common.QiniuException;
+import com.qiniu.common.Zone;
+import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
+import com.qiniu.storage.UploadManager;
+import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import springfox.documentation.spring.web.json.Json;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping(value = "/store")
 @RestController
@@ -170,15 +183,131 @@ public class StoreController {
 //上架商品
     @PostMapping(value = "/addGoods")
     public JsonResult addGoods(
-            @RequestBody Goods goods
-            ){
-          try{
-              Goods goods1=goodsService.addGoods(goods);
-              return new JsonResult("200",goods1);
-          }catch (Exception e){
-              return  new JsonResult("500",e.getMessage());
-          }
+            @RequestParam(value = "goodsName") String goodsName,
+            @RequestParam(value = "TypeID") long TypeID,
+            @RequestParam(value = "goodsSum") long goodsSum,
+            @RequestParam(value = "marketPrive") float marketPrive,
+            @RequestParam(value = "memberPrive") float memberPrive,
+            @RequestParam(value = "storeID") long storeID,
+            @RequestParam(value = "soldamount") long soldamount,
+            @RequestParam(value = "iamges") MultipartFile files[]
+            ) {
+          Goods goods=new Goods();
+          goods.setGoodsname(goodsName);
+          goods.setTypeid(TypeID);
+          goods.setCreatetime(new Date());
+          goods.setGoodssum(goodsSum);
+          goods.setMarketprive(marketPrive);
+          goods.setMemberprice(memberPrive);
+          goods.setStoreid(storeID);
+          goods.setSoldamount(soldamount);
+          goods.setShop(storeService.findByid(storeID).getStorename());
+            Goods good= goodsService.addGoods(goods);
+            if (files.length==0){
+                return  new JsonResult("404","图片为空");
+            }
+            String filePath="/Users/linjun/deaProjects/image/";
+        for (int i = 0; i < files.length; i++) {
+            String fileName=files[i].getOriginalFilename();
+            String stuffxName=fileName.substring(fileName.lastIndexOf("."));
+            fileName= UUID.randomUUID()+stuffxName;
+            fileName=System.currentTimeMillis()+fileName;
+            File dest=new File(filePath+fileName);
+            if (!dest.getParentFile().exists()){
+                dest.getParentFile().mkdirs();
+            }
+            Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
+            UploadManager uploadManager=new UploadManager(new Configuration(Zone.zone0()));
+            String uptakon=auth.uploadToken(QiNiuconfig.bucket);
+            try {
+                Response response=uploadManager.put(dest,fileName,uptakon);
+                GoodsImage goodsImage=new GoodsImage();
+                goodsImage.setGoodsid(good.getId());
+                goodsImage.setCreatetime(new Date());
+                goodsImage.setIamgeaddress(fileName);
+                if (i==0){
+                    goodsImage.setIskeyiamge((byte) 1);
+                }else {
+                    goodsImage.setIskeyiamge((byte) 0);
+                }
+                 goodsImageService.add(goodsImage);
+                files[i].transferTo(dest);
+            } catch (QiniuException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+   return new JsonResult("200","成功");
     }
+
+//    更新商品
+//上架商品
+@PostMapping(value = "/updateGoods")
+public JsonResult addGoods(
+        @RequestParam(value ="id") long id,
+        @RequestParam(value = "goodsName") String goodsName,
+        @RequestParam(value = "TypeID") long TypeID,
+        @RequestParam(value = "goodsSum") long goodsSum,
+        @RequestParam(value = "marketPrive") float marketPrive,
+        @RequestParam(value = "memberPrive") float memberPrive,
+        @RequestParam(value = "storeID") long storeID,
+        @RequestParam(value = "soldamount") long soldamount,
+        @RequestParam(value = "iamges") MultipartFile files[]
+) {
+    Goods goods=new Goods();
+    goods.setId(id);
+    goods.setGoodsname(goodsName);
+    goods.setTypeid(TypeID);
+    goods.setCreatetime(new Date());
+    goods.setGoodssum(goodsSum);
+    goods.setMarketprive(marketPrive);
+    goods.setMemberprice(memberPrive);
+    goods.setStoreid(storeID);
+    goods.setSoldamount(soldamount);
+    goods.setShop(storeService.findByid(storeID).getStorename());
+    Goods good= goodsService.addGoods(goods);
+    if (files.length==0){
+        return  new JsonResult("404","图片为空");
+    }
+    String filePath="/Users/linjun/deaProjects/image/";
+    for (int i = 0; i < files.length; i++) {
+        String fileName=files[i].getOriginalFilename();
+        String stuffxName=fileName.substring(fileName.lastIndexOf("."));
+        fileName= UUID.randomUUID()+stuffxName;
+        fileName=System.currentTimeMillis()+fileName;
+        File dest=new File(filePath+fileName);
+        if (!dest.getParentFile().exists()){
+            dest.getParentFile().mkdirs();
+        }
+        Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
+        UploadManager uploadManager=new UploadManager(new Configuration(Zone.zone0()));
+        String uptakon=auth.uploadToken(QiNiuconfig.bucket);
+        try {
+            Response response=uploadManager.put(dest,fileName,uptakon);
+            GoodsImage goodsImage=new GoodsImage();
+            goodsImage.setGoodsid(good.getId());
+            goodsImage.setCreatetime(new Date());
+            goodsImage.setIamgeaddress(fileName);
+            if (i==0){
+                goodsImage.setIskeyiamge((byte) 1);
+            }else {
+                goodsImage.setIskeyiamge((byte) 0);
+            }
+            goodsImageService.add(goodsImage);
+            files[i].transferTo(dest);
+        } catch (QiniuException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    return new JsonResult("200","成功");
+}
+
+
+
+
 //店铺的商品
     @GetMapping(value = "/getGoods")
     public  JsonResult getGoods(
@@ -191,7 +320,7 @@ public class StoreController {
                GoodsList storedata=new GoodsList();
                storedata.setId(data.getId());
                storedata.setGoodsName(data.getGoodsname());
-               storedata.setImageAddress(goodsImageService.findMainImage(data.getId()).getIamgeaddress());
+               storedata.setImageAddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(data.getId()).getIamgeaddress());
                storedata.setIsstart(data.getIsstart());
                storedata.setMarketPrice(data.getMarketprive());
                storedata.setMemberPrice(data.getMemberprice());
@@ -200,8 +329,6 @@ public class StoreController {
                goodsLists.add(storedata);
            }
            PageBean<GoodsList> goodslists=new PageBean<GoodsList>(goodslist.getTotal(),goodslist.getPageNum(),goodslist.getPageSize(),goodslist.getPages(),goodslist.getSize(),goodsLists);
-
-
            return  new JsonResult("200",goodslists);
        }catch (Exception e){
            return  new JsonResult("500",e.getMessage());
@@ -232,7 +359,36 @@ public class StoreController {
          }
 
      }
-
+//     订单状态更新
+    @PostMapping(value = "/upDataOrder")
+   public  JsonResult updataOrder(
+         @RequestBody Order order
+    ){
+               try{
+                   Order order1=orderService.updateOrder(order);
+                   if (order.getIspay()==1){
+                       OrderDetail orderDetail=new OrderDetail();
+                       orderDetail.setOrderid(order.getId());
+                       orderDetail.setOrderstate("待发货");
+                       orderDetailService.add(orderDetail);
+                   }
+                   return new JsonResult("200",order1);
+               }catch (Exception e){
+                   return  new JsonResult("500",e.getMessage());
+               }
+    }
+//   更新物流
+      @PutMapping(value = "/updateOrderDetail")
+    public  JsonResult updateOrderDetail(
+            @RequestBody OrderDetail orderDetail
+      ){
+             try{
+                 OrderDetail orderDetail1=orderDetailService.updateOrderDetail(orderDetail);
+              return    new JsonResult("200",orderDetail1);
+             }catch (Exception e){
+              return    new JsonResult("500",e.getMessage());
+             }
+      }
 
 
 

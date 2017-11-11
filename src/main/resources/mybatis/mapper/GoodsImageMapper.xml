@@ -101,17 +101,20 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.GoodsImage">
-    insert into t_goodsImage (id, goodsID, IamgeAddress, 
-      isKeyIamge, createTime)
-    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, 
-      #{iskeyiamge,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_goodsImage (goodsID, IamgeAddress, isKeyIamge, 
+      createTime)
+    values (#{goodsid,jdbcType=BIGINT}, #{iamgeaddress,jdbcType=VARCHAR}, #{iskeyiamge,jdbcType=TINYINT}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.GoodsImage">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_goodsImage
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="goodsid != null">
         goodsID,
       </if>
@@ -126,9 +129,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="goodsid != null">
         #{goodsid,jdbcType=BIGINT},
       </if>

@@ -104,19 +104,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.linjun.model.ShoppingCart">
-    insert into t_shoppingcart (id, goodsID, storeID, 
-      userID, storeName, goodsName, 
-      memberPrice, number)
-    values (#{id,jdbcType=BIGINT}, #{goodsid,jdbcType=BIGINT}, #{storeid,jdbcType=BIGINT}, 
-      #{userid,jdbcType=BIGINT}, #{storename,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, 
-      #{memberprice,jdbcType=REAL}, #{number,jdbcType=BIGINT})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_shoppingcart (goodsID, storeID, userID, 
+      storeName, goodsName, memberPrice, 
+      number)
+    values (#{goodsid,jdbcType=BIGINT}, #{storeid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{storename,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, #{memberprice,jdbcType=REAL}, 
+      #{number,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.ShoppingCart">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into t_shoppingcart
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="goodsid != null">
         goodsID,
       </if>
@@ -140,9 +143,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
       <if test="goodsid != null">
         #{goodsid,jdbcType=BIGINT},
       </if>

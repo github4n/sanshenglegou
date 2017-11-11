@@ -14,8 +14,8 @@ public class textmain {
     public  static  String bucket="sansheng";
 
    public  static void main(String[] args) {
-          String key="pthots.jpg";
-       String filepath="/Users/linjun/Desktop/16127695217AA170BAFDAFF7045B9D17BB00031DFC.jpg";
+          String key="pthosdsts.jpg";
+       String filepath="/Users/linjun/Desktop/9BA2B3A5B4BFD9821D6FC01BEEEBB999.jpg";
        Auth auth=Auth.create(accessKey,secretKey);
          UploadManager uploadManager=new UploadManager(new com.qiniu.storage.Configuration(Zone.zone0()));
        String uptakon=auth.uploadToken(bucket);

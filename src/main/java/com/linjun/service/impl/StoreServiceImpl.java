@@ -66,7 +66,7 @@ public class StoreServiceImpl implements StoreService {
 
             int result=storeMapper.insertSelective(store);
             if (result>0){
-                return store;
+                return storeMapper.selectByPrimaryKey((long) result);
             }else {
                 throw new PeopleException("店铺注册失败");
             }
