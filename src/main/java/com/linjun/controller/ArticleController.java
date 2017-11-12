@@ -94,7 +94,6 @@ public class ArticleController {
       }
       try {
           file.transferTo(dest);
-
 //          FileUtil.uploadFile(file.getBytes(),filePath,fileName);
           return new JsonResult("200",yi);
       } catch (Exception e) {

@@ -15,43 +15,6 @@ import java.util.List;
 public class GoodsController {
     @Autowired
     GoodsService goodsService;
-    @GetMapping(value = "/mainStore")
-    public JsonResult mainStore(){
-        try{
-         List<Goods> list= goodsService.mainstore();
-         return new JsonResult("200",list);
-        }catch (Exception e){
-            return  new JsonResult("500",e.getMessage());
-        }
 
-    }
-    @GetMapping(value = "/yiwu")
-    public JsonResult yiwu(){
-       try{
-         List<Goods> list=goodsService.yiwu();
-         return  new JsonResult("200",list);
-       }catch (Exception e){
-           return  new JsonResult("500",e.getMessage());
-       }
-    }
-    @GetMapping(value = "/composite")
-    public  JsonResult composite(){
-        try{
-            List<Goods> list=goodsService.composite();
-           return new JsonResult("200",list);
-        }catch (Exception e){
-            return  new JsonResult("500",e.getMessage());
-        }
-
-    }
-    @GetMapping(value = "/villages")
-    public JsonResult villages(){
-        try{
-        List<Goods> list=goodsService.Villages();
-        return  new JsonResult("200",list);
-        }catch (Exception e){
-         return new JsonResult("500",e.getMessage())   ;
-        }
-    }
 
 }

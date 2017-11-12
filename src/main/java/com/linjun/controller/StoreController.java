@@ -27,6 +27,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import static com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT.value;
+
 @RequestMapping(value = "/store")
 @RestController
 public class StoreController {
@@ -91,16 +93,17 @@ public class StoreController {
 
     }
 //    通过手机号码登入店铺
-    @PostMapping(value = "/loginByPhone")
+    @GetMapping(value = "/loginByPhone")
     public JsonResult loginByPhone(
-            @RequestBody String phone,
-            @RequestBody String passworld
+            @RequestParam(value = "phone") String phone,
+            @RequestParam(value = "passworld")String passworld
     ){
       try{
           Store store=new Store();
           store.setTel(phone);
           store.setPassworld(passworld);
           Store store1=storeService.loginByPhone(store);
+          System.out.println(store1.getStorename());
           return new JsonResult("200",store1);
 
       }catch (Exception e){
@@ -152,11 +155,13 @@ public class StoreController {
    @GetMapping(value = "/queryOrder")
     public  JsonResult queryOrder(
       @RequestParam(value = "storeID",required = false)long storeID,
-      @RequestParam(value = "page",required = false)int page
+      @RequestParam(value = "page",required = false)int page,
+      @RequestParam(value = "pagesize",required = false)int pagesize
+
    ){
                 try{
 
-                    PageBean<Order> orderList=orderService.findAllOStore(storeID,page,10);
+                    PageBean<Order> orderList=orderService.findAllOStore(storeID,page,pagesize);
                     List<OrderList> lists=new ArrayList<OrderList>();
                     for (Order list:orderList.getList()) {
                         OrderList orderList1=new OrderList();
@@ -312,8 +317,10 @@ public JsonResult addGoods(
     @GetMapping(value = "/getGoods")
     public  JsonResult getGoods(
             @RequestParam(value = "storeID",required = false)long storeID,
-            @RequestParam(value = "page",required = false)int page){
-                PageBean<Goods>  goodslist=goodsService.findBySID(storeID,page,10);
+            @RequestParam(value = "page",required = false)int page,
+            @RequestParam(value = "pagesize",required = false)int pagesize
+    ){
+                PageBean<Goods>  goodslist=goodsService.findBySID(storeID,page,pagesize);
              List<GoodsList> goodsLists=new ArrayList<GoodsList>();
        try {
            for (Goods data : goodslist.getList()) {
