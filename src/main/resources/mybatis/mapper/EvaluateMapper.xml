@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.EvaluateMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.Evaluate">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
     <result column="userID" jdbcType="BIGINT" property="userid" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -83,16 +83,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_evaluate
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_evaluate
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.EvaluateCriteria">
     delete from t_evaluate
     <if test="_parameter != null">
@@ -171,27 +161,5 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Evaluate">
-    update t_evaluate
-    <set>
-      <if test="goodsid != null">
-        goodsID = #{goodsid,jdbcType=BIGINT},
-      </if>
-      <if test="userid != null">
-        userID = #{userid,jdbcType=BIGINT},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Evaluate">
-    update t_evaluate
-    set goodsID = #{goodsid,jdbcType=BIGINT},
-      userID = #{userid,jdbcType=BIGINT},
-      content = #{content,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

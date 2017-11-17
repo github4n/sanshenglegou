@@ -47,12 +47,7 @@ AddressMongerService addressMongerService;
   try {
    User user = new User();
    user.setUsername(username);
-   user.setCreatetime(new Date());
-   user.setPassworld(password);
-   user.setLogin(new Date());
-   user.setIp(ip);
-   user.setTel(tel);
-   user.setToken(token);
+
    userService.add(user);
 
 
@@ -107,11 +102,7 @@ private  int rands(){
  ){
       try{
           User user=new User();
-          user.setPassworld(password);
-          user.setTel(tel);
-          user.setUsername(randommuber());
-          user.setLogin(new Date());
-          user.setCreatetime(new Date());
+
           userService.registerByPhone(user);
           return new JsonResult("200",user);
       }catch (Exception e){
@@ -126,12 +117,9 @@ private  int rands(){
             @RequestParam(value = "tel",required = false)String tel,
             @RequestParam(value = "password",required = false)String password
     ){
-        User user=new User();
-        user.setTel(tel);
-        user.setPassworld(password);
+
         try{
-            User user1=userService.loginByPhone(user);
-            return  new JsonResult("200",user1);
+            return  new JsonResult("200","");
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());
         }
@@ -147,7 +135,6 @@ private  int rands(){
            @RequestParam(value = "password",required = false)String password){
            User user=new User();
            user.setUsername(username);
-           user.setPassworld(password);
            try{
                User usesr=  userService.loginByUsername(user);
                return  new JsonResult("200",usesr);
@@ -236,7 +223,6 @@ private  int rands(){
           order.setUserid(userid);
           order.setGoodsum(goodsum);
           order.setIspay((byte) 0);
-          order.setIsreceive((byte) 0);
           order.setGoodsname(goods.getGoodsname());
           order.setGoodsid(goodsid);
           order.setMarketpricce(goods.getMarketprive());
@@ -244,7 +230,7 @@ private  int rands(){
           order.setOrdercode((long) rands());
           order.setStoreid(goods.getStoreid());
           order.setSendtime(new Date());
-        AddressManger addressManger=addressMongerService.findByUserid(userid);
+        AddressManger addressManger=addressMongerService.findByUseridDefault(userid);
           order.setAddressid(addressManger.getId());
           Order order1=orderService.createOrder(order);
           OrderDetail orderDetail=new OrderDetail();

@@ -10,21 +10,13 @@ public interface ShoppingCartMapper {
 
     int deleteByExample(ShoppingCartCriteria example);
 
-    int deleteByPrimaryKey(Long id);
-
     int insert(ShoppingCart record);
 
     int insertSelective(ShoppingCart record);
 
     List<ShoppingCart> selectByExample(ShoppingCartCriteria example);
 
-    ShoppingCart selectByPrimaryKey(Long id);
-
     int updateByExampleSelective(@Param("record") ShoppingCart record, @Param("example") ShoppingCartCriteria example);
 
     int updateByExample(@Param("record") ShoppingCart record, @Param("example") ShoppingCartCriteria example);
-
-    int updateByPrimaryKeySelective(ShoppingCart record);
-
-    int updateByPrimaryKey(ShoppingCart record);
 }

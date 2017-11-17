@@ -11,5 +11,6 @@ public interface ArticleService {
     public List<Article> findAll();
       Article update(Article article);
       Article addArticle(Article article);
+      Article findByID(long id);
 
 }

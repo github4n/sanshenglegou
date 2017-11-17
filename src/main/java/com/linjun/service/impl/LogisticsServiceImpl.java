@@ -31,4 +31,10 @@ public class LogisticsServiceImpl implements LogisticsService {
         criteria.andOrderidEqualTo(goods);
         return logisticsMapper.deleteByExample(logisticsCriteria);
     }
+
+    @Override
+    public Logistics built(Logistics logistics) {
+
+        return logisticsMapper.selectByPrimaryKey((long) logisticsMapper.insertSelective(logistics));
+    }
 }

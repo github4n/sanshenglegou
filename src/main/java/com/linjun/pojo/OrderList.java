@@ -6,13 +6,32 @@ public class OrderList {
   private   Long id;
   private  Long orderCode;
   private  String storename;
-  private Date sendtime;
+  private String sendtime;
   private  String people;
   private String tel;
   private  Float price;
   private  Integer  amount;
   private Float pricesum;
   private Byte ispay;
+  private String goodsName;
+
+  public Float getMoney() {
+    return money;
+  }
+
+  public void setMoney(Float money) {
+    this.money = money;
+  }
+
+  private  Float money;
+
+  public String getGoodsName() {
+    return goodsName;
+  }
+
+  public void setGoodsName(String goodsName) {
+    this.goodsName = goodsName;
+  }
 
   public Long getId() {
     return id;
@@ -38,11 +57,11 @@ public class OrderList {
     this.storename = storename;
   }
 
-  public Date getSendtime() {
+  public String getSendtime() {
     return sendtime;
   }
 
-  public void setSendtime(Date sendtime) {
+  public void setSendtime(String sendtime) {
     this.sendtime = sendtime;
   }
 

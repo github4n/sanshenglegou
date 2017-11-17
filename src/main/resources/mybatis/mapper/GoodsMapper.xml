@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.GoodsMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.Goods">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="goodsName" jdbcType="VARCHAR" property="goodsname" />
     <result column="TypeID" jdbcType="BIGINT" property="typeid" />
     <result column="goodsSum" jdbcType="BIGINT" property="goodssum" />
@@ -92,16 +92,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_goods
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_goods
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.GoodsCriteria">
     delete from t_goods
     <if test="_parameter != null">
@@ -264,59 +254,5 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Goods">
-    update t_goods
-    <set>
-      <if test="goodsname != null">
-        goodsName = #{goodsname,jdbcType=VARCHAR},
-      </if>
-      <if test="typeid != null">
-        TypeID = #{typeid,jdbcType=BIGINT},
-      </if>
-      <if test="goodssum != null">
-        goodsSum = #{goodssum,jdbcType=BIGINT},
-      </if>
-      <if test="marketprive != null">
-        marketPrive = #{marketprive,jdbcType=REAL},
-      </if>
-      <if test="memberprice != null">
-        memberPrice = #{memberprice,jdbcType=REAL},
-      </if>
-      <if test="sendcredit != null">
-        sendCredit = #{sendcredit,jdbcType=INTEGER},
-      </if>
-      <if test="storeid != null">
-        storeID = #{storeid,jdbcType=BIGINT},
-      </if>
-      <if test="shop != null">
-        shop = #{shop,jdbcType=VARCHAR},
-      </if>
-      <if test="soldamount != null">
-        soldamount = #{soldamount,jdbcType=BIGINT},
-      </if>
-      <if test="isstart != null">
-        isstart = #{isstart,jdbcType=TINYINT},
-      </if>
-      <if test="createtime != null">
-        createTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Goods">
-    update t_goods
-    set goodsName = #{goodsname,jdbcType=VARCHAR},
-      TypeID = #{typeid,jdbcType=BIGINT},
-      goodsSum = #{goodssum,jdbcType=BIGINT},
-      marketPrive = #{marketprive,jdbcType=REAL},
-      memberPrice = #{memberprice,jdbcType=REAL},
-      sendCredit = #{sendcredit,jdbcType=INTEGER},
-      storeID = #{storeid,jdbcType=BIGINT},
-      shop = #{shop,jdbcType=VARCHAR},
-      soldamount = #{soldamount,jdbcType=BIGINT},
-      isstart = #{isstart,jdbcType=TINYINT},
-      createTime = #{createtime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

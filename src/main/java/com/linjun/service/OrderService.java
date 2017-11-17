@@ -14,6 +14,7 @@ public interface OrderService {
     Order createOrder(Order order);
     List<Order> queryOrder(long storid);
     Order findByOrder(long id,long goodsID);
+    Order findByID(long id);
     List<Integer> getTodayOrder(long storeid);
     int[] getWeekDayOrder(long storeid);
     PageBean<Order> findAllOrder(int cuurrentPage,int pagesize);

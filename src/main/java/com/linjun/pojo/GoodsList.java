@@ -1,5 +1,7 @@
 package com.linjun.pojo;
 
+import java.util.Date;
+
 public class GoodsList {
     private  String imageAddress;
     private  long id;
@@ -9,6 +11,25 @@ public class GoodsList {
     private  float memberPrice;
     private  long soldamount;
     private  byte isstart;
+    private  long goodsSum;
+    private  String createTime;
+
+    public long getGoodsSum() {
+        return goodsSum;
+    }
+
+    public void setGoodsSum(long goodsSum) {
+        this.goodsSum = goodsSum;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
     public String getImageAddress() {
         return imageAddress;
     }

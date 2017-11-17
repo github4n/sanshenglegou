@@ -10,4 +10,5 @@ public interface GoodsImageService {
     public  int update(long goodsid,GoodsImage goodsImage);
     public List<GoodsImage> find(long goodsid);
     GoodsImage findMainImage(long goodsid);
+    GoodsImage built(GoodsImage goodsImage);
 }

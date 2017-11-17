@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.LogisticsMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.Logistics">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="orderId" jdbcType="BIGINT" property="orderid" />
     <result column="userID" jdbcType="BIGINT" property="userid" />
     <result column="logisticsName" jdbcType="VARCHAR" property="logisticsname" />
@@ -84,16 +84,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_logistics
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_logistics
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.LogisticsCriteria">
     delete from t_logistics
     <if test="_parameter != null">
@@ -182,31 +172,5 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Logistics">
-    update t_logistics
-    <set>
-      <if test="orderid != null">
-        orderId = #{orderid,jdbcType=BIGINT},
-      </if>
-      <if test="userid != null">
-        userID = #{userid,jdbcType=BIGINT},
-      </if>
-      <if test="logisticsname != null">
-        logisticsName = #{logisticsname,jdbcType=VARCHAR},
-      </if>
-      <if test="logisticsstate != null">
-        logisticsState = #{logisticsstate,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Logistics">
-    update t_logistics
-    set orderId = #{orderid,jdbcType=BIGINT},
-      userID = #{userid,jdbcType=BIGINT},
-      logisticsName = #{logisticsname,jdbcType=VARCHAR},
-      logisticsState = #{logisticsstate,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

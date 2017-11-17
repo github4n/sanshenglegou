@@ -3,7 +3,7 @@ package com.linjun.model;
 import java.util.Date;
 
 public class Advertsing {
-    private Long id;
+    private Integer id;
 
     private String name;
 
@@ -19,11 +19,11 @@ public class Advertsing {
 
     private Date datacreate;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

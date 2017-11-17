@@ -10,21 +10,13 @@ public interface GoodsMapper {
 
     int deleteByExample(GoodsCriteria example);
 
-    int deleteByPrimaryKey(Long id);
-
     int insert(Goods record);
 
     int insertSelective(Goods record);
 
     List<Goods> selectByExample(GoodsCriteria example);
 
-    Goods selectByPrimaryKey(Long id);
-
     int updateByExampleSelective(@Param("record") Goods record, @Param("example") GoodsCriteria example);
 
     int updateByExample(@Param("record") Goods record, @Param("example") GoodsCriteria example);
-
-    int updateByPrimaryKeySelective(Goods record);
-
-    int updateByPrimaryKey(Goods record);
 }

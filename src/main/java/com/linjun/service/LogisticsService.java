@@ -8,4 +8,5 @@ public interface LogisticsService {
     public  boolean add(Logistics logistics);
     public List<Logistics> findBy(long userid,long goods);
     public  int delete(long userid,long goodis);
+    Logistics built(Logistics logistics);
 }

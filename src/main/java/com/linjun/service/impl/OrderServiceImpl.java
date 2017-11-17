@@ -79,8 +79,9 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order findByOrder(long id, long goodsID) {
         OrderCriteria orderCriteria = new OrderCriteria();
-        orderCriteria.createCriteria().andUseridEqualTo(id);
-        orderCriteria.createCriteria().andGoodsidEqualTo(goodsID);
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andUseridEqualTo(id);
+        criteria.andGoodsidEqualTo(goodsID);
         List<Order> list = orderMapper.selectByExample(orderCriteria);
         if (list != null && list.size() == 1) {
             Order order = list.get(0);
@@ -91,10 +92,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Order findByID(long id) {
+        return orderMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public List<Integer> getTodayOrder(long storeid) {
         OrderCriteria orderCriteria = new OrderCriteria();
-        orderCriteria.createCriteria().andStoreidEqualTo(storeid);
-        orderCriteria.createCriteria().andSendtimeEqualTo(new Date());
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andStoreidEqualTo(storeid);
+        criteria.andSendtimeEqualTo(new Date());
         long tadayOrder = orderMapper.countByExample(orderCriteria);
         List<Integer> list = new ArrayList<Integer>();
         list.add((int) tadayOrder);

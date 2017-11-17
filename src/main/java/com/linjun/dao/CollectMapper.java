@@ -10,21 +10,13 @@ public interface CollectMapper {
 
     int deleteByExample(CollectCriteria example);
 
-    int deleteByPrimaryKey(Long id);
-
     int insert(Collect record);
 
     int insertSelective(Collect record);
 
     List<Collect> selectByExample(CollectCriteria example);
 
-    Collect selectByPrimaryKey(Long id);
-
     int updateByExampleSelective(@Param("record") Collect record, @Param("example") CollectCriteria example);
 
     int updateByExample(@Param("record") Collect record, @Param("example") CollectCriteria example);
-
-    int updateByPrimaryKeySelective(Collect record);
-
-    int updateByPrimaryKey(Collect record);
 }

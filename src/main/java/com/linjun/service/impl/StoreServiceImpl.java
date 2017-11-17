@@ -77,8 +77,9 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store loginByName(Store store) {
         StoreCriteria storeCriteria=new StoreCriteria();
-        storeCriteria.createCriteria().andStorenameEqualTo(store.getStorename());
-        storeCriteria.createCriteria().andPassworldEqualTo(store.getPassworld());
+        StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
+        criteria.andStorenameEqualTo(store.getStorename());
+        criteria.andPassworldEqualTo(store.getPassworld());
         List<Store> storeList=storeMapper.selectByExample(storeCriteria);
         if (storeList.size()==0){
             throw new PeopleException("店铺不存在");
@@ -105,8 +106,9 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store loginByPhone(Store store) {
         StoreCriteria storeCriteria=new StoreCriteria();
-        storeCriteria.createCriteria().andTelEqualTo(store.getTel());
-        storeCriteria.createCriteria().andPassworldEqualTo(store.getPassworld());
+        StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
+        criteria.andTelEqualTo(store.getTel());
+        criteria.andPassworldEqualTo(store.getPassworld());
           List<Store> storeList=storeMapper.selectByExample(storeCriteria);
           if (storeList!=null&&storeList.size()<2){
               return storeList.get(0);

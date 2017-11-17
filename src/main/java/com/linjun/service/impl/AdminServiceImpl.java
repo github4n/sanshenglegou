@@ -1,11 +1,14 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.AdminMapper;
 import com.linjun.model.Admin;
 import com.linjun.model.AdminCriteria;
 import com.linjun.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -28,5 +31,20 @@ public class AdminServiceImpl implements AdminService {
         }else {
             return  false;
         }
+    }
+
+    @Override
+    public Admin login(Admin admin) {
+       AdminCriteria adminCriteria=new AdminCriteria();
+        AdminCriteria.Criteria criteria=adminCriteria.createCriteria();
+        criteria.andAccountEqualTo(admin.getAccount());
+        criteria.andPassworldEqualTo(admin.getPassworld());
+        List<Admin> result=adminMapper.selectByExample(adminCriteria);
+        if (result!=null&&result.size()<2){
+            return result.get(0);
+        }else {
+         throw new PeopleException("密码错误");
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 package com.linjun.model;
 
 public class AdvertsingPosing {
-    private Long id;
+    private Integer id;
 
     private String description;
 
@@ -9,11 +9,11 @@ public class AdvertsingPosing {
 
     private String isenable;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -10,21 +10,13 @@ public interface RecommendMapper {
 
     int deleteByExample(RecommendCriteria example);
 
-    int deleteByPrimaryKey(Long id);
-
     int insert(Recommend record);
 
     int insertSelective(Recommend record);
 
     List<Recommend> selectByExample(RecommendCriteria example);
 
-    Recommend selectByPrimaryKey(Long id);
-
     int updateByExampleSelective(@Param("record") Recommend record, @Param("example") RecommendCriteria example);
 
     int updateByExample(@Param("record") Recommend record, @Param("example") RecommendCriteria example);
-
-    int updateByPrimaryKeySelective(Recommend record);
-
-    int updateByPrimaryKey(Recommend record);
 }

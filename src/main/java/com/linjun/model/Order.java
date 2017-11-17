@@ -31,7 +31,9 @@ public class Order {
 
     private Date paytime;
 
-    private Byte isreceive;
+    private String message;
+
+    private Long logisticscode;
 
     private Byte ispay;
 
@@ -147,12 +149,20 @@ public class Order {
         this.paytime = paytime;
     }
 
-    public Byte getIsreceive() {
-        return isreceive;
+    public String getMessage() {
+        return message;
     }
 
-    public void setIsreceive(Byte isreceive) {
-        this.isreceive = isreceive;
+    public void setMessage(String message) {
+        this.message = message == null ? null : message.trim();
+    }
+
+    public Long getLogisticscode() {
+        return logisticscode;
+    }
+
+    public void setLogisticscode(Long logisticscode) {
+        this.logisticscode = logisticscode;
     }
 
     public Byte getIspay() {

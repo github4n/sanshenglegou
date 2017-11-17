@@ -17,4 +17,6 @@ public interface GoodsService {
     PageBean<Goods> findBySID(long storeId,int cuurrentPage,int pagesize);
 //    所有的商品
     PageBean<Goods>  goodsAll(int cuurrentPage,int pagessize);
+    Goods updateGoods(Goods goods);
+
 }

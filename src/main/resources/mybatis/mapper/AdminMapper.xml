@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.AdminMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.Admin">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="passworld" jdbcType="VARCHAR" property="passworld" />
     <result column="grade" jdbcType="TINYINT" property="grade" />
@@ -84,16 +84,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_admin
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_admin
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.AdminCriteria">
     delete from t_admin
     <if test="_parameter != null">
@@ -183,30 +173,211 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Admin">
+  <resultMap id="BaseResultMap" type="com.linjun.model.Admin">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="buildTime" jdbcType="TIMESTAMP" property="buildtime" />
+    <result column="signinTime" jdbcType="TIMESTAMP" property="signintime" />
+    <result column="signoutTime" jdbcType="TIMESTAMP" property="signouttime" />
+    <result column="sigTime" jdbcType="TIMESTAMP" property="sigtime" />
+    <result column="adminaccount" jdbcType="VARCHAR" property="adminaccount" />
+    <result column="adminPassword" jdbcType="VARCHAR" property="adminpassword" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, ip, buildTime, signinTime, signoutTime, sigTime, adminaccount, adminPassword
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.AdminCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_admin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.linjun.model.AdminCriteria">
+    delete from t_admin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.Admin">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_admin (ip, buildTime, signinTime, 
+      signoutTime, sigTime, adminaccount, 
+      adminPassword)
+    values (#{ip,jdbcType=VARCHAR}, #{buildtime,jdbcType=TIMESTAMP}, #{signintime,jdbcType=TIMESTAMP}, 
+      #{signouttime,jdbcType=TIMESTAMP}, #{sigtime,jdbcType=TIMESTAMP}, #{adminaccount,jdbcType=VARCHAR}, 
+      #{adminpassword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.Admin">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_admin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="buildtime != null">
+        buildTime,
+      </if>
+      <if test="signintime != null">
+        signinTime,
+      </if>
+      <if test="signouttime != null">
+        signoutTime,
+      </if>
+      <if test="sigtime != null">
+        sigTime,
+      </if>
+      <if test="adminaccount != null">
+        adminaccount,
+      </if>
+      <if test="adminpassword != null">
+        adminPassword,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="buildtime != null">
+        #{buildtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signintime != null">
+        #{signintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signouttime != null">
+        #{signouttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sigtime != null">
+        #{sigtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminaccount != null">
+        #{adminaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="adminpassword != null">
+        #{adminpassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.AdminCriteria" resultType="java.lang.Long">
+    select count(*) from t_admin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
     update t_admin
     <set>
-      <if test="account != null">
-        account = #{account,jdbcType=VARCHAR},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="passworld != null">
-        passworld = #{passworld,jdbcType=VARCHAR},
+      <if test="record.ip != null">
+        ip = #{record.ip,jdbcType=VARCHAR},
       </if>
-      <if test="grade != null">
-        grade = #{grade,jdbcType=TINYINT},
+      <if test="record.buildtime != null">
+        buildTime = #{record.buildtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="jurisdiction != null">
-        jurisdiction = #{jurisdiction,jdbcType=TINYINT},
+      <if test="record.signintime != null">
+        signinTime = #{record.signintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.signouttime != null">
+        signoutTime = #{record.signouttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sigtime != null">
+        sigTime = #{record.sigtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adminaccount != null">
+        adminaccount = #{record.adminaccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adminpassword != null">
+        adminPassword = #{record.adminpassword,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Admin">
+  <update id="updateByExample" parameterType="map">
     update t_admin
-    set account = #{account,jdbcType=VARCHAR},
-      passworld = #{passworld,jdbcType=VARCHAR},
-      grade = #{grade,jdbcType=TINYINT},
-      jurisdiction = #{jurisdiction,jdbcType=TINYINT}
-    where id = #{id,jdbcType=BIGINT}
+    set id = #{record.id,jdbcType=INTEGER},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      buildTime = #{record.buildtime,jdbcType=TIMESTAMP},
+      signinTime = #{record.signintime,jdbcType=TIMESTAMP},
+      signoutTime = #{record.signouttime,jdbcType=TIMESTAMP},
+      sigTime = #{record.sigtime,jdbcType=TIMESTAMP},
+      adminaccount = #{record.adminaccount,jdbcType=VARCHAR},
+      adminPassword = #{record.adminpassword,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
   </update>
 </mapper>

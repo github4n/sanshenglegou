@@ -91,9 +91,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public long countInType(long typeID) {
         GoodsCriteria goodsCriteria=new GoodsCriteria();
-        goodsCriteria.createCriteria().andTypeidEqualTo(typeID);
-        goodsCriteria.createCriteria().andIsstartEqualTo((byte) 1);
-
+        GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
+        criteria.andTypeidEqualTo(typeID);
+        criteria.andIsstartEqualTo((byte) 1);
         return goodsMapper.countByExample(goodsCriteria);
     }
 
@@ -148,6 +148,16 @@ public class GoodsServiceImpl implements GoodsService {
         }
         PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagessize,pages,sise,list);
         return goodslist;
+    }
+
+    @Override
+    public Goods updateGoods(Goods goods) {
+        int result= goodsMapper.updateByPrimaryKeySelective(goods);
+        if (result>0){
+            return goodsMapper.selectByPrimaryKey(goods.getId());
+        }else {
+            throw new PeopleException("更新失败");
+        }
     }
 
 

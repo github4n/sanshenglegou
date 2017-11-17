@@ -44,16 +44,26 @@ public class GoodsImageServiceImpl implements GoodsImageService {
     @Override
     public GoodsImage findMainImage(long goodsid) {
         GoodsImageCriteria goodsImageCriteria=new GoodsImageCriteria();
-        goodsImageCriteria.createCriteria().andGoodsidEqualTo(goodsid);
-        goodsImageCriteria.createCriteria().andIskeyiamgeEqualTo((byte) 1);
+        GoodsImageCriteria.Criteria criteria=goodsImageCriteria.createCriteria();
+        criteria.andGoodsidEqualTo(goodsid);
+        criteria.andIskeyiamgeEqualTo((byte) 1);
         List<GoodsImage> list=goodsImageMapper.selectByExample(goodsImageCriteria);
         if (list!=null&&list.size()==1){
             GoodsImage goodsImage=list.get(0);
            return goodsImage ;
         }else {
-
             throw new PeopleException("主图查询失败");
         }
 
+    }
+
+    @Override
+    public GoodsImage built(GoodsImage goodsImage) {
+        int result=goodsImageMapper.insert(goodsImage);
+        if (result>0){
+            return goodsImageMapper.selectByPrimaryKey((long) result);
+        }else {
+            throw new PeopleException("新建失败");
+        }
     }
 }

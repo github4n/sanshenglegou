@@ -10,8 +10,6 @@ public interface AdvertsinglnPosingMapper {
 
     int deleteByExample(AdvertsinglnPosingCriteria example);
 
-    int deleteByPrimaryKey(@Param("advertsingid") Long advertsingid, @Param("postingid") Long postingid);
-
     int insert(AdvertsinglnPosing record);
 
     int insertSelective(AdvertsinglnPosing record);

@@ -965,63 +965,133 @@ public class OrderCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveIsNull() {
-            addCriterion("isreceive is null");
+        public Criteria andMessageIsNull() {
+            addCriterion("message is null");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveIsNotNull() {
-            addCriterion("isreceive is not null");
+        public Criteria andMessageIsNotNull() {
+            addCriterion("message is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveEqualTo(Byte value) {
-            addCriterion("isreceive =", value, "isreceive");
+        public Criteria andMessageEqualTo(String value) {
+            addCriterion("message =", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveNotEqualTo(Byte value) {
-            addCriterion("isreceive <>", value, "isreceive");
+        public Criteria andMessageNotEqualTo(String value) {
+            addCriterion("message <>", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveGreaterThan(Byte value) {
-            addCriterion("isreceive >", value, "isreceive");
+        public Criteria andMessageGreaterThan(String value) {
+            addCriterion("message >", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveGreaterThanOrEqualTo(Byte value) {
-            addCriterion("isreceive >=", value, "isreceive");
+        public Criteria andMessageGreaterThanOrEqualTo(String value) {
+            addCriterion("message >=", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveLessThan(Byte value) {
-            addCriterion("isreceive <", value, "isreceive");
+        public Criteria andMessageLessThan(String value) {
+            addCriterion("message <", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveLessThanOrEqualTo(Byte value) {
-            addCriterion("isreceive <=", value, "isreceive");
+        public Criteria andMessageLessThanOrEqualTo(String value) {
+            addCriterion("message <=", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveIn(List<Byte> values) {
-            addCriterion("isreceive in", values, "isreceive");
+        public Criteria andMessageLike(String value) {
+            addCriterion("message like", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveNotIn(List<Byte> values) {
-            addCriterion("isreceive not in", values, "isreceive");
+        public Criteria andMessageNotLike(String value) {
+            addCriterion("message not like", value, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveBetween(Byte value1, Byte value2) {
-            addCriterion("isreceive between", value1, value2, "isreceive");
+        public Criteria andMessageIn(List<String> values) {
+            addCriterion("message in", values, "message");
             return (Criteria) this;
         }
 
-        public Criteria andIsreceiveNotBetween(Byte value1, Byte value2) {
-            addCriterion("isreceive not between", value1, value2, "isreceive");
+        public Criteria andMessageNotIn(List<String> values) {
+            addCriterion("message not in", values, "message");
+            return (Criteria) this;
+        }
+
+        public Criteria andMessageBetween(String value1, String value2) {
+            addCriterion("message between", value1, value2, "message");
+            return (Criteria) this;
+        }
+
+        public Criteria andMessageNotBetween(String value1, String value2) {
+            addCriterion("message not between", value1, value2, "message");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeIsNull() {
+            addCriterion("logisticsCode is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeIsNotNull() {
+            addCriterion("logisticsCode is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeEqualTo(Long value) {
+            addCriterion("logisticsCode =", value, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeNotEqualTo(Long value) {
+            addCriterion("logisticsCode <>", value, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeGreaterThan(Long value) {
+            addCriterion("logisticsCode >", value, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeGreaterThanOrEqualTo(Long value) {
+            addCriterion("logisticsCode >=", value, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeLessThan(Long value) {
+            addCriterion("logisticsCode <", value, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeLessThanOrEqualTo(Long value) {
+            addCriterion("logisticsCode <=", value, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeIn(List<Long> values) {
+            addCriterion("logisticsCode in", values, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeNotIn(List<Long> values) {
+            addCriterion("logisticsCode not in", values, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeBetween(Long value1, Long value2) {
+            addCriterion("logisticsCode between", value1, value2, "logisticscode");
+            return (Criteria) this;
+        }
+
+        public Criteria andLogisticscodeNotBetween(Long value1, Long value2) {
+            addCriterion("logisticsCode not between", value1, value2, "logisticscode");
             return (Criteria) this;
         }
 

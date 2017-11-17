@@ -3,11 +3,9 @@ package com.linjun.model;
 import java.util.Date;
 
 public class SiglnDetail {
-    private Long id;
+    private Integer id;
 
-    private Long signid;
-
-    private Long userid;
+    private Integer userid;
 
     private Integer expencepiont;
 
@@ -15,27 +13,19 @@ public class SiglnDetail {
 
     private Date datacreate;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getSignid() {
-        return signid;
-    }
-
-    public void setSignid(Long signid) {
-        this.signid = signid;
-    }
-
-    public Long getUserid() {
+    public Integer getUserid() {
         return userid;
     }
 
-    public void setUserid(Long userid) {
+    public void setUserid(Integer userid) {
         this.userid = userid;
     }
 

@@ -10,21 +10,13 @@ public interface CreditMangerMapper {
 
     int deleteByExample(CreditMangerCriteria example);
 
-    int deleteByPrimaryKey(Long id);
-
     int insert(CreditManger record);
 
     int insertSelective(CreditManger record);
 
     List<CreditManger> selectByExample(CreditMangerCriteria example);
 
-    CreditManger selectByPrimaryKey(Long id);
-
     int updateByExampleSelective(@Param("record") CreditManger record, @Param("example") CreditMangerCriteria example);
 
     int updateByExample(@Param("record") CreditManger record, @Param("example") CreditMangerCriteria example);
-
-    int updateByPrimaryKeySelective(CreditManger record);
-
-    int updateByPrimaryKey(CreditManger record);
 }

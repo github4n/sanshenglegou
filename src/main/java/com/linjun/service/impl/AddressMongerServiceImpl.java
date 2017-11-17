@@ -59,7 +59,7 @@ public class AddressMongerServiceImpl implements AddressMongerService {
     }
 
     @Override
-    public AddressManger findByUserid(long userid) {
+    public AddressManger findByUseridDefault(long userid) {
         AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();
         AddressMangerCriteria.Criteria criteria=addressMangerCriteria.createCriteria();
         criteria.andUseridEqualTo(userid);

@@ -42,8 +42,8 @@ public class ArticleController {
             @RequestBody Article article
     ){
         try{
-             articleService.update(article);
-            return  new JsonResult("200",article);
+           Article article1=  articleService.update(article);
+            return  new JsonResult("200",article1);
         }catch (Exception e){
             return new JsonResult("500",e.getMessage());
         }
@@ -80,27 +80,29 @@ public class ArticleController {
    }
   @PostMapping(value = "/updataimage",produces = "application/json;charset=utf-8")
   @ResponseBody
-    public JsonResult updataimage(@RequestParam(value = "yi") String yi,@RequestParam(value = "file") MultipartFile file){
-       if (file.isEmpty()){
-           return  new JsonResult("404","图片为空");
-       }
-       String fileName=file.getOriginalFilename();
-       String stuffixName=fileName.substring(fileName.lastIndexOf("."));
-       String filePath="/Users/linjun/deaProjects/image/";
-       fileName= UUID.randomUUID()+stuffixName;
-      File dest=new File(filePath+fileName);
-      if (!dest.getParentFile().exists()){
-          dest.getParentFile().mkdirs();
-      }
-      try {
-          file.transferTo(dest);
-//          FileUtil.uploadFile(file.getBytes(),filePath,fileName);
-          return new JsonResult("200",yi);
-      } catch (Exception e) {
+    public JsonResult updataimage(@RequestParam(value = "file") MultipartFile files[]){
 
+      String filePath="/Users/linjun/deaProjects/image/";
+
+//      }
+      for (int i = 0; i < files.length; i++) {
+          String fileName = files[i].getOriginalFilename();
+          String stuffxName = fileName.substring(fileName.lastIndexOf("."));
+          fileName = UUID.randomUUID() + stuffxName;
+          fileName = System.currentTimeMillis() + fileName;
+          File dest = new File(filePath + fileName);
+          if (!dest.getParentFile().exists()) {
+              dest.getParentFile().mkdirs();
+          }
+          try {
+              files[i].transferTo(dest);
+          } catch (IOException e) {
+
+          }
 
       }
-     return new JsonResult("500","dasfsd");
+
+     return new JsonResult("200","dasfsd");
   }
     @RequestMapping("/upload")
     @ResponseBody
@@ -127,7 +129,18 @@ public class ArticleController {
 
         }
     }
+      @GetMapping(value = "/find")
+    public  JsonResult findByID(
+            @RequestParam(value = "id")long id
+      ){
+        try{
+            Article article=articleService.findByID(id);
 
+            return  new JsonResult("200",article);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+      }
 
 
 

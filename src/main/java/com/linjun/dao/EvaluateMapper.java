@@ -10,21 +10,13 @@ public interface EvaluateMapper {
 
     int deleteByExample(EvaluateCriteria example);
 
-    int deleteByPrimaryKey(Long id);
-
     int insert(Evaluate record);
 
     int insertSelective(Evaluate record);
 
     List<Evaluate> selectByExample(EvaluateCriteria example);
 
-    Evaluate selectByPrimaryKey(Long id);
-
     int updateByExampleSelective(@Param("record") Evaluate record, @Param("example") EvaluateCriteria example);
 
     int updateByExample(@Param("record") Evaluate record, @Param("example") EvaluateCriteria example);
-
-    int updateByPrimaryKeySelective(Evaluate record);
-
-    int updateByPrimaryKey(Evaluate record);
 }

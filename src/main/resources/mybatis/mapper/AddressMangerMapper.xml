@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.AddressMangerMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.AddressManger">
-    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="userID" jdbcType="BIGINT" property="userid" />
     <result column="receivePeople" jdbcType="VARCHAR" property="receivepeople" />
     <result column="receiveTel" jdbcType="VARCHAR" property="receivetel" />
@@ -88,16 +88,6 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from t_addressManger
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from t_addressManger
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.AddressMangerCriteria">
     delete from t_addressManger
     <if test="_parameter != null">
@@ -228,47 +218,5 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.AddressManger">
-    update t_addressManger
-    <set>
-      <if test="userid != null">
-        userID = #{userid,jdbcType=BIGINT},
-      </if>
-      <if test="receivepeople != null">
-        receivePeople = #{receivepeople,jdbcType=VARCHAR},
-      </if>
-      <if test="receivetel != null">
-        receiveTel = #{receivetel,jdbcType=VARCHAR},
-      </if>
-      <if test="province != null">
-        province = #{province,jdbcType=VARCHAR},
-      </if>
-      <if test="city != null">
-        city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="county != null">
-        county = #{county,jdbcType=VARCHAR},
-      </if>
-      <if test="addressdetail != null">
-        addressDetail = #{addressdetail,jdbcType=VARCHAR},
-      </if>
-      <if test="isdefault != null">
-        isDefault = #{isdefault,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.linjun.model.AddressManger">
-    update t_addressManger
-    set userID = #{userid,jdbcType=BIGINT},
-      receivePeople = #{receivepeople,jdbcType=VARCHAR},
-      receiveTel = #{receivetel,jdbcType=VARCHAR},
-      province = #{province,jdbcType=VARCHAR},
-      city = #{city,jdbcType=VARCHAR},
-      county = #{county,jdbcType=VARCHAR},
-      addressDetail = #{addressdetail,jdbcType=VARCHAR},
-      isDefault = #{isdefault,jdbcType=TINYINT}
-    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
