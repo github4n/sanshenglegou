@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linjun.dao.StoreApplyMapper">
+  <resultMap id="BaseResultMap" type="com.linjun.model.StoreApply">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="userID" jdbcType="BIGINT" property="userid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="identityImage" jdbcType="VARCHAR" property="identityimage" />
+    <result column="identityImages" jdbcType="VARCHAR" property="identityimages" />
+    <result column="bankacount" jdbcType="VARCHAR" property="bankacount" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="businessImages" jdbcType="VARCHAR" property="businessimages" />
+    <result column="appleTime" jdbcType="TIMESTAMP" property="appletime" />
+    <result column="stutas" jdbcType="TINYINT" property="stutas" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, userID, username, identityImage, identityImages, bankacount, tel, businessImages, 
+    appleTime, stutas
+  </sql>
+  <select id="selectByExample" parameterType="com.linjun.model.StoreApplyCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_storeApply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_storeApply
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_storeApply
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.linjun.model.StoreApplyCriteria">
+    delete from t_storeApply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.linjun.model.StoreApply">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_storeApply (userID, username, identityImage, 
+      identityImages, bankacount, tel, 
+      businessImages, appleTime, stutas
+      )
+    values (#{userid,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{identityimage,jdbcType=VARCHAR}, 
+      #{identityimages,jdbcType=VARCHAR}, #{bankacount,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{businessimages,jdbcType=VARCHAR}, #{appletime,jdbcType=TIMESTAMP}, #{stutas,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.linjun.model.StoreApply">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into t_storeApply
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userID,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="identityimage != null">
+        identityImage,
+      </if>
+      <if test="identityimages != null">
+        identityImages,
+      </if>
+      <if test="bankacount != null">
+        bankacount,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="businessimages != null">
+        businessImages,
+      </if>
+      <if test="appletime != null">
+        appleTime,
+      </if>
+      <if test="stutas != null">
+        stutas,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="identityimage != null">
+        #{identityimage,jdbcType=VARCHAR},
+      </if>
+      <if test="identityimages != null">
+        #{identityimages,jdbcType=VARCHAR},
+      </if>
+      <if test="bankacount != null">
+        #{bankacount,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessimages != null">
+        #{businessimages,jdbcType=VARCHAR},
+      </if>
+      <if test="appletime != null">
+        #{appletime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stutas != null">
+        #{stutas,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.linjun.model.StoreApplyCriteria" resultType="java.lang.Long">
+    select count(*) from t_storeApply
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_storeApply
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userID = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityimage != null">
+        identityImage = #{record.identityimage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityimages != null">
+        identityImages = #{record.identityimages,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankacount != null">
+        bankacount = #{record.bankacount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessimages != null">
+        businessImages = #{record.businessimages,jdbcType=VARCHAR},
+      </if>
+      <if test="record.appletime != null">
+        appleTime = #{record.appletime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stutas != null">
+        stutas = #{record.stutas,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_storeApply
+    set id = #{record.id,jdbcType=BIGINT},
+      userID = #{record.userid,jdbcType=BIGINT},
+      username = #{record.username,jdbcType=VARCHAR},
+      identityImage = #{record.identityimage,jdbcType=VARCHAR},
+      identityImages = #{record.identityimages,jdbcType=VARCHAR},
+      bankacount = #{record.bankacount,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      businessImages = #{record.businessimages,jdbcType=VARCHAR},
+      appleTime = #{record.appletime,jdbcType=TIMESTAMP},
+      stutas = #{record.stutas,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.StoreApply">
+    update t_storeApply
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="identityimage != null">
+        identityImage = #{identityimage,jdbcType=VARCHAR},
+      </if>
+      <if test="identityimages != null">
+        identityImages = #{identityimages,jdbcType=VARCHAR},
+      </if>
+      <if test="bankacount != null">
+        bankacount = #{bankacount,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessimages != null">
+        businessImages = #{businessimages,jdbcType=VARCHAR},
+      </if>
+      <if test="appletime != null">
+        appleTime = #{appletime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stutas != null">
+        stutas = #{stutas,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.StoreApply">
+    update t_storeApply
+    set userID = #{userid,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
+      identityImage = #{identityimage,jdbcType=VARCHAR},
+      identityImages = #{identityimages,jdbcType=VARCHAR},
+      bankacount = #{bankacount,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      businessImages = #{businessimages,jdbcType=VARCHAR},
+      appleTime = #{appletime,jdbcType=TIMESTAMP},
+      stutas = #{stutas,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

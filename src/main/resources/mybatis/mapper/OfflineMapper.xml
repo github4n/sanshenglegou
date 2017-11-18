@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.OfflineMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.Offline">
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="userID" jdbcType="BIGINT" property="userid" />
     <result column="offlinrUserID" jdbcType="BIGINT" property="offlinruserid" />
     <result column="fatherUserID" jdbcType="BIGINT" property="fatheruserid" />
@@ -85,6 +85,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_offLine
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_offLine
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.OfflineCriteria">
     delete from t_offLine
     <if test="_parameter != null">
@@ -183,5 +193,35 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Offline">
+    update t_offLine
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="offlinruserid != null">
+        offlinrUserID = #{offlinruserid,jdbcType=BIGINT},
+      </if>
+      <if test="fatheruserid != null">
+        fatherUserID = #{fatheruserid,jdbcType=BIGINT},
+      </if>
+      <if test="isfather != null">
+        isFather = #{isfather,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Offline">
+    update t_offLine
+    set userID = #{userid,jdbcType=BIGINT},
+      offlinrUserID = #{offlinruserid,jdbcType=BIGINT},
+      fatherUserID = #{fatheruserid,jdbcType=BIGINT},
+      isFather = #{isfather,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

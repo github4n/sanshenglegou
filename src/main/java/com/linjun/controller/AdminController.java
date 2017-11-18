@@ -2,7 +2,6 @@ package com.linjun.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
-import com.linjun.entity.PageBean;
 import com.linjun.model.Admin;
 import com.linjun.model.Order;
 import com.linjun.model.Store;

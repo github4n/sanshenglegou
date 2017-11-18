@@ -1,17 +1,7 @@
 package com.linjun.config;
 
-import com.google.gson.Gson;
-import com.linjun.common.JsonResult;
 import com.linjun.controller.StoreController;
 import com.linjun.model.Goods;
-import com.linjun.model.GoodsImage;
-import com.qiniu.common.QiniuException;
-import com.qiniu.common.Zone;
-import com.qiniu.http.Response;
-import com.qiniu.storage.UploadManager;
-import com.qiniu.storage.model.DefaultPutRet;
-import com.qiniu.util.Auth;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class textmain {
     public static  String accessKey="WNiSKaCk1gu5mt3JtW5cqwhtBMD0pCvitUhzKRwI";

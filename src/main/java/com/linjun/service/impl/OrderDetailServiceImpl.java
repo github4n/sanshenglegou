@@ -2,7 +2,6 @@ package com.linjun.service.impl;
 
 import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.OrderDetailMapper;
-import com.linjun.model.Order;
 import com.linjun.model.OrderDetail;
 import com.linjun.model.OrderDetailCriteria;
 import com.linjun.service.OrderDetailService;

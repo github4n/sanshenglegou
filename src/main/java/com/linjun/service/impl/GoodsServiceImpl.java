@@ -6,8 +6,6 @@ import com.linjun.dao.GoodsMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.Goods;
 import com.linjun.model.GoodsCriteria;
-import com.linjun.model.Order;
-import com.linjun.model.OrderCriteria;
 import com.linjun.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

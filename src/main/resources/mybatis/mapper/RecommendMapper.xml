@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.RecommendMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.Recommend">
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="userID" jdbcType="BIGINT" property="userid" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="type" jdbcType="VARCHAR" property="type" />
@@ -85,6 +85,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_recommend
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_recommend
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.RecommendCriteria">
     delete from t_recommend
     <if test="_parameter != null">
@@ -183,5 +193,35 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Recommend">
+    update t_recommend
+    <set>
+      <if test="userid != null">
+        userID = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ischeck != null">
+        isCheck = #{ischeck,jdbcType=TINYINT},
+      </if>
+      <if test="recommendname != null">
+        recommendName = #{recommendname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Recommend">
+    update t_recommend
+    set userID = #{userid,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      isCheck = #{ischeck,jdbcType=TINYINT},
+      recommendName = #{recommendname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

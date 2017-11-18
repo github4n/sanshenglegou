@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.GoodsImageMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.GoodsImage">
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="goodsID" jdbcType="BIGINT" property="goodsid" />
     <result column="IamgeAddress" jdbcType="VARCHAR" property="iamgeaddress" />
     <result column="isKeyIamge" jdbcType="TINYINT" property="iskeyiamge" />
@@ -84,6 +84,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_goodsImage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.GoodsImageCriteria">
     delete from t_goodsImage
     <if test="_parameter != null">
@@ -172,5 +182,31 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    <set>
+      <if test="goodsid != null">
+        goodsID = #{goodsid,jdbcType=BIGINT},
+      </if>
+      <if test="iamgeaddress != null">
+        IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="iskeyiamge != null">
+        isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.GoodsImage">
+    update t_goodsImage
+    set goodsID = #{goodsid,jdbcType=BIGINT},
+      IamgeAddress = #{iamgeaddress,jdbcType=VARCHAR},
+      isKeyIamge = #{iskeyiamge,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

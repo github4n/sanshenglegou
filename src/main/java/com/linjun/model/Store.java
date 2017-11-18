@@ -29,6 +29,8 @@ public class Store {
 
     private String introduce;
 
+    private Byte type;
+
     public Long getId() {
         return id;
     }
@@ -131,5 +133,13 @@ public class Store {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce == null ? null : introduce.trim();
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
     }
 }

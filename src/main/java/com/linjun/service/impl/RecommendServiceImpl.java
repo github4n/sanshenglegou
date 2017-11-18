@@ -5,7 +5,6 @@ import com.linjun.dao.RecommendMapper;
 import com.linjun.model.Recommend;
 import com.linjun.model.RecommendCriteria;
 import com.linjun.service.RecommendService;
-import netscape.javascript.JSException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

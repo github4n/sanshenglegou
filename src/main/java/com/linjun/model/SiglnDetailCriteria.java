@@ -115,53 +115,113 @@ public class SiglnDetailCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidIsNull() {
+            addCriterion("signID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidIsNotNull() {
+            addCriterion("signID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidEqualTo(Long value) {
+            addCriterion("signID =", value, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidNotEqualTo(Long value) {
+            addCriterion("signID <>", value, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidGreaterThan(Long value) {
+            addCriterion("signID >", value, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidGreaterThanOrEqualTo(Long value) {
+            addCriterion("signID >=", value, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidLessThan(Long value) {
+            addCriterion("signID <", value, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidLessThanOrEqualTo(Long value) {
+            addCriterion("signID <=", value, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidIn(List<Long> values) {
+            addCriterion("signID in", values, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidNotIn(List<Long> values) {
+            addCriterion("signID not in", values, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidBetween(Long value1, Long value2) {
+            addCriterion("signID between", value1, value2, "signid");
+            return (Criteria) this;
+        }
+
+        public Criteria andSignidNotBetween(Long value1, Long value2) {
+            addCriterion("signID not between", value1, value2, "signid");
             return (Criteria) this;
         }
 
@@ -175,52 +235,52 @@ public class SiglnDetailCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andUseridEqualTo(Integer value) {
+        public Criteria andUseridEqualTo(Long value) {
             addCriterion("userID =", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotEqualTo(Integer value) {
+        public Criteria andUseridNotEqualTo(Long value) {
             addCriterion("userID <>", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThan(Integer value) {
+        public Criteria andUseridGreaterThan(Long value) {
             addCriterion("userID >", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridGreaterThanOrEqualTo(Integer value) {
+        public Criteria andUseridGreaterThanOrEqualTo(Long value) {
             addCriterion("userID >=", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThan(Integer value) {
+        public Criteria andUseridLessThan(Long value) {
             addCriterion("userID <", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridLessThanOrEqualTo(Integer value) {
+        public Criteria andUseridLessThanOrEqualTo(Long value) {
             addCriterion("userID <=", value, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridIn(List<Integer> values) {
+        public Criteria andUseridIn(List<Long> values) {
             addCriterion("userID in", values, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotIn(List<Integer> values) {
+        public Criteria andUseridNotIn(List<Long> values) {
             addCriterion("userID not in", values, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridBetween(Integer value1, Integer value2) {
+        public Criteria andUseridBetween(Long value1, Long value2) {
             addCriterion("userID between", value1, value2, "userid");
             return (Criteria) this;
         }
 
-        public Criteria andUseridNotBetween(Integer value1, Integer value2) {
+        public Criteria andUseridNotBetween(Long value1, Long value2) {
             addCriterion("userID not between", value1, value2, "userid");
             return (Criteria) this;
         }

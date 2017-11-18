@@ -264,5 +264,53 @@
 		>
 			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
 		</table>
+		<table tableName="t_income"
+			   domainObjectName="Income" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="t_outcome"
+			   domainObjectName="Outcome" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="t_memberApply"
+			   domainObjectName="MemberApply" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="t_villageApply"
+			   domainObjectName="VillageApply" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="t_storeApply"
+			   domainObjectName="StoreApply" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="t_withDrawApply"
+			   domainObjectName="WithDrawApply" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
 	</context>
 </generatorConfiguration>  

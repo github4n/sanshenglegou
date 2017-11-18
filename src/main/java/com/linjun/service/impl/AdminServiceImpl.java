@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class AdminServiceImpl implements AdminService {
     @Autowired
-     AdminMapper adminMapper;
+    AdminMapper adminMapper;
     public int updateAdmin(long id, Admin admin) {
         AdminCriteria adminCriteria=new AdminCriteria();
         AdminCriteria.Criteria criteria=adminCriteria.createCriteria();

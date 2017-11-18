@@ -3,8 +3,6 @@ package com.linjun.service;
 import com.linjun.entity.PageBean;
 import com.linjun.model.Goods;
 
-import java.util.List;
-
 public interface GoodsService {
 
      boolean delete(long id);

@@ -17,7 +17,7 @@ public interface UserService {
     public  int deleteByName(String username);
 
     PageList<User> search(String username,Integer page);
-    PageList<User> searchSize(String username,Integer page);
+    PageList<User> searchSize(String username, Integer page);
     User loginByPhone(User user);
     User loginByUsername(User user);
     User registerByPhone(User user);

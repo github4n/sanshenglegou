@@ -2,7 +2,6 @@ package com.linjun.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.domain.PeopleException;
-import com.linjun.config.QiNiuconfig;
 import com.linjun.dao.StoreMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.Store;

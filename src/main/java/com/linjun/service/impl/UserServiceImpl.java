@@ -1,18 +1,13 @@
 package com.linjun.service.impl;
 
 import com.linjun.common.domain.PageList;
-import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.UserMapper;
 import com.linjun.model.User;
-import com.linjun.model.UserCriteria;
 import com.linjun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {

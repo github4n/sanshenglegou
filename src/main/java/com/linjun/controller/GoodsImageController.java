@@ -3,7 +3,6 @@ package com.linjun.controller;
 import com.linjun.common.JsonResult;
 import com.linjun.model.GoodsImage;
 import com.linjun.service.GoodsImageService;
-import com.sun.javafx.binding.StringFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

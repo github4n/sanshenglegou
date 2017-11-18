@@ -3,17 +3,12 @@ package com.linjun.controller;
 import com.linjun.common.JsonResult;
 import com.linjun.model.Article;
 import com.linjun.service.ArticleService;
-import com.linjun.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController

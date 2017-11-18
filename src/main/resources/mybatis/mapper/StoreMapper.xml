@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.linjun.dao.StoreMapper">
   <resultMap id="BaseResultMap" type="com.linjun.model.Store">
-    <result column="id" jdbcType="BIGINT" property="id" />
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="storeName" jdbcType="VARCHAR" property="storename" />
     <result column="storeAddress" jdbcType="VARCHAR" property="storeaddress" />
@@ -15,6 +15,7 @@
     <result column="storeUserID" jdbcType="BIGINT" property="storeuserid" />
     <result column="passworld" jdbcType="VARCHAR" property="passworld" />
     <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="type" jdbcType="TINYINT" property="type" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, createTime, storeName, storeAddress, storeType, storer, stroelogo, scope, tel, 
-    isAuth, storeUserID, passworld, introduce
+    isAuth, storeUserID, passworld, introduce, type
   </sql>
   <select id="selectByExample" parameterType="com.linjun.model.StoreCriteria" resultMap="BaseResultMap">
     select
@@ -93,6 +94,16 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_store
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_store
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
   <delete id="deleteByExample" parameterType="com.linjun.model.StoreCriteria">
     delete from t_store
     <if test="_parameter != null">
@@ -106,13 +117,13 @@
     insert into t_store (createTime, storeName, storeAddress, 
       storeType, storer, stroelogo, 
       scope, tel, isAuth, 
-      storeUserID, passworld, introduce
-      )
+      storeUserID, passworld, introduce, 
+      type)
     values (#{createtime,jdbcType=TIMESTAMP}, #{storename,jdbcType=VARCHAR}, #{storeaddress,jdbcType=VARCHAR}, 
       #{storetype,jdbcType=VARCHAR}, #{storer,jdbcType=VARCHAR}, #{stroelogo,jdbcType=VARCHAR}, 
       #{scope,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{isauth,jdbcType=TINYINT}, 
-      #{storeuserid,jdbcType=BIGINT}, #{passworld,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}
-      )
+      #{storeuserid,jdbcType=BIGINT}, #{passworld,jdbcType=VARCHAR}, #{introduce,jdbcType=VARCHAR}, 
+      #{type,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Store">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -156,6 +167,9 @@
       <if test="introduce != null">
         introduce,
       </if>
+      <if test="type != null">
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="createtime != null">
@@ -193,6 +207,9 @@
       </if>
       <if test="introduce != null">
         #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -244,6 +261,9 @@
       <if test="record.introduce != null">
         introduce = #{record.introduce,jdbcType=VARCHAR},
       </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -263,9 +283,72 @@
       isAuth = #{record.isauth,jdbcType=TINYINT},
       storeUserID = #{record.storeuserid,jdbcType=BIGINT},
       passworld = #{record.passworld,jdbcType=VARCHAR},
-      introduce = #{record.introduce,jdbcType=VARCHAR}
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=TINYINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linjun.model.Store">
+    update t_store
+    <set>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storename != null">
+        storeName = #{storename,jdbcType=VARCHAR},
+      </if>
+      <if test="storeaddress != null">
+        storeAddress = #{storeaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="storetype != null">
+        storeType = #{storetype,jdbcType=VARCHAR},
+      </if>
+      <if test="storer != null">
+        storer = #{storer,jdbcType=VARCHAR},
+      </if>
+      <if test="stroelogo != null">
+        stroelogo = #{stroelogo,jdbcType=VARCHAR},
+      </if>
+      <if test="scope != null">
+        scope = #{scope,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="isauth != null">
+        isAuth = #{isauth,jdbcType=TINYINT},
+      </if>
+      <if test="storeuserid != null">
+        storeUserID = #{storeuserid,jdbcType=BIGINT},
+      </if>
+      <if test="passworld != null">
+        passworld = #{passworld,jdbcType=VARCHAR},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linjun.model.Store">
+    update t_store
+    set createTime = #{createtime,jdbcType=TIMESTAMP},
+      storeName = #{storename,jdbcType=VARCHAR},
+      storeAddress = #{storeaddress,jdbcType=VARCHAR},
+      storeType = #{storetype,jdbcType=VARCHAR},
+      storer = #{storer,jdbcType=VARCHAR},
+      stroelogo = #{stroelogo,jdbcType=VARCHAR},
+      scope = #{scope,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      isAuth = #{isauth,jdbcType=TINYINT},
+      storeUserID = #{storeuserid,jdbcType=BIGINT},
+      passworld = #{passworld,jdbcType=VARCHAR},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
