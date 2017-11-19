@@ -156,4 +156,5 @@ public class StoreServiceImpl implements StoreService {
             StoreCriteria storeCriteria=new StoreCriteria();
         return storeMapper.countByExample(storeCriteria);
     }
+
 }

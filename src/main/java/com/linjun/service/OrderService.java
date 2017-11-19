@@ -20,5 +20,13 @@ public interface OrderService {
     PageBean<Order> findAllOrder(int cuurrentPage,int pagesize);
     long countOrder();
       Order updateOrder(Order order);
+      Long todayOrder();
+      Long toadayOrderPay();
+      Float todayMoney();
+      Long sumOrder();
+      Float sumMoney();
+      List<Float> weekMoney();
+      List<Integer> orderPlan();
+       List<Integer> monthOrder();
     PageBean<Order> findAllOStore(long storid,int cuurrentPage,int pagesize);
 }

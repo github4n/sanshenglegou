@@ -20,4 +20,5 @@ public interface StoreService {
     Store updateStore(Store store);
     PageBean<Store> findAllStore(int cuurrentPage, int pageSize);
     long countStore();
+
 }
