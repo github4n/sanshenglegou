@@ -281,7 +281,7 @@ public class AdminController {
               }
 
     }
-//村村通申请
+//村村通申请呢
     @GetMapping(value = "/getVillageApply")
     public  JsonResult getVillageApply(
             @RequestParam(value = "page")int page,
@@ -296,7 +296,7 @@ public class AdminController {
     }
 
 //商城申请
-    
+
 
 
 
