@@ -34,8 +34,7 @@ public class StoreController {
     UserService userService;
     @Autowired
     OrderService orderService;
-    @Autowired
-    OrderDetailService orderDetailService;
+
     @Autowired
     GoodsService goodsService;
     @Autowired
@@ -436,18 +435,18 @@ public JsonResult addGoods(
                    return  new JsonResult("500",e.getMessage());
                }
     }
-//   更新物流
-      @PutMapping(value = "/updateOrderDetail")
-    public  JsonResult updateOrderDetail(
-            @RequestBody OrderDetail orderDetail
-      ){
-             try{
-                 OrderDetail orderDetail1=orderDetailService.updateOrderDetail(orderDetail);
-              return    new JsonResult("200",orderDetail1);
-             }catch (Exception e){
-              return    new JsonResult("500",e.getMessage());
-             }
-      }
+////   更新物流
+//      @PutMapping(value = "/updateOrderDetail")
+//    public  JsonResult updateOrderDetail(
+//            @RequestBody OrderDetail orderDetail
+//      ){
+//             try{
+//                 OrderDetail orderDetail1=orderDetailService.updateOrderDetail(orderDetail);
+//              return    new JsonResult("200",orderDetail1);
+//             }catch (Exception e){
+//              return    new JsonResult("500",e.getMessage());
+//             }
+//      }
       //获取订单细节
     @GetMapping(value = "/orderDatail")
     public  JsonResult getOrderDetail(

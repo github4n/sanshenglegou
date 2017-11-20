@@ -9,7 +9,7 @@ public class Admin {
 
     private Byte grade;
 
-    private Byte jurisdiction;
+    private String jurisdiction;
 
     public Long getId() {
         return id;
@@ -43,11 +43,11 @@ public class Admin {
         this.grade = grade;
     }
 
-    public Byte getJurisdiction() {
+    public String getJurisdiction() {
         return jurisdiction;
     }
 
-    public void setJurisdiction(Byte jurisdiction) {
-        this.jurisdiction = jurisdiction;
+    public void setJurisdiction(String jurisdiction) {
+        this.jurisdiction = jurisdiction == null ? null : jurisdiction.trim();
     }
 }

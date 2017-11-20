@@ -374,52 +374,62 @@ public class AdminCriteria {
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionEqualTo(Byte value) {
+        public Criteria andJurisdictionEqualTo(String value) {
             addCriterion("jurisdiction =", value, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionNotEqualTo(Byte value) {
+        public Criteria andJurisdictionNotEqualTo(String value) {
             addCriterion("jurisdiction <>", value, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionGreaterThan(Byte value) {
+        public Criteria andJurisdictionGreaterThan(String value) {
             addCriterion("jurisdiction >", value, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionGreaterThanOrEqualTo(Byte value) {
+        public Criteria andJurisdictionGreaterThanOrEqualTo(String value) {
             addCriterion("jurisdiction >=", value, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionLessThan(Byte value) {
+        public Criteria andJurisdictionLessThan(String value) {
             addCriterion("jurisdiction <", value, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionLessThanOrEqualTo(Byte value) {
+        public Criteria andJurisdictionLessThanOrEqualTo(String value) {
             addCriterion("jurisdiction <=", value, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionIn(List<Byte> values) {
+        public Criteria andJurisdictionLike(String value) {
+            addCriterion("jurisdiction like", value, "jurisdiction");
+            return (Criteria) this;
+        }
+
+        public Criteria andJurisdictionNotLike(String value) {
+            addCriterion("jurisdiction not like", value, "jurisdiction");
+            return (Criteria) this;
+        }
+
+        public Criteria andJurisdictionIn(List<String> values) {
             addCriterion("jurisdiction in", values, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionNotIn(List<Byte> values) {
+        public Criteria andJurisdictionNotIn(List<String> values) {
             addCriterion("jurisdiction not in", values, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionBetween(Byte value1, Byte value2) {
+        public Criteria andJurisdictionBetween(String value1, String value2) {
             addCriterion("jurisdiction between", value1, value2, "jurisdiction");
             return (Criteria) this;
         }
 
-        public Criteria andJurisdictionNotBetween(Byte value1, Byte value2) {
+        public Criteria andJurisdictionNotBetween(String value1, String value2) {
             addCriterion("jurisdiction not between", value1, value2, "jurisdiction");
             return (Criteria) this;
         }

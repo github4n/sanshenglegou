@@ -14,8 +14,11 @@
     <result column="goodSum" jdbcType="INTEGER" property="goodsum" />
     <result column="priceSum" jdbcType="REAL" property="pricesum" />
     <result column="sendTime" jdbcType="TIMESTAMP" property="sendtime" />
-    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
     <result column="payTime" jdbcType="TIMESTAMP" property="paytime" />
+    <result column="cancel" jdbcType="TIMESTAMP" property="cancel" />
+    <result column="completeTime" jdbcType="TIMESTAMP" property="completetime" />
+    <result column="logistics" jdbcType="VARCHAR" property="logistics" />
     <result column="message" jdbcType="VARCHAR" property="message" />
     <result column="logisticsCode" jdbcType="BIGINT" property="logisticscode" />
     <result column="isPay" jdbcType="TINYINT" property="ispay" />
@@ -80,7 +83,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, userID, storeID, orderCode, goodsName, goodsID, addressID, marketPricce, memberPrice, 
-    goodSum, priceSum, sendTime, logistics, payTime, message, logisticsCode, isPay
+    goodSum, priceSum, sendTime, createTime, payTime, cancel, completeTime, logistics, 
+    message, logisticsCode, isPay
   </sql>
   <select id="selectByExample" parameterType="com.linjun.model.OrderCriteria" resultMap="BaseResultMap">
     select
@@ -120,14 +124,16 @@
     insert into t_order (userID, storeID, orderCode, 
       goodsName, goodsID, addressID, 
       marketPricce, memberPrice, goodSum, 
-      priceSum, sendTime, logistics, 
-      payTime, message, logisticsCode, 
+      priceSum, sendTime, createTime, 
+      payTime, cancel, completeTime, 
+      logistics, message, logisticsCode, 
       isPay)
     values (#{userid,jdbcType=BIGINT}, #{storeid,jdbcType=BIGINT}, #{ordercode,jdbcType=BIGINT}, 
       #{goodsname,jdbcType=VARCHAR}, #{goodsid,jdbcType=BIGINT}, #{addressid,jdbcType=BIGINT}, 
       #{marketpricce,jdbcType=REAL}, #{memberprice,jdbcType=REAL}, #{goodsum,jdbcType=INTEGER}, 
-      #{pricesum,jdbcType=REAL}, #{sendtime,jdbcType=TIMESTAMP}, #{logistics,jdbcType=VARCHAR}, 
-      #{paytime,jdbcType=TIMESTAMP}, #{message,jdbcType=VARCHAR}, #{logisticscode,jdbcType=BIGINT}, 
+      #{pricesum,jdbcType=REAL}, #{sendtime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{paytime,jdbcType=TIMESTAMP}, #{cancel,jdbcType=TIMESTAMP}, #{completetime,jdbcType=TIMESTAMP}, 
+      #{logistics,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, #{logisticscode,jdbcType=BIGINT}, 
       #{ispay,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Order">
@@ -169,11 +175,20 @@
       <if test="sendtime != null">
         sendTime,
       </if>
-      <if test="logistics != null">
-        logistics,
+      <if test="createtime != null">
+        createTime,
       </if>
       <if test="paytime != null">
         payTime,
+      </if>
+      <if test="cancel != null">
+        cancel,
+      </if>
+      <if test="completetime != null">
+        completeTime,
+      </if>
+      <if test="logistics != null">
+        logistics,
       </if>
       <if test="message != null">
         message,
@@ -219,11 +234,20 @@
       <if test="sendtime != null">
         #{sendtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="logistics != null">
-        #{logistics,jdbcType=VARCHAR},
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="paytime != null">
         #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cancel != null">
+        #{cancel,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completetime != null">
+        #{completetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        #{logistics,jdbcType=VARCHAR},
       </if>
       <if test="message != null">
         #{message,jdbcType=VARCHAR},
@@ -281,11 +305,20 @@
       <if test="record.sendtime != null">
         sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.logistics != null">
-        logistics = #{record.logistics,jdbcType=VARCHAR},
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.paytime != null">
         payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cancel != null">
+        cancel = #{record.cancel,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completetime != null">
+        completeTime = #{record.completetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.logistics != null">
+        logistics = #{record.logistics,jdbcType=VARCHAR},
       </if>
       <if test="record.message != null">
         message = #{record.message,jdbcType=VARCHAR},
@@ -315,8 +348,11 @@
       goodSum = #{record.goodsum,jdbcType=INTEGER},
       priceSum = #{record.pricesum,jdbcType=REAL},
       sendTime = #{record.sendtime,jdbcType=TIMESTAMP},
-      logistics = #{record.logistics,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
       payTime = #{record.paytime,jdbcType=TIMESTAMP},
+      cancel = #{record.cancel,jdbcType=TIMESTAMP},
+      completeTime = #{record.completetime,jdbcType=TIMESTAMP},
+      logistics = #{record.logistics,jdbcType=VARCHAR},
       message = #{record.message,jdbcType=VARCHAR},
       logisticsCode = #{record.logisticscode,jdbcType=BIGINT},
       isPay = #{record.ispay,jdbcType=TINYINT}
@@ -360,11 +396,20 @@
       <if test="sendtime != null">
         sendTime = #{sendtime,jdbcType=TIMESTAMP},
       </if>
-      <if test="logistics != null">
-        logistics = #{logistics,jdbcType=VARCHAR},
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
       </if>
       <if test="paytime != null">
         payTime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cancel != null">
+        cancel = #{cancel,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completetime != null">
+        completeTime = #{completetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logistics != null">
+        logistics = #{logistics,jdbcType=VARCHAR},
       </if>
       <if test="message != null">
         message = #{message,jdbcType=VARCHAR},
@@ -391,8 +436,11 @@
       goodSum = #{goodsum,jdbcType=INTEGER},
       priceSum = #{pricesum,jdbcType=REAL},
       sendTime = #{sendtime,jdbcType=TIMESTAMP},
-      logistics = #{logistics,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
       payTime = #{paytime,jdbcType=TIMESTAMP},
+      cancel = #{cancel,jdbcType=TIMESTAMP},
+      completeTime = #{completetime,jdbcType=TIMESTAMP},
+      logistics = #{logistics,jdbcType=VARCHAR},
       message = #{message,jdbcType=VARCHAR},
       logisticsCode = #{logisticscode,jdbcType=BIGINT},
       isPay = #{ispay,jdbcType=TINYINT}

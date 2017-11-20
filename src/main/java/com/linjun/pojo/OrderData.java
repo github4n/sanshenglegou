@@ -4,13 +4,15 @@ import java.util.List;
 
 public class OrderData {
     private  Long id;
-    private  int  noworder;
-    private  int nowOrderPay;
+    private  Long  noworder;
+    private  Long nowOrderPay;
     private  Float todayMoney;
     private  Long orderSum;
     private  Float moneySum;
     private List<Float> weekMoney;
     private  List<Integer> monthMoney;
+    private  List<Long> weekPlan;
+    private  Integer monthDay;
 
     public Long getId() {
         return id;
@@ -20,19 +22,19 @@ public class OrderData {
         this.id = id;
     }
 
-    public int getNoworder() {
+    public Long getNoworder() {
         return noworder;
     }
 
-    public void setNoworder(int noworder) {
+    public void setNoworder(Long noworder) {
         this.noworder = noworder;
     }
 
-    public int getNowOrderPay() {
+    public Long getNowOrderPay() {
         return nowOrderPay;
     }
 
-    public void setNowOrderPay(int nowOrderPay) {
+    public void setNowOrderPay(Long nowOrderPay) {
         this.nowOrderPay = nowOrderPay;
     }
 
@@ -74,5 +76,21 @@ public class OrderData {
 
     public void setMonthMoney(List<Integer> monthMoney) {
         this.monthMoney = monthMoney;
+    }
+
+    public List<Long> getWeekPlan() {
+        return weekPlan;
+    }
+
+    public void setWeekPlan(List<Long> weekPlan) {
+        this.weekPlan = weekPlan;
+    }
+
+    public Integer getMonthDay() {
+        return monthDay;
+    }
+
+    public void setMonthDay(Integer monthDay) {
+        this.monthDay = monthDay;
     }
 }

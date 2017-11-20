@@ -8,6 +8,7 @@ public class UserData {
     private  Long alluser;
     private List<Integer> weekUser;
     private  List<Integer> monthUser;
+     private  int monthday;
 
     public Long getId() {
         return id;
@@ -17,19 +18,19 @@ public class UserData {
         this.id = id;
     }
 
-    public long getNewuser() {
+    public Long getNewuser() {
         return newuser;
     }
 
-    public void setNewuser(long newuser) {
+    public void setNewuser(Long newuser) {
         this.newuser = newuser;
     }
 
-    public long getAlluser() {
+    public Long getAlluser() {
         return alluser;
     }
 
-    public void setAlluser(long alluser) {
+    public void setAlluser(Long alluser) {
         this.alluser = alluser;
     }
 
@@ -47,5 +48,13 @@ public class UserData {
 
     public void setMonthUser(List<Integer> monthUser) {
         this.monthUser = monthUser;
+    }
+
+    public int getMonthday() {
+        return monthday;
+    }
+
+    public void setMonthday(int monthday) {
+        this.monthday = monthday;
     }
 }

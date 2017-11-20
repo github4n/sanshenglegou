@@ -29,6 +29,6 @@ public interface UserService {
     List<User> userlist ();
     User updateUser(User user);
    PageBean<User> findUserList(int cuurrentPage, int pageSize);
-
+      Integer monthDay();
 
 }

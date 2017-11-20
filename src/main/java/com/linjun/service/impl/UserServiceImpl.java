@@ -268,4 +268,14 @@ public class UserServiceImpl implements UserService {
         return lists;
 
     }
+
+    @Override
+    public Integer monthDay() {
+
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.DATE,1);
+        c.roll(Calendar.DATE,-1);
+        int months=c.get(Calendar.DATE);
+        return months;
+    }
 }

@@ -4,10 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
-import com.linjun.pojo.GoodsListAdmin;
-import com.linjun.pojo.OrderData;
-import com.linjun.pojo.OrderListAdmin;
-import com.linjun.pojo.UserData;
+import com.linjun.pojo.*;
 import com.linjun.service.*;
 import com.qiniu.util.Json;
 import org.mapstruct.TargetType;
@@ -29,8 +26,7 @@ public class AdminController {
     UserService userService;
     @Autowired
     OrderService orderService;
-    @Autowired
-    OrderDetailService orderDetailService;
+
     @Autowired
     GoodsService goodsService;
     @Autowired
@@ -43,6 +39,15 @@ public class AdminController {
     LogisticsService logisticsService;
     @Autowired
     GoodsDetailService goodsDetailService;
+     @Autowired
+     InComeService inComeService;
+     @Autowired
+     OutComeService outComeService;
+     @Autowired
+     MemberApplyService memberApplyService;
+     @Autowired
+     VillageApplyService villageApplyService;
+
 
 //    管理员登入
     @GetMapping(value = "/login")
@@ -82,6 +87,7 @@ public class AdminController {
              userData.setNewuser(nowuser);
              userData.setWeekUser(workuser);
              userData.setMonthUser(monthuser);
+             userData.setMonthday(userService.monthDay());
        return  new JsonResult("200",userData);
 
         }catch (Exception e){
@@ -185,18 +191,112 @@ public class AdminController {
     public  JsonResult getOrderImage(){
       try{
           OrderData orderData=new OrderData();
+            long todayOrder=orderService.todayOrder();
+            long todayOrderPay=orderService.toadayOrderPay();
+            Float todaymoneyPay=orderService.todayMoney();
+            long sumOredr=orderService.sumOrder();
+            float sumMoney=orderService.sumMoney();
+            List<Float> weeklistOredr=orderService.weekMoney();
+            List<Integer> monthOrders=orderService.monthOrder();
+            List<Long> weekorderplan=orderService.weekorderPlan();
+            orderData.setMoneySum(sumMoney);
+            orderData.setMonthMoney(monthOrders);
+            orderData.setWeekMoney(weeklistOredr);
+            orderData.setNoworder(todayOrder);
+            orderData.setNowOrderPay(todayOrderPay);
+            orderData.setTodayMoney(todaymoneyPay);
+             orderData.setOrderSum(sumOredr);
+             orderData.setWeekPlan(weekorderplan);
+             orderData.setMonthDay(orderService.monthday());
 
-
-
-    return  new JsonResult("200","");
+    return  new JsonResult("200",orderData);
       }catch (Exception e) {
        return  new JsonResult("500",e.getMessage());
       }
     }
+//    交易概览
+    @GetMapping(value = "/getDealImage")
+    public  JsonResult getDealImage(){
+        try{
+            DealImsgeData dealImsgeData=new DealImsgeData();
+            dealImsgeData.setIncome(inComeService.sumincome());
+             dealImsgeData.setMoneyDay(inComeService.monthday());
+             dealImsgeData.setOutcome(outComeService.sumOutcome());
+             dealImsgeData.setTodayincome(inComeService.todayincome());
+             dealImsgeData.setTodayoutcome(outComeService.todayOutcome());
+             List<Float> list=new ArrayList<Float>();
+             list.add(inComeService.monthcome());
+             list.add(outComeService.monthMoney());
+             dealImsgeData.setMonthcome(list);
+             dealImsgeData.setMonthMeneyincome(inComeService.monthincome());
+             dealImsgeData.setMonthMeneyoutcome(outComeService.monthMoneys());
+             dealImsgeData.setWeekIncome(inComeService.weekincome());
+             dealImsgeData.setWeekOutcome(outComeService.weekMoney());
+             return  new JsonResult("200",dealImsgeData);
 
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
 
+//收入列表
+    @GetMapping(value = "/getIncomeList")
+    public  JsonResult getIncomeList(
+            @RequestParam(value = "page") int page,@RequestParam(value = "pagesize")int pagesize
+    ){
+        try{
+            PageBean<Income> list=inComeService.findall(page,pagesize);
+            return  new JsonResult("200",list);
 
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
 
+    }
+//    支出列表
+    @GetMapping(value = "/getOutcomeList")
+    public  JsonResult getOutcomeList(
+            @RequestParam(value = "page")int page,@RequestParam(value = "pagesize")int pagesize
+    ){
+            try{
+                PageBean<Outcome> list=outComeService.findAll(page,pagesize);
+                return  new JsonResult("200",list);
+
+            }catch (Exception e){
+                return  new JsonResult("500",e.getMessage());
+            }
+
+    }
+//  会员申请
+    @GetMapping(value = "/getMemberApply")
+    public JsonResult getMenberApply(
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+              try{
+               PageBean<MemberApply> list=memberApplyService.findAll(page,pagesize);
+             return  new JsonResult("200",list);
+              }catch (Exception e){
+                  return  new JsonResult("500",e.getMessage());
+              }
+
+    }
+//村村通申请
+    @GetMapping(value = "/getVillageApply")
+    public  JsonResult getVillageApply(
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+         try{
+           PageBean<VillageApply> list=villageApplyService.findAll(page,pagesize);
+             return  new JsonResult("200",list);
+         }catch (Exception e){
+             return  new JsonResult("500",e.getMessage());
+         }
+    }
+
+//商城申请
+    
 
 
 

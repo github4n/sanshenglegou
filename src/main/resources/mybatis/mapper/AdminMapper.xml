@@ -6,7 +6,7 @@
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="passworld" jdbcType="VARCHAR" property="passworld" />
     <result column="grade" jdbcType="TINYINT" property="grade" />
-    <result column="jurisdiction" jdbcType="TINYINT" property="jurisdiction" />
+    <result column="jurisdiction" jdbcType="VARCHAR" property="jurisdiction" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -107,7 +107,7 @@
     insert into t_admin (account, passworld, grade, 
       jurisdiction)
     values (#{account,jdbcType=VARCHAR}, #{passworld,jdbcType=VARCHAR}, #{grade,jdbcType=TINYINT}, 
-      #{jurisdiction,jdbcType=TINYINT})
+      #{jurisdiction,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Admin">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -139,7 +139,7 @@
         #{grade,jdbcType=TINYINT},
       </if>
       <if test="jurisdiction != null">
-        #{jurisdiction,jdbcType=TINYINT},
+        #{jurisdiction,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -165,7 +165,7 @@
         grade = #{record.grade,jdbcType=TINYINT},
       </if>
       <if test="record.jurisdiction != null">
-        jurisdiction = #{record.jurisdiction,jdbcType=TINYINT},
+        jurisdiction = #{record.jurisdiction,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -178,7 +178,7 @@
       account = #{record.account,jdbcType=VARCHAR},
       passworld = #{record.passworld,jdbcType=VARCHAR},
       grade = #{record.grade,jdbcType=TINYINT},
-      jurisdiction = #{record.jurisdiction,jdbcType=TINYINT}
+      jurisdiction = #{record.jurisdiction,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -196,7 +196,7 @@
         grade = #{grade,jdbcType=TINYINT},
       </if>
       <if test="jurisdiction != null">
-        jurisdiction = #{jurisdiction,jdbcType=TINYINT},
+        jurisdiction = #{jurisdiction,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -206,7 +206,7 @@
     set account = #{account,jdbcType=VARCHAR},
       passworld = #{passworld,jdbcType=VARCHAR},
       grade = #{grade,jdbcType=TINYINT},
-      jurisdiction = #{jurisdiction,jdbcType=TINYINT}
+      jurisdiction = #{jurisdiction,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

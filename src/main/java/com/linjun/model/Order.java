@@ -27,9 +27,15 @@ public class Order {
 
     private Date sendtime;
 
-    private String logistics;
+    private Date createtime;
 
     private Date paytime;
+
+    private Date cancel;
+
+    private Date completetime;
+
+    private String logistics;
 
     private String message;
 
@@ -133,12 +139,12 @@ public class Order {
         this.sendtime = sendtime;
     }
 
-    public String getLogistics() {
-        return logistics;
+    public Date getCreatetime() {
+        return createtime;
     }
 
-    public void setLogistics(String logistics) {
-        this.logistics = logistics == null ? null : logistics.trim();
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 
     public Date getPaytime() {
@@ -147,6 +153,30 @@ public class Order {
 
     public void setPaytime(Date paytime) {
         this.paytime = paytime;
+    }
+
+    public Date getCancel() {
+        return cancel;
+    }
+
+    public void setCancel(Date cancel) {
+        this.cancel = cancel;
+    }
+
+    public Date getCompletetime() {
+        return completetime;
+    }
+
+    public void setCompletetime(Date completetime) {
+        this.completetime = completetime;
+    }
+
+    public String getLogistics() {
+        return logistics;
+    }
+
+    public void setLogistics(String logistics) {
+        this.logistics = logistics == null ? null : logistics.trim();
     }
 
     public String getMessage() {

@@ -30,10 +30,9 @@ public class UserController {
  GoodsService goodsService;
 @Autowired
 ShoppingcartService shoppingcartService;
-@Autowired
-RecommendService recommendService;
-@Autowired
-OrderDetailService orderDetailService;
+//
+//@Autowired
+//OrderDetailService orderDetailService;
 @Autowired
 AddressMongerService addressMongerService;
 
@@ -202,47 +201,46 @@ private  int rands(){
  ){
      try{
          Order order=orderService.findByOrder(userID,orderID);
-         orderDetailService.deletebyid(order.getId());
       orderService.deletebyuserid(userID,orderID);
       return  new JsonResult("200","删除成功");
      }catch (Exception e){
       return  new JsonResult("500",e.getMessage());
      }
  }
-//生成用户订单
- @PostMapping(value = "/creatOrder")
-   public JsonResult creatOrder(
-   @RequestParam(value = "goodsid")long goodsid,
-   @RequestParam(value = "userid")long userid,
-   @RequestParam(value = "goodsum")int goodsum
- ) {
-          try{
-        Goods goods;
-        goods=goodsService.findByid(goodsid);
-          Order order=new Order();
-          order.setUserid(userid);
-          order.setGoodsum(goodsum);
-          order.setIspay((byte) 0);
-          order.setGoodsname(goods.getGoodsname());
-          order.setGoodsid(goodsid);
-          order.setMarketpricce(goods.getMarketprive());
-          order.setMemberprice(goods.getMemberprice());
-          order.setOrdercode((long) rands());
-          order.setStoreid(goods.getStoreid());
-          order.setSendtime(new Date());
-        AddressManger addressManger=addressMongerService.findByUseridDefault(userid);
-          order.setAddressid(addressManger.getId());
-          Order order1=orderService.createOrder(order);
-          OrderDetail orderDetail=new OrderDetail();
-          orderDetail.setOrderstate(String.valueOf(1));
-          orderDetail.setOrderid(order1.getId());
-              OrderDetail orderDetail1=orderDetailService.add(orderDetail);
-           return  new JsonResult("200","成功");
-          }catch (Exception e){
-           return  new JsonResult("500",e.getMessage());
-          }
-
-}
+////生成用户订单
+// @PostMapping(value = "/creatOrder")
+//   public JsonResult creatOrder(
+//   @RequestParam(value = "goodsid")long goodsid,
+//   @RequestParam(value = "userid")long userid,
+//   @RequestParam(value = "goodsum")int goodsum
+// ) {
+//          try{
+//        Goods goods;
+//        goods=goodsService.findByid(goodsid);
+//          Order order=new Order();
+//          order.setUserid(userid);
+//          order.setGoodsum(goodsum);
+//          order.setIspay((byte) 0);
+//          order.setGoodsname(goods.getGoodsname());
+//          order.setGoodsid(goodsid);
+//          order.setMarketpricce(goods.getMarketprive());
+//          order.setMemberprice(goods.getMemberprice());
+//          order.setOrdercode((long) rands());
+//          order.setStoreid(goods.getStoreid());
+//          order.setSendtime(new Date());
+//        AddressManger addressManger=addressMongerService.findByUseridDefault(userid);
+//          order.setAddressid(addressManger.getId());
+//          Order order1=orderService.createOrder(order);
+//          OrderDetail orderDetail=new OrderDetail();
+//          orderDetail.setOrderstate(String.valueOf(1));
+//          orderDetail.setOrderid(order1.getId());
+//              OrderDetail orderDetail1=orderDetailService.add(orderDetail);
+//           return  new JsonResult("200","成功");
+//          }catch (Exception e){
+//           return  new JsonResult("500",e.getMessage());
+//          }
+//
+//}
 //    支付订单
     @PutMapping(value = "/updateOrder")
     public  JsonResult updateOrder(
