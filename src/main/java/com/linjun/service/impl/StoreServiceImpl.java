@@ -157,4 +157,60 @@ public class StoreServiceImpl implements StoreService {
         return storeMapper.countByExample(storeCriteria);
     }
 
+    @Override
+    public PageBean<Store> findStart(int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        StoreCriteria storeCriteria=new StoreCriteria();
+        StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
+        criteria.andIsauthEqualTo((byte) 1);
+        List<Store> list=storeMapper.selectByExample(storeCriteria);
+        long total=countStore();
+        int pages,sise;
+        if (total%currentpage==0){
+            pages= (int) (total/currentpage);
+        }else {
+            pages= (int) (total/currentpage)+1;
+        }
+        if (pages*pagesize==total){
+            sise=currentpage*pagesize;
+        }else {
+            if (currentpage<pages){
+                sise=currentpage*pagesize;
+            }else {
+                sise= (int) total;
+            }
+        }
+        PageBean<Store> lists=new PageBean<Store>(total,currentpage,pagesize,pages,sise,list);
+        return lists;
+
+    }
+
+    @Override
+    public PageBean<Store> findShop(int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        StoreCriteria storeCriteria=new StoreCriteria();
+        StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
+        criteria.andIsauthEqualTo((byte) 0);
+        List<Store> list=storeMapper.selectByExample(storeCriteria);
+        long total=countStore();
+        int pages,sise;
+        if (total%currentpage==0){
+            pages= (int) (total/currentpage);
+        }else {
+            pages= (int) (total/currentpage)+1;
+        }
+        if (pages*pagesize==total){
+            sise=currentpage*pagesize;
+        }else {
+            if (currentpage<pages){
+                sise=currentpage*pagesize;
+            }else {
+                sise= (int) total;
+            }
+        }
+        PageBean<Store> lists=new PageBean<Store>(total,currentpage,pagesize,pages,sise,list);
+        return lists;
+
+    }
+
 }

@@ -335,12 +335,7 @@ public class OrderServiceImpl implements OrderService {
                 List<Order> list1=orderMapper.selectByExample(orderCriteria);
                 Float dayMoney=null;
                 for (int j = 0; j <list1.size() ; j++) {
-                    int userRole=userMapper.selectByPrimaryKey(list1.get(j).getUserid()).getRole();
-                    if (userRole==1){
-                        dayMoney+=list1.get(j).getMemberprice();
-                    }else {
-                        dayMoney+=list1.get(j).getMarketpricce();
-                    }
+                    dayMoney+=list1.get(j).getPricesum();
                 }
                 list.add(dayMoney);
 
@@ -355,12 +350,7 @@ public class OrderServiceImpl implements OrderService {
                 List<Order> list1=orderMapper.selectByExample(orderCriteria);
                 Float dayMoney=null;
                 for (int j = 0; j <list1.size() ; j++) {
-                    int userRole=userMapper.selectByPrimaryKey(list1.get(j).getUserid()).getRole();
-                    if (userRole==1){
-                        dayMoney+=list1.get(j).getMemberprice();
-                    }else {
-                        dayMoney+=list1.get(j).getMarketpricce();
-                    }
+                    dayMoney+=list1.get(j).getPricesum();
                 }
                 list.add(dayMoney);
 
@@ -459,6 +449,56 @@ public class OrderServiceImpl implements OrderService {
         list.add(cancel);
         list.add(complete);
         return list;
+    }
+
+    @Override
+    public List<Float> monthMoney() {
+        List<Float> list=new ArrayList<Float>();
+        String currentTime=String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-01 00:00:00");
+        String b= null;
+        Date date=null;
+        Date date1=null;
+        Date date2=null;
+        try {
+            b=sdf2.format(sdf1.parse(currentTime));
+            date=sdf2.parse(b);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.DATE,1);
+        c.roll(Calendar.DATE,-1);
+        int months=c.get(Calendar.DATE);
+        try {
+            date1=sdf3.parse(b);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for (int i=1;i<months+1;i++){
+            SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+i+" 23:59:59");
+            try {
+                date2=sdf4.parse(b);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            OrderCriteria orderCriteria=new OrderCriteria();
+            OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+            criteria.andPaytimeBetween(date1,date2);
+            List<Order> list1=orderMapper.selectByExample(orderCriteria);
+            Float sumMoney=null;
+            for (int j = 0; j <list1.size() ; j++) {
+                sumMoney+=list1.get(j).getPricesum();
+            }
+             list.add(sumMoney);
+        }
+        return list;
+
     }
 
     @Override

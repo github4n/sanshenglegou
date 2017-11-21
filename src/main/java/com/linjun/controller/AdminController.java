@@ -1,5 +1,6 @@
 package com.linjun.controller;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
 import com.linjun.entity.PageBean;
@@ -47,6 +48,10 @@ public class AdminController {
      MemberApplyService memberApplyService;
      @Autowired
      VillageApplyService villageApplyService;
+     @Autowired
+     StoreApplyService storeApplyService;
+     @Autowired
+     WithDrawApplyService withDrawApplyService;
 
 
 //    管理员登入
@@ -64,6 +69,29 @@ public class AdminController {
         }
 
     }
+//    首页的数据概览
+    @GetMapping(value = "/getHeaderData")
+    public  JsonResult getHeaderData(){
+        try{
+            HearData hearData=new HearData();
+            hearData.setSumUser(userService.countUser());
+            hearData.setSumOrder(orderService.sumOrder());
+           hearData.setSumStore(storeService.countStore());
+           hearData.setSumMember(userService.countMenber());
+           hearData.setMonthMoney(orderService.monthMoney());
+           hearData.setMonthOrder(orderService.monthOrder());
+           hearData.setMonthMoney(orderService.monthMoney());
+           hearData.setMonthOrder(orderService.monthOrder());
+           hearData.setMonthvistor(userService.lookuser());
+           hearData.setMonthpay(orderService.monthOrder());
+          return  new JsonResult("200",hearData);
+
+        }catch (Exception e){
+         return new JsonResult("500",e.getMessage());
+        }
+    }
+
+
 //    得到所有用户列表
     @GetMapping(value = "/getUserAll")
     public JsonResult getUserAll(@RequestParam(value = "page",required = false)int page,@RequestParam(value = "pageszie")int pagesize){
@@ -97,8 +125,6 @@ public class AdminController {
 //   获取所有的店家列表
     @GetMapping(value = "/getStoreAll")
     public  JsonResult getStoreAll(@RequestParam(value = "page")int page,@RequestParam(value = "pagesize")int pagesize){
-
-
         try{
             PageBean<Store> list=storeService.findAllStore(page,pagesize);
             return  new JsonResult("200",list);
@@ -106,6 +132,56 @@ public class AdminController {
             return  new JsonResult("500", e.getMessage());
         }
     }
+//    获取启用店家列表
+
+    @GetMapping(value = "/getStartStore")
+  public  JsonResult getStartStore(
+          @RequestParam(value = "page") int page,
+          @RequestParam(value = "pagesize")int pagesize
+    ){
+
+        try{
+            PageBean<Store> list=storeService.findStart(page,pagesize);
+   return  new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+
+    }
+//获取禁用店家列表
+    @GetMapping(value = "/getStopStore")
+    public  JsonResult getStopStore(
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize") int pagesize
+    ){
+              try{
+                  PageBean<Store> list=storeService.findShop(page,pagesize);
+                  return  new JsonResult("200",list);
+
+              }catch ( Exception e){
+                  return  new JsonResult("500",e.getMessage());
+              }
+    }
+//商品类别设置
+    @PutMapping(value = "/updateGoodsType")
+    public  JsonResult updateGoodsType(
+            @RequestBody GoodsType goodsType
+    ){
+        try{
+            GoodsType goodsType1=goodsTypeService.update(goodsType);
+            return  new JsonResult("200",goodsType1);
+
+        }catch ( Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
+
+
+
+
+
+
+
 
 //    获取所有商品
     @GetMapping(value = "/getGoodsAll")
@@ -165,7 +241,11 @@ public class AdminController {
              orderListAdmin.setAllPrice(data.getPricesum());
              SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-             orderListAdmin.setCreateTime(df.format(data.getPaytime()));
+             orderListAdmin.setCreateTime(df.format(data.getCreatetime()));
+             orderListAdmin.setSendTime(df.format(data.getSendtime()));
+             orderListAdmin.setPayTime(df.format(data.getPaytime()));
+             orderListAdmin.setCompletTime(df.format(data.getCompletetime()));
+              orderListAdmin.setCancelTime(df.format(data.getCancel()));
              orderListAdmin.setOrderCode(data.getOrdercode());
              int a=userService.findByID(data.getUserid()).getRole();
              if (a==1){
@@ -179,6 +259,8 @@ public class AdminController {
              orderListAdmin.setStorer(storeService.findByid(data.getUserid()).getStorer());
              orderListAdmin.setStoreid(data.getUserid());
              orderListAdmin.setStatus(data.getIspay());
+
+
               list.add(orderListAdmin);
          }
           return new JsonResult("200",list);
@@ -281,7 +363,22 @@ public class AdminController {
               }
 
     }
-//村村通申请呢
+//    会员申请更新
+    @PutMapping(value = "updateMemberApply")
+    public JsonResult update(
+            @RequestBody MemberApply memberApply
+    ){
+       try{
+           MemberApply memberApply1=memberApplyService.update(memberApply);
+           return  new JsonResult("200",memberApply1);
+       }catch (Exception e){
+        return  new JsonResult("500",e.getMessage());
+       }
+    }
+
+
+
+//村村通申请
     @GetMapping(value = "/getVillageApply")
     public  JsonResult getVillageApply(
             @RequestParam(value = "page")int page,
@@ -294,27 +391,74 @@ public class AdminController {
              return  new JsonResult("500",e.getMessage());
          }
     }
+//    村村通申请更新
+    @PutMapping(value = "/updateVillageApply")
+    public  JsonResult updateVillageApply(
+            @RequestBody VillageApply villageApply
+    ){
+          try{
+              VillageApply villageApply1=villageApplyService.update(villageApply);
+              return  new JsonResult("200",villageApply1);
+          }catch (Exception e){
+              return  new JsonResult("500",e.getMessage());
+          }
+    }
+
+
 
 //商城申请
-
-
-
-
-//  获得所有店铺
-    @GetMapping(value = "/getStore")
-    public  JsonResult getStore(
-            @RequestParam(value = "page",required = false)int page
+  @GetMapping(value = "/getStoreApply")
+  public JsonResult getStoreApply(
+          @RequestParam(value = "page")int page,
+          @RequestParam(value = "pagesize") int pagesize
+  ){
+         try{
+             PageBean<StoreApply> list=storeApplyService.findAll(page,pagesize);
+             return  new JsonResult("200",list);
+         }catch (Exception e){
+             return  new JsonResult("500",e.getMessage());
+         }
+  }
+//  商城申请更新
+    @PutMapping(value = "/updateStoreApply")
+    public  JsonResult updateStoreApply(
+            @RequestBody StoreApply storeApply
     ){
-        try {
-//            PageHelper.startPage(page,2);
-//            List<Store> storeList=storeService.findAll();
+       try{
+           StoreApply storeApply1=storeApplyService.update(storeApply);
+           return  new JsonResult("200",storeApply1);
+       }catch (Exception e){
+        return  new JsonResult("500",e.getMessage());
+       }
+    }
 
-
-            return  new JsonResult("200",storeService.findAllStore(page,2));
-        }catch (Exception e){
-            return  new JsonResult("500",e.getMessage());
+//提现申请
+    @GetMapping(value = "/getWithDrawApply")
+    public  JsonResult getWithDrawApply(
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+        try{
+            PageBean<WithDrawApply> list=withDrawApplyService.findAll(page,pagesize);
+            return  new JsonResult("200",list);
+        }catch (Exception e) {
+return new JsonResult("500",e.getMessage());
         }
     }
+//    提现状态更新
+    @PutMapping(value = "/updateWithDrawApply")
+    public JsonResult updateWithDrawApply(
+            @RequestBody WithDrawApply withDrawApply
+    ){
+       try{
+          WithDrawApply withDrawApply1=withDrawApplyService.update(withDrawApply);
+           return  new JsonResult("200",withDrawApply1);
+       }catch (Exception e){
+           return  new JsonResult("500",e.getMessage());
+       }
+
+    }
+
    @GetMapping(value = "/getstorelist")
     public  JsonResult getstorelist(){
        List<Store> stores=storeService.findAll();

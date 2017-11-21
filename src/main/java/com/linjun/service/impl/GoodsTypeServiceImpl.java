@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.GoodsTypeMapper;
 import com.linjun.model.GoodsType;
 import com.linjun.model.GoodsTypeCriteria;
@@ -38,5 +39,15 @@ public class GoodsTypeServiceImpl implements GoodsTypeService {
     @Override
     public GoodsType findById(long id) {
         return goodsTypeMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public GoodsType update(GoodsType goodsType) {
+        int result=goodsTypeMapper.updateByPrimaryKeySelective(goodsType);
+        if (result>0){
+             return  goodsTypeMapper.selectByPrimaryKey(goodsType.getId());
+        }else {
+            throw new PeopleException("更新失败");
+        }
     }
 }

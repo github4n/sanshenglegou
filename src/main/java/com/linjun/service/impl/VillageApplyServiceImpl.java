@@ -1,6 +1,7 @@
 package com.linjun.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.VillageApplyMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.VillageApply;
@@ -45,5 +46,17 @@ public class VillageApplyServiceImpl implements VillageApplyService {
         VillageApplyCriteria villageApplyCriteria=new VillageApplyCriteria();
 
         return villageApplyMapper.countByExample(villageApplyCriteria);
+    }
+
+    @Override
+    public VillageApply update(VillageApply villageApply) {
+        int result=villageApplyMapper.updateByPrimaryKeySelective(villageApply);
+        if (result>0){
+            VillageApply villageApply1=villageApplyMapper.selectByPrimaryKey(villageApply.getId());
+            return  villageApply1;
+        }else {
+            throw new PeopleException("更新失败");
+        }
+
     }
 }

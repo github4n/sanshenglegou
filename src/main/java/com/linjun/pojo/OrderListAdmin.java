@@ -11,6 +11,10 @@ public class OrderListAdmin {
     private  String storeName;
     private  String storer;
     private  String createTime;
+    private String  payTime;
+    private  String sendTime;
+    private  String cancelTime;
+    private  String completTime;
     private  String revierPeople;
     private  String tel;
     private  Float price;
@@ -18,6 +22,41 @@ public class OrderListAdmin {
     private Integer acount;
     private Float allPrice;
     private  byte status;
+
+
+    public String getPayTime() {
+        return payTime;
+    }
+
+    public void setPayTime(String payTime) {
+        this.payTime = payTime;
+    }
+
+    public String getSendTime() {
+        return sendTime;
+    }
+
+    public void setSendTime(String sendTime) {
+        this.sendTime = sendTime;
+    }
+
+    public String getCancelTime() {
+        return cancelTime;
+    }
+
+    public void setCancelTime(String cancelTime) {
+        this.cancelTime = cancelTime;
+    }
+
+    public String getCompletTime() {
+        return completTime;
+    }
+
+    public void setCompletTime(String completTime) {
+        this.completTime = completTime;
+    }
+
+
 
     public Long getId() {
         return id;

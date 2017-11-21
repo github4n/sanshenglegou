@@ -30,5 +30,6 @@ public interface UserService {
     User updateUser(User user);
    PageBean<User> findUserList(int cuurrentPage, int pageSize);
       Integer monthDay();
-
+      Long countMenber();
+   List<Integer> lookuser();
 }

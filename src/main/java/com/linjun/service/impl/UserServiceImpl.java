@@ -278,4 +278,66 @@ public class UserServiceImpl implements UserService {
         int months=c.get(Calendar.DATE);
         return months;
     }
+
+    @Override
+    public Long countMenber() {
+        UserCriteria userCriteria=new UserCriteria();
+        UserCriteria.Criteria criteria=userCriteria.createCriteria();
+        criteria.andRoleEqualTo((byte) 1);
+
+
+        return userMapper.countByExample(userCriteria);
+    }
+
+    @Override
+    public List<Integer> lookuser() {
+
+        List<Integer>  list=new ArrayList<Integer>();
+        String a= String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-01 00:00:00");
+        String b= null;
+        Date date=null;
+        Date date1=null;
+        Date date2=null;
+        try {
+            b = sdf2.format(sdf1.parse(a));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            date=sdf2.parse(b);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.DATE,1);
+        c.roll(Calendar.DATE,-1);
+        int months=c.get(Calendar.DATE);
+        try {
+            date1=sdf3.parse(b);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        for (int i = 1; i <months+1 ; i++) {
+
+            SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+i+" 23:59:59");
+            try {
+                date2=sdf4.parse(b);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            UserCriteria userCriteria=new UserCriteria();
+            UserCriteria.Criteria criteria=userCriteria.createCriteria();
+            criteria.andLoginBetween(date1,date2);
+            list.add((int) userMapper.countByExample(userCriteria));
+        }
+        return list;
+
+    }
 }

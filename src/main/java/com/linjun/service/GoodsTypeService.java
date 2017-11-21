@@ -8,4 +8,5 @@ public interface GoodsTypeService {
     public  int update(long id,GoodsType goodsType);
     public Long findByfather(long id);
     GoodsType findById(long id);
+    GoodsType update(GoodsType goodsType);
 }

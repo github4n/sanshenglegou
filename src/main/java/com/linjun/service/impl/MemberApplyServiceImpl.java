@@ -1,6 +1,7 @@
 package com.linjun.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.MemberApplyMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.MemberApply;
@@ -44,5 +45,15 @@ public class MemberApplyServiceImpl implements MemberApplyService {
     public Long countMapply() {
         MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
         return memberApplyMapper.countByExample(memberApplyCriteria);
+    }
+
+    @Override
+    public MemberApply update(MemberApply memberApply) {
+          int reslut=memberApplyMapper.updateByPrimaryKeySelective(memberApply);
+          if (reslut>0){
+              return memberApplyMapper.selectByPrimaryKey(memberApply.getId());
+          }else {
+              throw  new PeopleException("更新失败");
+          }
     }
 }
