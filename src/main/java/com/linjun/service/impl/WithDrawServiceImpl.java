@@ -68,4 +68,40 @@ public class WithDrawServiceImpl implements WithDrawApplyService {
          throw  new PeopleException("删除失败");
         }
     }
+
+    @Override
+    public PageBean<WithDrawApply> findByStatus(byte status, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        WithDrawApplyCriteria withDrawApplyCriteria=new WithDrawApplyCriteria();
+        WithDrawApplyCriteria.Criteria criteria=withDrawApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        List<WithDrawApply> list=withDrawApplyMapper.selectByExample(withDrawApplyCriteria);
+        long total=countWithDraw();
+        int pages,sise;
+        if (total%currentpage==0){
+            pages = (int) (total/currentpage);
+        }else {
+            pages= (int) (total/currentpage)+1;
+        }
+        if (pages*pagesize==total){
+            sise=currentpage*pagesize;
+        }else {
+            if (currentpage<pages){
+                sise=currentpage*pagesize;
+            }else {
+                sise= (int) total;
+            }
+        }
+        PageBean<WithDrawApply> lists=new PageBean<WithDrawApply>(total,currentpage,pagesize,pages,sise,list);
+        return lists;
+
+    }
+
+    @Override
+    public Long acountByStatus(byte status) {
+        WithDrawApplyCriteria withDrawApplyCriteria=new WithDrawApplyCriteria();
+        WithDrawApplyCriteria.Criteria criteria=withDrawApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        return withDrawApplyMapper.countByExample(withDrawApplyCriteria);
+    }
 }

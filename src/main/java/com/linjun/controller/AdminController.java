@@ -12,6 +12,7 @@ import org.mapstruct.TargetType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sound.sampled.Line;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -410,6 +411,23 @@ public class AdminController {
         return  new JsonResult("500",e.getMessage());
        }
     }
+//    获取会员几种状态的列表
+    @GetMapping(value = "/getStatusMember")
+    public JsonResult getStatusMember(
+            @RequestParam(value = "status")byte status,
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+                try{
+                    PageBean<MemberApply> list=memberApplyService.findByStatus(status,page,pagesize);
+
+
+            return  new JsonResult("200",list);
+                }catch (Exception e){
+                    return  new JsonResult("500",e.getMessage());
+                }
+
+    }
 //会员申请删除
     @DeleteMapping(value = "/deleteMemberApply")
     public JsonResult deleteMemberApply(
@@ -462,6 +480,22 @@ public class AdminController {
               return  new JsonResult("500",e.getMessage());
           }
     }
+//    获取村村通指定状态的列表
+@GetMapping(value = "/getStatusVillage")
+public  JsonResult getStatusVillage(
+        @RequestParam(value = "status")byte status,
+        @RequestParam(value = "page")int page,
+        @RequestParam(value = "pagesize")int pagesize
+
+){
+      try{
+          PageBean<VillageApply> list=villageApplyService.findByStatus(status,page,pagesize);
+          return  new JsonResult("200",list);
+      }catch (Exception e){
+          return  new JsonResult("500",e.getMessage());
+      }
+}
+
 
 
 //商城申请
@@ -503,7 +537,22 @@ public class AdminController {
           }
 
     }
+//获取商城
+    @GetMapping(value = "/getStatusStoreApply")
+    public  JsonResult getStatusStoreApply(
+            @RequestParam(value = "status")byte status,
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+            try{
+                PageBean<StoreApply> list=storeApplyService.findByStatus(status,page,pagesize);
+                return  new JsonResult("200",list);
 
+            }catch (Exception e){
+                return  new JsonResult("500",e.getMessage());
+            }
+
+    }
 
 
 //提现申请
@@ -545,14 +594,42 @@ return new JsonResult("500",e.getMessage());
          }
 
     }
+//    获取提现状态的列表
+    @GetMapping(value = "/getStatusWithDraw")
+    public JsonResult getStatusWith(
+            @RequestParam(value = "status")byte status,
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+           try{
+               PageBean<WithDrawApply> list=withDrawApplyService.findByStatus(status,page,pagesize);
+               return  new JsonResult("200",list);
+           }catch (Exception e){
+               return  new JsonResult("500",e.getMessage());
+           }
+    }
 
 
 
-   @GetMapping(value = "/getstorelist")
-    public  JsonResult getstorelist(){
-       List<Store> stores=storeService.findAll();
-       return  new JsonResult("200",stores);
-   }
+//    得到消息通知
+ @GetMapping(value = "/getinfo")
+ public  JsonResult getinfo(
+         @RequestParam(value = "status")byte status
+ ){
+      try{
+          InfoData infoData=new InfoData();
+          infoData.setMemberinfo( memberApplyService.countByStatus(status));
+          infoData.setStoreapplyinfo(storeApplyService.count(status));
+          infoData.setVillageinfo(villageApplyService.acountBystatus(status));
+          infoData.setWithdrawinfo(withDrawApplyService.acountByStatus(status));
+
+      return  new JsonResult("200",infoData);
+      }catch (Exception e){
+        return  new JsonResult("500",e.getMessage());
+      }
+ }
+
+
 
 
 }

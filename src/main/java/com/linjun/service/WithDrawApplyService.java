@@ -8,4 +8,7 @@ public interface WithDrawApplyService {
     Long countWithDraw();
     WithDrawApply update(WithDrawApply withDrawApply);
     int delete(long id);
+    PageBean<WithDrawApply> findByStatus(byte status,int currentpage,int pagesize);
+    Long acountByStatus(byte status);
+
 }

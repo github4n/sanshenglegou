@@ -8,4 +8,6 @@ public interface VillageApplyService {
     Long countVillage();
     VillageApply update(VillageApply villageApply);
      int delete(long id);
+     PageBean<VillageApply> findByStatus(byte status,int currentpage,int pagesize);
+     Long acountBystatus(byte status);
 }

@@ -66,4 +66,69 @@ public class MemberApplyServiceImpl implements MemberApplyService {
             throw new PeopleException("删除失败");
         }
     }
+
+    @Override
+    public PageBean<MemberApply> findByStatus(byte status,int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
+        MemberApplyCriteria.Criteria criteria=memberApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+
+        List<MemberApply> list=memberApplyMapper.selectByExample(memberApplyCriteria);
+        long total=countMapply();
+        int pages,size;
+        if (total%currentpage==0){
+            pages= (int) (total/currentpage);
+        }else {
+            pages= (int) (total/currentpage)+1;
+        }
+        if (pages*pagesize==total){
+            size=currentpage*pagesize;
+        }else {
+            if (currentpage<pages){
+                size=currentpage*pagesize;
+            }else {
+                size= (int) total;
+            }
+        }
+        PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
+        return lists;
+
+    }
+
+    @Override
+    public Long countByStatus(byte status) {
+        MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
+        MemberApplyCriteria.Criteria criteria=memberApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        return memberApplyMapper.countByExample(memberApplyCriteria);
+    }
+
+    @Override
+    public PageBean<MemberApply> findBy(String condition, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
+        MemberApplyCriteria.Criteria criteria=memberApplyCriteria.createCriteria();
+           criteria.andBankacountLike(condition);
+           criteria.andUsernameLike(condition);
+        List<MemberApply> list=memberApplyMapper.selectByExample(memberApplyCriteria);
+        long total=countMapply();
+        int pages,size;
+        if (total%currentpage==0){
+            pages= (int) (total/currentpage);
+        }else {
+            pages= (int) (total/currentpage)+1;
+        }
+        if (pages*pagesize==total){
+            size=currentpage*pagesize;
+        }else {
+            if (currentpage<pages){
+                size=currentpage*pagesize;
+            }else {
+                size= (int) total;
+            }
+        }
+        PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
+        return lists;
+    }
 }

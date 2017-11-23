@@ -69,4 +69,40 @@ public class VillageApplyServiceImpl implements VillageApplyService {
          throw new PeopleException("删除失败");
         }
     }
+
+    @Override
+    public PageBean<VillageApply> findByStatus(byte status, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        VillageApplyCriteria villageApplyCriteria=new VillageApplyCriteria();
+        VillageApplyCriteria.Criteria criteria=villageApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        List<VillageApply> list=villageApplyMapper.selectByExample(villageApplyCriteria);
+        long total=countVillage();
+        int pages,sise;
+        if (total%currentpage==0){
+            pages = (int) (total/currentpage);
+        }else {
+            pages= (int) (total/currentpage)+1;
+        }
+        if (pages*pagesize==total){
+            sise=currentpage*pagesize;
+        }else {
+            if (currentpage<pages){
+                sise=currentpage*pagesize;
+            }else {
+                sise= (int) total;
+            }
+        }
+        PageBean<VillageApply> lists=new PageBean<VillageApply>(total,currentpage,pagesize,pages,sise,list);
+        return lists;
+
+    }
+
+    @Override
+    public Long acountBystatus(byte status) {
+         VillageApplyCriteria villageApplyCriteria=new VillageApplyCriteria();
+        VillageApplyCriteria.Criteria criteria=villageApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        return villageApplyMapper.countByExample(villageApplyCriteria);
+    }
 }

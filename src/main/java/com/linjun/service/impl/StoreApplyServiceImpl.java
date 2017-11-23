@@ -69,4 +69,39 @@ public class StoreApplyServiceImpl implements StoreApplyService {
              throw new PeopleException("删除失败");
          }
     }
+
+    @Override
+    public PageBean<StoreApply> findByStatus(byte status, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        StoreApplyCriteria storeApplyCriteria=new StoreApplyCriteria();
+        StoreApplyCriteria.Criteria criteria=storeApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        List<StoreApply> list=storeApplyMapper.selectByExample(storeApplyCriteria);
+        long total=countStoreApply();
+        int pages,sise;
+        if (total%currentpage==0){
+            pages = (int) (total/currentpage);
+        }else {
+            pages= (int) (total/currentpage)+1;
+        }
+        if (pages*pagesize==total){
+            sise=currentpage*pagesize;
+        }else {
+            if (currentpage<pages){
+                sise=currentpage*pagesize;
+            }else {
+                sise= (int) total;
+            }
+        }
+        PageBean<StoreApply> lists=new PageBean<StoreApply>(total,currentpage,pagesize,pages,sise,list);
+        return lists;
+    }
+
+    @Override
+    public Long count(byte status) {
+        StoreApplyCriteria storeApplyCriteria=new StoreApplyCriteria();
+        StoreApplyCriteria.Criteria criteria=storeApplyCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        return storeApplyMapper.countByExample(storeApplyCriteria);
+    }
 }

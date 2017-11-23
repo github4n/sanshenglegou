@@ -8,4 +8,6 @@ public interface StoreApplyService {
     Long countStoreApply();
      StoreApply update(StoreApply storeApply);
      int delete(long id);
+     PageBean<StoreApply> findByStatus(byte status,int currentpage,int pagesize);
+     Long count(byte status);
 }

@@ -10,4 +10,7 @@ public interface MemberApplyService {
     Long countMapply();
     MemberApply update(MemberApply memberApply);
     int delete(long id);
+    PageBean<MemberApply> findByStatus(byte status,int currentpage,int pagesize);
+    Long countByStatus(byte status);
+    PageBean<MemberApply> findBy(String condition,int currentpage,int pagesize);
 }
