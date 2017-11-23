@@ -57,4 +57,15 @@ public class WithDrawServiceImpl implements WithDrawApplyService {
               throw new PeopleException("更新失败");
           }
     }
+
+    @Override
+    public int delete(long id) {
+        int result=withDrawApplyMapper.deleteByPrimaryKey(id);
+        if (result>0){
+            return  result;
+
+        }else {
+         throw  new PeopleException("删除失败");
+        }
+    }
 }

@@ -7,5 +7,5 @@ public interface VillageApplyService {
     PageBean<VillageApply> findAll(int currentpage,int pagesize);
     Long countVillage();
     VillageApply update(VillageApply villageApply);
-
+     int delete(long id);
 }

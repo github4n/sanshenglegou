@@ -9,4 +9,5 @@ public interface MemberApplyService {
     PageBean<MemberApply> findAll(int currentpage,int pagesize);
     Long countMapply();
     MemberApply update(MemberApply memberApply);
+    int delete(long id);
 }

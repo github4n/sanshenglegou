@@ -132,6 +132,34 @@ public class AdminController {
             return  new JsonResult("500", e.getMessage());
         }
     }
+//    修改店家的状态
+    @PutMapping(value ="/updateStore")
+    public  JsonResult updateStore(
+            @RequestBody Store store
+    ){
+        try{
+            Store store1= storeService.updateStore(store);
+            return  new JsonResult("200",store1);
+        }catch (Exception e){
+         return  new JsonResult("500",e.getMessage());
+        }
+    }
+//删除店铺
+    @DeleteMapping(value = "/deleteStore")
+    public  JsonResult deleteStore(
+            @RequestParam(value ="id")int id
+    ) {
+        try {
+            int reslut=storeService.deletebyid(id);
+            return  new JsonResult("200",reslut);
+
+        } catch (Exception e) {
+         return  new JsonResult("500",e.getMessage());
+        }
+    }
+
+
+
 //    获取启用店家列表
 
     @GetMapping(value = "/getStartStore")
@@ -364,19 +392,37 @@ public class AdminController {
 
     }
 //    会员申请更新
-    @PutMapping(value = "updateMemberApply")
+    @PutMapping(value = "/updateMemberApply")
     public JsonResult update(
             @RequestBody MemberApply memberApply
     ){
        try{
            MemberApply memberApply1=memberApplyService.update(memberApply);
+           if (memberApply.getStutas()==1){
+             User user=new User();
+               user.setId(memberApply.getUserid());
+               user.setRole((byte) 1);
+               userService.updateUser(user);
+           }
+
            return  new JsonResult("200",memberApply1);
        }catch (Exception e){
         return  new JsonResult("500",e.getMessage());
        }
     }
+//会员申请删除
+    @DeleteMapping(value = "/deleteMemberApply")
+    public JsonResult deleteMemberApply(
+            @RequestParam(value = "id")long id
+    ){
+          try{
+              int result=memberApplyService.delete(id);
+              return  new JsonResult("200",result);
+          }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+          }
 
-
+    }
 
 //村村通申请
     @GetMapping(value = "/getVillageApply")
@@ -403,7 +449,19 @@ public class AdminController {
               return  new JsonResult("500",e.getMessage());
           }
     }
+//村村通申请删除
+    @DeleteMapping(value = "/deleteVillage")
+   public  JsonResult deleteVillage(
+           @RequestParam(value = "id")long id
+    ){
+          try{
+              int result=villageApplyService.delete(id);
+              return  new JsonResult("200",result);
 
+          }catch (Exception e){
+              return  new JsonResult("500",e.getMessage());
+          }
+    }
 
 
 //商城申请
@@ -431,6 +489,22 @@ public class AdminController {
         return  new JsonResult("500",e.getMessage());
        }
     }
+//    商城申请删除
+    @DeleteMapping(value = "/deleteStoreApply")
+    public  JsonResult deleteStoreApply(
+            @RequestParam(value = "id")int id
+    ){
+          try{
+              int result=storeApplyService.delete(id);
+              return new JsonResult("200",result);
+
+          }catch (Exception e){
+              return new JsonResult("500",e.getMessage());
+          }
+
+    }
+
+
 
 //提现申请
     @GetMapping(value = "/getWithDrawApply")
@@ -458,6 +532,21 @@ return new JsonResult("500",e.getMessage());
        }
 
     }
+//    提现状态删除
+    @DeleteMapping(value = "/deleteWithDraw")
+    public  JsonResult deleteWithDraw(
+            @RequestParam(value = "id")int id
+    ){
+         try{
+             int result=withDrawApplyService.delete(id);
+             return new JsonResult("200",result);
+         }catch (Exception e){
+             return  new JsonResult("500",e.getMessage());
+         }
+
+    }
+
+
 
    @GetMapping(value = "/getstorelist")
     public  JsonResult getstorelist(){

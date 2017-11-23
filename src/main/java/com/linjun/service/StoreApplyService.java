@@ -7,4 +7,5 @@ public interface StoreApplyService {
     PageBean<StoreApply> findAll(int currentpage,int pagesize);
     Long countStoreApply();
      StoreApply update(StoreApply storeApply);
+     int delete(long id);
 }

@@ -44,7 +44,6 @@ public class AddressMongerServiceImpl implements AddressMongerService {
         criteria.andIsdefaultEqualTo((byte) label);
         return (AddressManger) addressMangerMapper.selectByExample(addressMangerCriteria);
     }
-
     public int deleteByuan(long userid, String name) {
         AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();
         AddressMangerCriteria.Criteria criteria=addressMangerCriteria.createCriteria();

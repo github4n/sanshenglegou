@@ -59,4 +59,14 @@ public class VillageApplyServiceImpl implements VillageApplyService {
         }
 
     }
+
+    @Override
+    public int delete(long id) {
+        int result=villageApplyMapper.deleteByPrimaryKey(id);
+        if (result>0){
+            return  result;
+        }else {
+         throw new PeopleException("删除失败");
+        }
+    }
 }
