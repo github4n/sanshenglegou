@@ -22,4 +22,6 @@ public interface StoreService {
     long countStore();
     PageBean<Store> findStart(int  currentpage,int pagesize);
     PageBean<Store> findShop(int currentpage,int pagesize);
+    int changeList(List<Store> stores );
+    int deleleList(List<Store> stores);
 }

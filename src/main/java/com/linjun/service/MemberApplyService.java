@@ -13,4 +13,5 @@ public interface MemberApplyService {
     PageBean<MemberApply> findByStatus(byte status,int currentpage,int pagesize);
     Long countByStatus(byte status);
     PageBean<MemberApply> findBy(String condition,int currentpage,int pagesize);
+    PageBean<MemberApply> findByStatus(String condition,byte status,int currentpage,int pagesize);
 }

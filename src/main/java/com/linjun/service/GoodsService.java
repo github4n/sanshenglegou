@@ -16,5 +16,7 @@ public interface GoodsService {
 //    所有的商品
     PageBean<Goods>  goodsAll(int cuurrentPage,int pagessize);
     Goods updateGoods(Goods goods);
-
+    PageBean<Goods> findBy(byte status,int currentpage,int paegsize);
+    PageBean<Goods> search(Object condition,int currentpage,int paegsize);
+    PageBean<Goods> searchByStatus(Object condition,byte status,int currentpage,int pagesize);
 }

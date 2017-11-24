@@ -10,5 +10,7 @@ public interface WithDrawApplyService {
     int delete(long id);
     PageBean<WithDrawApply> findByStatus(byte status,int currentpage,int pagesize);
     Long acountByStatus(byte status);
+    PageBean<WithDrawApply> search(String condition,int currentpage,int pagesize);
+    PageBean<WithDrawApply> searchByStatus(String condition,byte status,int currentpage,int pagesize);
 
 }

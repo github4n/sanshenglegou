@@ -10,6 +10,7 @@ import com.linjun.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -128,24 +129,29 @@ public class GoodsServiceImpl implements GoodsService {
         PageHelper.startPage(cuurrentPage,pagessize);
         GoodsCriteria goodsCriteria=new GoodsCriteria();
         List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
-        long total=countGoods();
-        int pages,sise;
-        if (total%cuurrentPage==0){
-            pages= (int) (total/cuurrentPage);
-        }else {
-            pages= (int) (total/cuurrentPage)+1;
-        }
-        if (pages*pagessize==total){
-            sise=cuurrentPage*pagessize;
-        }else {
-            if (cuurrentPage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countGoods();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagessize==total){
                 sise=cuurrentPage*pagessize;
             }else {
-                sise= (int) total;
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagessize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagessize,pages,sise,list);
+            return goodslist;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagessize,pages,sise,list);
-        return goodslist;
+
     }
 
     @Override
@@ -155,6 +161,108 @@ public class GoodsServiceImpl implements GoodsService {
             return goodsMapper.selectByPrimaryKey(goods.getId());
         }else {
             throw new PeopleException("更新失败");
+        }
+    }
+
+    @Override
+    public PageBean<Goods> findBy(byte status, int cuurrentPage, int pagessize) {
+
+        PageHelper.startPage(cuurrentPage,pagessize);
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
+        criteria.andIsstartEqualTo(status);
+        List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
+        if (list!=null&&list.size()>0){
+            long total=countGoods();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagessize==total){
+                sise=cuurrentPage*pagessize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagessize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagessize,pages,sise,list);
+            return goodslist;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+
+    }
+
+    @Override
+    public PageBean<Goods> search(Object condition, int cuurrentPage, int pagessize) {
+        PageHelper.startPage(cuurrentPage,pagessize);
+        List<Goods> list=new ArrayList<Goods>();
+        if (condition instanceof  String){
+            list=goodsMapper.dimfindStr('%'+(String)condition+'%');
+        }else  if (condition instanceof  Long){
+            GoodsCriteria goodsCriteria=new GoodsCriteria();
+            GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
+            criteria.andIdEqualTo('%'+(Long)condition+'%');
+            list=goodsMapper.selectByExample(goodsCriteria);
+        }
+        if (list!=null&&list.size()>0){
+            long total=countGoods();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagessize==total){
+                sise=cuurrentPage*pagessize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagessize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagessize,pages,sise,list);
+            return goodslist;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+    }
+
+    @Override
+    public PageBean<Goods> searchByStatus(Object condition, byte status, int cuurrentPage, int pagessize) {
+        PageHelper.startPage(cuurrentPage,pagessize);
+        List<Goods> list=new ArrayList<Goods>();
+        if (condition instanceof  String){
+            list=goodsMapper.dimfindStrStatus('%'+(String)condition+'%',status);
+        }else  if (condition instanceof  Long){
+            list=goodsMapper.dimfindStatus('%'+(Long)condition+'%',status);
+        }
+        if (list!=null&&list.size()>0){
+            long total=countGoods();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagessize==total){
+                sise=cuurrentPage*pagessize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagessize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Goods> goodslist=new PageBean<Goods>(total,cuurrentPage,pagessize,pages,sise,list);
+            return goodslist;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
     }
 

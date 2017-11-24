@@ -264,4 +264,75 @@ public class IncomeServiceImpl implements InComeService {
 
 
     }
+
+    @Override
+    public PageBean<Income> search(Object condition, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        List<Income> list=new ArrayList<Income>();
+        if (condition instanceof String){
+            IncomeCriteria incomeCriteria=new IncomeCriteria();
+            IncomeCriteria.Criteria criteria=incomeCriteria.createCriteria();
+            criteria.andPaynameLike(('%'+(String)condition+'%'));
+             list=incomeMapper.selectByExample(incomeCriteria);
+        }else if (condition instanceof Long){
+            list=incomeMapper.dimfind('%'+(Long)condition+'%');
+        }
+        if (list!=null&&list.size()>0){
+            long total=countIncome();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages= (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=currentpage*pagesize;
+            }else {
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Income> lists=new PageBean<Income>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
+        }
+
+
+    }
+
+    @Override
+    public PageBean<Income> searchByStatus(Object condition, byte status, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        List<Income> list=new ArrayList<Income>();
+        if (condition instanceof String){
+            list=incomeMapper.dimfindStrStatus('%'+(String)condition+'%',status);
+        }else if (condition instanceof Long){
+            list=incomeMapper.dimfindandstatus('%'+(Long)condition+'%',status);
+        }
+        if (list!=null&&list.size()>0){
+            long total=countIncome();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages= (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=currentpage*pagesize;
+            }else {
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Income> lists=new PageBean<Income>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
+        }
+    }
 }

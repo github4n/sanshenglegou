@@ -10,6 +10,7 @@ import com.linjun.model.OrderCriteria;
 import com.linjun.model.UserCriteria;
 import com.linjun.service.OrderService;
 import io.swagger.models.auth.In;
+import netscape.javascript.JSException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -148,24 +149,29 @@ public class OrderServiceImpl implements OrderService {
         PageHelper.startPage(cuurrentPage,pagesize);
         OrderCriteria storeCriteria=new OrderCriteria();
         List<Order> list=orderMapper.selectByExample(storeCriteria);
-        long total=countOrder();
-        int pages,sise;
-        if (total%cuurrentPage==0){
-            pages= (int) (total/cuurrentPage);
-        }else {
-            pages= (int) (total/cuurrentPage)+1;
-        }
-        if (pages*pagesize==total){
-            sise=cuurrentPage*pagesize;
-        }else {
-            if (cuurrentPage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countOrder();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagesize==total){
                 sise=cuurrentPage*pagesize;
             }else {
-                sise= (int) total;
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<Order> lists=new PageBean<Order>(total,cuurrentPage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<Order> lists=new PageBean<Order>(total,cuurrentPage,pagesize,pages,sise,list);
-        return lists; }
+         }
 
     @Override
     public long countOrder() {
@@ -502,6 +508,35 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public PageBean<Order> findBy(byte status, int cuurrentPage, int pagesize) {
+        PageHelper.startPage(cuurrentPage,pagesize);
+        OrderCriteria storeCriteria=new OrderCriteria();
+        List<Order> list=orderMapper.selectByExample(storeCriteria);
+        if (list!=null&&list.size()>0){
+            long total=countOrder();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=cuurrentPage*pagesize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Order> lists=new PageBean<Order>(total,cuurrentPage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+    }
+
+    @Override
     public List<Integer> monthOrder() {
       List<Integer> list=new ArrayList<Integer>();
       String currentTime=String.valueOf(new Date());
@@ -564,23 +599,87 @@ public class OrderServiceImpl implements OrderService {
         OrderCriteria storeCriteria=new OrderCriteria();
         storeCriteria.createCriteria().andStoreidEqualTo(storid);
         List<Order> list=orderMapper.selectByExample(storeCriteria);
-        long total=countOrder();
-        int pages,sise;
-        if (total%cuurrentPage==0){
-            pages= (int) (total/cuurrentPage);
-        }else {
-            pages= (int) (total/cuurrentPage)+1;
-        }
-        if (pages*pagesize==total){
-            sise=cuurrentPage*pagesize;
-        }else {
-            if (cuurrentPage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countOrder();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagesize==total){
                 sise=cuurrentPage*pagesize;
             }else {
-                sise= (int) total;
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<Order> lists=new PageBean<Order>(total,cuurrentPage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<Order> lists=new PageBean<Order>(total,cuurrentPage,pagesize,pages,sise,list);
-        return lists; }
+        }
+
+    @Override
+    public PageBean<Order> search(Long condition, int cuurrentPage, int pagesize) {
+        PageHelper.startPage(cuurrentPage,pagesize);
+        OrderCriteria storeCriteria=new OrderCriteria();
+        storeCriteria.createCriteria().andIdEqualTo(condition);
+        List<Order> list=orderMapper.selectByExample(storeCriteria);
+        if (list!=null&&list.size()>0){
+            long total=countOrder();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=cuurrentPage*pagesize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Order> lists=new PageBean<Order>(total,cuurrentPage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
     }
+
+    @Override
+    public PageBean<Order> searchByStatus(Long condition, byte status, int cuurrentPage, int pagesize) {
+        PageHelper.startPage(cuurrentPage,pagesize);
+
+        List<Order> list=orderMapper.dimStatus(condition,status);
+        if (list!=null&&list.size()>0){
+            long total=countOrder();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=cuurrentPage*pagesize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<Order> lists=new PageBean<Order>(total,cuurrentPage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+    }
+}
 

@@ -80,4 +80,14 @@ public class BannerSeriveImp implements BannerService {
         }
 
     }
+
+    @Override
+    public Banner add(Banner banner) {
+        int result=bannerMapper.insertSelective(banner);
+        if (result>0){
+            return bannerMapper.selectByPrimaryKey(banner.getId());
+        }else {
+            throw new PeopleException("添加失败");
+        }
+    }
 }

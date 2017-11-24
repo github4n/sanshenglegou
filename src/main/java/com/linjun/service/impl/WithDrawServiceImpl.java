@@ -21,24 +21,28 @@ public class WithDrawServiceImpl implements WithDrawApplyService {
         PageHelper.startPage(currentpage,pagesize);
         WithDrawApplyCriteria villageApplyCriteria=new WithDrawApplyCriteria();
         List<WithDrawApply> list=withDrawApplyMapper.selectByExample(villageApplyCriteria);
-        long total=countWithDraw();
-        int pages,sise;
-        if (total%currentpage==0){
-            pages = (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            sise=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countWithDraw();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
                 sise=currentpage*pagesize;
             }else {
-                sise= (int) total;
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<WithDrawApply> lists=new PageBean<WithDrawApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<WithDrawApply> lists=new PageBean<WithDrawApply>(total,currentpage,pagesize,pages,sise,list);
-        return lists;
     }
 
     @Override
@@ -76,24 +80,29 @@ public class WithDrawServiceImpl implements WithDrawApplyService {
         WithDrawApplyCriteria.Criteria criteria=withDrawApplyCriteria.createCriteria();
         criteria.andStutasEqualTo(status);
         List<WithDrawApply> list=withDrawApplyMapper.selectByExample(withDrawApplyCriteria);
-        long total=countWithDraw();
-        int pages,sise;
-        if (total%currentpage==0){
-            pages = (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            sise=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countWithDraw();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
                 sise=currentpage*pagesize;
             }else {
-                sise= (int) total;
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<WithDrawApply> lists=new PageBean<WithDrawApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<WithDrawApply> lists=new PageBean<WithDrawApply>(total,currentpage,pagesize,pages,sise,list);
-        return lists;
+
 
     }
 
@@ -103,5 +112,64 @@ public class WithDrawServiceImpl implements WithDrawApplyService {
         WithDrawApplyCriteria.Criteria criteria=withDrawApplyCriteria.createCriteria();
         criteria.andStutasEqualTo(status);
         return withDrawApplyMapper.countByExample(withDrawApplyCriteria);
+    }
+
+    @Override
+    public PageBean<WithDrawApply> search(String condition, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+
+        List<WithDrawApply> list=withDrawApplyMapper.dimfind('%'+condition+'%');
+        if (list!=null&&list.size()>0){
+            long total=countWithDraw();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=currentpage*pagesize;
+            }else {
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<WithDrawApply> lists=new PageBean<WithDrawApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+
+    }
+
+    @Override
+    public PageBean<WithDrawApply> searchByStatus(String condition, byte status, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+
+        List<WithDrawApply> list=withDrawApplyMapper.dimfindandstatus('%'+condition+'%',status);
+        if (list!=null&&list.size()>0){
+            long total=countWithDraw();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=currentpage*pagesize;
+            }else {
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<WithDrawApply> lists=new PageBean<WithDrawApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
     }
 }

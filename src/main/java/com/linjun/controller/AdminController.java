@@ -145,6 +145,20 @@ public class AdminController {
          return  new JsonResult("500",e.getMessage());
         }
     }
+//    批量修改店家状态
+    @PutMapping(value = "/updateStoreList")
+    public  JsonResult updateStoreList(
+            @RequestBody List<Store> stores
+    ){
+         try{
+              int result=storeService.changeList(stores);
+             return  new JsonResult("200",result);
+         }catch (Exception e){
+             return  new JsonResult("500",e.getMessage());
+         }
+    }
+
+
 //删除店铺
     @DeleteMapping(value = "/deleteStore")
     public  JsonResult deleteStore(
@@ -158,7 +172,19 @@ public class AdminController {
          return  new JsonResult("500",e.getMessage());
         }
     }
+//批量删除店铺
+    @DeleteMapping(value ="/deleteStoreList")
+    public  JsonResult deleteStoreList(
+            @RequestBody List<Store> stores
+    ){
+        try{
+            int result=storeService.deleleList(stores);
+            return new JsonResult("200",result);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
 
+    }
 
 
 //    获取启用店家列表
@@ -191,6 +217,11 @@ public class AdminController {
                   return  new JsonResult("500",e.getMessage());
               }
     }
+
+
+
+
+
 //商品类别设置
     @PutMapping(value = "/updateGoodsType")
     public  JsonResult updateGoodsType(
@@ -250,6 +281,52 @@ public class AdminController {
              return  new JsonResult("500",e.getMessage());
             }
     }
+//获取所有商品状态分类
+    @GetMapping(value = "/getStatusGoods")
+    public JsonResult getStatusGoods(
+            @RequestParam(value = "status")byte status,
+            @RequestParam(value = "page",required = false)int page,
+            @RequestParam(value = "page",required = false)int pagesize
+    ){
+        PageBean<Goods> goodslist=goodsService.findBy(status,page,pagesize);
+        List<GoodsListAdmin> list=new ArrayList<GoodsListAdmin>();
+        try{
+            for (Goods data:goodslist.getList()) {
+                GoodsListAdmin admindata=new GoodsListAdmin();
+                admindata.setGoodsname(data.getGoodsname());
+                admindata.setId(data.getId());
+                admindata.setGoodsSum(data.getGoodssum());
+                admindata.setIsstart(data.getIsstart());
+                admindata.setMarketPrice(data.getMarketprive());
+                admindata.setMemberPrice(data.getMemberprice());
+                admindata.setSoldamount(data.getSoldamount());
+                admindata.setStoreid(data.getStoreid());
+                admindata.setStorename(storeService.findByid(data.getId()).getStorename());
+                admindata.setStorer(storeService.findByid(data.getId()).getStorer());
+                String a=null;
+                try{
+                    a=goodsImageService.findMainImage(data.getId()).getIamgeaddress();
+                }catch (Exception e){
+                    a=null;
+                }
+                admindata.setGoodsimage(a);
+                admindata.setTypeName(goodsTypeService.findById(data.getId()).getTypename());
+                SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                admindata.setCreateTime(df.format(data.getCreatetime()));
+                list.add(admindata);
+            }
+            return new JsonResult("200",list);
+
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+
+
+    }
+
+
+
 
 
 // 得到所有订单
@@ -325,6 +402,54 @@ public class AdminController {
        return  new JsonResult("500",e.getMessage());
       }
     }
+//    订单状态的数据获取
+    @GetMapping(value = "/getStatusOrder")
+    public  JsonResult getStatusOrder(
+          @RequestParam(value = "status")byte status,
+          @RequestParam(value = "page",required = false)int page,
+          @RequestParam(value = "page",required = false)int pagesize
+    ){
+        PageBean<Order> orderList=orderService.findBy(status,page,pagesize);
+        List<OrderListAdmin> list=new ArrayList<OrderListAdmin>();
+        try{
+            for (Order data:orderList.getList()) {
+                OrderListAdmin orderListAdmin=new OrderListAdmin();
+                orderListAdmin.setGoodsName(data.getGoodsname());
+                orderListAdmin.setAcount(data.getGoodsum());
+                orderListAdmin.setAddress(addressMongerService.findByUseridDefault(data.getUserid()).getAddressdetail());
+                orderListAdmin.setAllPrice(data.getPricesum());
+                SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                orderListAdmin.setCreateTime(df.format(data.getCreatetime()));
+                orderListAdmin.setSendTime(df.format(data.getSendtime()));
+                orderListAdmin.setPayTime(df.format(data.getPaytime()));
+                orderListAdmin.setCompletTime(df.format(data.getCompletetime()));
+                orderListAdmin.setCancelTime(df.format(data.getCancel()));
+                orderListAdmin.setOrderCode(data.getOrdercode());
+                int a=userService.findByID(data.getUserid()).getRole();
+                if (a==1){
+                    orderListAdmin.setPrice(data.getMemberprice());
+                }else {
+                    orderListAdmin.setPrice(data.getMarketpricce());
+                }
+                orderListAdmin.setRevierPeople(addressMongerService.findByUseridDefault(data.getUserid()).getReceivepeople());
+                orderListAdmin.setTel(addressMongerService.findByUseridDefault(data.getUserid()).getReceivetel());
+                orderListAdmin.setId(data.getId());
+                orderListAdmin.setStorer(storeService.findByid(data.getUserid()).getStorer());
+                orderListAdmin.setStoreid(data.getUserid());
+                orderListAdmin.setStatus(data.getIspay());
+
+
+                list.add(orderListAdmin);
+            }
+            return new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+
+    }
+
+
 //    交易概览
     @GetMapping(value = "/getDealImage")
     public  JsonResult getDealImage(){
@@ -364,7 +489,7 @@ public class AdminController {
         }
 
     }
-//    支出状态数据获取
+//    收入状态数据获取
     @GetMapping(value = "/getStatusIncome")
     public  JsonResult getStatusIncome(
             @RequestParam(value = "status")byte status,
@@ -380,8 +505,6 @@ public class AdminController {
 
     }
 
-
-
 //    支出列表
     @GetMapping(value = "/getOutcomeList")
     public  JsonResult getOutcomeList(
@@ -396,7 +519,21 @@ public class AdminController {
             }
 
     }
+//支出状态数据获取
+    @GetMapping(value = "/getStatusOutcome")
+    public  JsonResult getStatusOutcome(
+            @RequestParam(value = "status")byte status,
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+         try{
+             PageBean<Outcome> list=outComeService.findBy(status,page,pagesize);
+             return  new JsonResult("200",list);
 
+         }catch (Exception e){
+             return  new JsonResult("500",e.getMessage());
+         }
+    }
 
 
 //  会员申请
@@ -516,7 +653,6 @@ public  JsonResult getStatusVillage(
           return  new JsonResult("500",e.getMessage());
       }
 }
-
 
 
 //商城申请
@@ -649,6 +785,7 @@ return new JsonResult("500",e.getMessage());
         return  new JsonResult("500",e.getMessage());
       }
  }
+
 
 
 

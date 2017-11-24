@@ -27,4 +27,6 @@ public interface WithDrawApplyMapper {
     int updateByPrimaryKeySelective(WithDrawApply record);
 
     int updateByPrimaryKey(WithDrawApply record);
+    List<WithDrawApply> dimfind(String temp);
+    List<WithDrawApply> dimfindandstatus(String temp,byte status);
 }

@@ -21,24 +21,28 @@ public class StoreApplyServiceImpl implements StoreApplyService {
         PageHelper.startPage(currentpage,pagesize);
         StoreApplyCriteria villageApplyCriteria=new StoreApplyCriteria();
         List<StoreApply> list=storeApplyMapper.selectByExample(villageApplyCriteria);
-        long total=countStoreApply();
-        int pages,sise;
-        if (total%currentpage==0){
-            pages = (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            sise=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countStoreApply();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
                 sise=currentpage*pagesize;
             }else {
-                sise= (int) total;
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<StoreApply> lists=new PageBean<StoreApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<StoreApply> lists=new PageBean<StoreApply>(total,currentpage,pagesize,pages,sise,list);
-        return lists;
     }
 
     @Override
@@ -77,24 +81,28 @@ public class StoreApplyServiceImpl implements StoreApplyService {
         StoreApplyCriteria.Criteria criteria=storeApplyCriteria.createCriteria();
         criteria.andStutasEqualTo(status);
         List<StoreApply> list=storeApplyMapper.selectByExample(storeApplyCriteria);
-        long total=countStoreApply();
-        int pages,sise;
-        if (total%currentpage==0){
-            pages = (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            sise=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countStoreApply();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
                 sise=currentpage*pagesize;
             }else {
-                sise= (int) total;
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<StoreApply> lists=new PageBean<StoreApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<StoreApply> lists=new PageBean<StoreApply>(total,currentpage,pagesize,pages,sise,list);
-        return lists;
     }
 
     @Override
@@ -103,5 +111,63 @@ public class StoreApplyServiceImpl implements StoreApplyService {
         StoreApplyCriteria.Criteria criteria=storeApplyCriteria.createCriteria();
         criteria.andStutasEqualTo(status);
         return storeApplyMapper.countByExample(storeApplyCriteria);
+    }
+
+    @Override
+    public PageBean<StoreApply> search(String condition, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+
+        List<StoreApply> list=storeApplyMapper.dimfind('%'+condition+'%');
+        if (list!=null&&list.size()>0){
+            long total=countStoreApply();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=currentpage*pagesize;
+            }else {
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<StoreApply> lists=new PageBean<StoreApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+    }
+
+    @Override
+    public PageBean<StoreApply> searchByStatus(String condition, byte status, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+
+        List<StoreApply> list=storeApplyMapper.dimfindandstatus('%'+condition+'%',status);
+        if (list!=null&&list.size()>0){
+            long total=countStoreApply();
+            int pages,sise;
+            if (total%currentpage==0){
+                pages = (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
+                sise=currentpage*pagesize;
+            }else {
+                if (currentpage<pages){
+                    sise=currentpage*pagesize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<StoreApply> lists=new PageBean<StoreApply>(total,currentpage,pagesize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
     }
 }

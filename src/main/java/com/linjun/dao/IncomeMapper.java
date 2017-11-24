@@ -27,4 +27,7 @@ public interface IncomeMapper {
     int updateByPrimaryKeySelective(Income record);
 
     int updateByPrimaryKey(Income record);
+    List<Income> dimfind(Long temp);
+    List<Income> dimfindandstatus(Long temp,byte status);
+    List<Income> dimfindStrStatus(String temp,byte status);
 }

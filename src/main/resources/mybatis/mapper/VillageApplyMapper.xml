@@ -72,6 +72,14 @@
   <sql id="Base_Column_List">
     id, userID, username, identityImage, identityImages, bankacount, appleTime, stutas
   </sql>
+  <select id="dimfind" resultMap="BaseResultMap">
+    SELECT  * FROM t_villageApply WHERE  concat(username,',',bankacount) LIKE #{temp,jdbcType=VARCHAR}
+  </select>
+  <select id="dimfindandstatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_villageApply WHERE  concat(username,',',bankacount) LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
+  </select>
+
+
   <select id="selectByExample" parameterType="com.linjun.model.VillageApplyCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">

@@ -16,4 +16,7 @@ public interface OutComeService {
      List<Float> monthMoneys();
      Integer countDay();
      PageBean<Outcome> findBy(byte status,int currentPage,int paegsize);
+     PageBean<Outcome> search(Object condition,int currentpage,int pagesize);
+     PageBean<Outcome> searchByStatus(Object condition,byte status,int currentpage,int pagesize);
+
 }

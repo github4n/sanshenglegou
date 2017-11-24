@@ -27,4 +27,6 @@ public interface StoreApplyMapper {
     int updateByPrimaryKeySelective(StoreApply record);
 
     int updateByPrimaryKey(StoreApply record);
+    List<StoreApply> dimfind(String temp);
+    List<StoreApply> dimfindandstatus(String temp,byte status);
 }

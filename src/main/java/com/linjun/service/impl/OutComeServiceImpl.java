@@ -329,4 +329,72 @@ public class OutComeServiceImpl implements OutComeService {
 
 
     }
+
+    @Override
+    public PageBean<Outcome> search(Object condition, int currentPage, int pagesize) {
+        PageHelper.startPage(currentPage,pagesize);
+        List<Outcome>  list=new ArrayList<Outcome>();
+        if (condition instanceof String){
+            list=outcomeMapper.dimfindStr('%'+(String)condition+'%');
+        }else if (condition instanceof  Long){
+            list=outcomeMapper.dimfind('%'+(Long)condition+'%');
+        }
+        if (list!=null&list.size()>0){
+            long total=countOutCome();
+            int pages,size;
+            if (total%currentPage==0){
+                pages= (int) (total/currentPage);
+            }else {
+                pages= (int) (total/currentPage)+1;
+            }
+            if (pages*pagesize==total){
+                size=currentPage*pages;
+            }else {
+                if (currentPage<pages){
+                    size=currentPage*pagesize;
+                }else {
+                    size=(int)total;
+                }
+            }
+
+            PageBean<Outcome> lists=new PageBean<Outcome>(total,currentPage,pagesize,pages,size,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
+        }
+    }
+
+    @Override
+    public PageBean<Outcome> searchByStatus(Object condition, byte status, int currentPage, int pagesize) {
+        PageHelper.startPage(currentPage,pagesize);
+        List<Outcome>  list=new ArrayList<Outcome>();
+        if (condition instanceof String){
+            list=outcomeMapper.dimfindStrStatus('%'+(String)condition+'%',status);
+        }else if (condition instanceof  Long){
+            list=outcomeMapper.dimfindandstatus('%'+(Long)condition+'%',status);
+        }
+        if (list!=null&list.size()>0){
+            long total=countOutCome();
+            int pages,size;
+            if (total%currentPage==0){
+                pages= (int) (total/currentPage);
+            }else {
+                pages= (int) (total/currentPage)+1;
+            }
+            if (pages*pagesize==total){
+                size=currentPage*pages;
+            }else {
+                if (currentPage<pages){
+                    size=currentPage*pagesize;
+                }else {
+                    size=(int)total;
+                }
+            }
+
+            PageBean<Outcome> lists=new PageBean<Outcome>(total,currentPage,pagesize,pages,size,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
+        }
+    }
 }

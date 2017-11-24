@@ -27,4 +27,7 @@ public interface MemberApplyMapper {
     int updateByPrimaryKeySelective(MemberApply record);
 
     int updateByPrimaryKey(MemberApply record);
+
+    List<MemberApply> dimfind(String temp);
+    List<MemberApply> dimfindandstatus(String temp,byte status);
 }

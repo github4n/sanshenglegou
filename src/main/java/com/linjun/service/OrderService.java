@@ -28,9 +28,10 @@ public interface OrderService {
       List<Float> weekMoney();
       List<Long> weekorderPlan();
       List<Float> monthMoney();
-
-
+        PageBean<Order> findBy(byte status,int currentpage,int pagesize);
        List<Integer> monthOrder();
        Integer  monthday();
     PageBean<Order> findAllOStore(long storid,int cuurrentPage,int pagesize);
+    PageBean<Order> search(Long condition,int currentpage,int pagesize);
+    PageBean<Order> searchByStatus(Long condition,byte status,int currentpage,int pagesize);
 }

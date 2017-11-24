@@ -213,4 +213,41 @@ public class StoreServiceImpl implements StoreService {
 
     }
 
+    @Override
+    public int changeList(List<Store> stores) {
+        int temp=0;
+        for (int i = 0; i <stores.size() ; i++) {
+            int result=storeMapper.updateByPrimaryKeySelective(stores.get(i));
+            if (result>0){
+                temp+=1;
+            }else {
+
+            }
+        }
+        if (temp==stores.size()){
+            return  temp;
+        }else {
+            throw new PeopleException("批量修改失败");
+        }
+    }
+
+    @Override
+    public int deleleList(List<Store> stores) {
+        int temp=0;
+        for (int i = 0; i < stores.size(); i++) {
+          int result=storeMapper.deleteByPrimaryKey(stores.get(i).getId());
+          if (result>0){
+              temp+=1;
+          }else {
+
+          }
+        }
+if (temp==stores.size()){
+            return  stores.size();
+}else {
+    throw  new PeopleException("批量删除失败");
+}
+
+    }
+
 }

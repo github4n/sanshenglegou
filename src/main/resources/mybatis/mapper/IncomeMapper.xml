@@ -87,6 +87,22 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="dimfind" resultMap="BaseResultMap">
+
+    SELECT  * FROM t_income WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT}
+  </select>
+
+
+
+
+  <select id="dimfindandstatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_income WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT} and stutas = #{status,jdbcType=TINYINT}
+  </select>
+  <select id="dimfindStrStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_income WHERE  payName LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

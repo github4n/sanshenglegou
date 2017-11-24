@@ -11,4 +11,5 @@ public interface BannerService {
     PageBean<Banner> findAll(int currentpage,int pagesize);
  Long countbanner();
   int deletebanner(long id);
+  Banner add(Banner banner);
 }

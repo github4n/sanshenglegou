@@ -10,4 +10,8 @@ public interface StoreApplyService {
      int delete(long id);
      PageBean<StoreApply> findByStatus(byte status,int currentpage,int pagesize);
      Long count(byte status);
+     PageBean<StoreApply> search(String condition,int currentpage,int pagesize);
+     PageBean<StoreApply> searchByStatus(String condition,byte status,int currentpage,int pagesize);
+
+
 }

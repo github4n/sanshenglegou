@@ -72,6 +72,23 @@
   <sql id="Base_Column_List">
     id, orderCode, payName, payAcount, price, dopayName, payTime, stutas
   </sql>
+
+  <select id="dimfind" resultMap="BaseResultMap">
+
+    SELECT  * FROM t_outcome WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT}
+  </select>
+  <select id="dimfindStr" resultMap="BaseResultMap">
+
+    SELECT  * FROM t_outcome WHERE  concat(payName,',',dopayName) LIKE #{temp,jdbcType=VARCHAR}
+  </select>
+  <select id="dimfindandstatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_outcome WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT} and stutas = #{status,jdbcType=TINYINT}
+  </select>
+  <select id="dimfindStrStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_outcome WHERE  concat(payName,',',dopayName) LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
+  </select>
+
+
   <select id="selectByExample" parameterType="com.linjun.model.OutcomeCriteria" resultMap="BaseResultMap">
     select
     <if test="distinct">

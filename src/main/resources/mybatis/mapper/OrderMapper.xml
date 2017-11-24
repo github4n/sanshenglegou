@@ -423,6 +423,10 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="dimStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_order WHERE  id  = #{temp,jdbcType=BIGINT} and stutas = #{status,jdbcType=TINYINT}
+  </select>
+
   <update id="updateByPrimaryKey" parameterType="com.linjun.model.Order">
     update t_order
     set userID = #{userid,jdbcType=BIGINT},
