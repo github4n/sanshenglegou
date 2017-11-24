@@ -291,7 +291,6 @@ public class SearchController {
         PageBean<Order> orderList=orderService.searchByStatus(condition,status,page,pagesize);
         List<OrderListAdmin> list=new ArrayList<OrderListAdmin>();
         try{
-
             for (Order data:orderList.getList()) {
                 OrderListAdmin orderListAdmin=new OrderListAdmin();
                 orderListAdmin.setGoodsName(data.getGoodsname());
@@ -299,7 +298,6 @@ public class SearchController {
                 orderListAdmin.setAddress(addressMongerService.findByUseridDefault(data.getUserid()).getAddressdetail());
                 orderListAdmin.setAllPrice(data.getPricesum());
                 SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
                 orderListAdmin.setCreateTime(df.format(data.getCreatetime()));
                 orderListAdmin.setSendTime(df.format(data.getSendtime()));
                 orderListAdmin.setPayTime(df.format(data.getPaytime()));
@@ -357,5 +355,6 @@ public class SearchController {
              return  new JsonResult("500",e.getMessage());
          }
     }
+//    用户状态的搜索
 
 }
