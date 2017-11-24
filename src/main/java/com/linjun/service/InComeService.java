@@ -14,4 +14,5 @@ public interface InComeService {
     List<Float> weekincome();
     List<Float> monthincome();
       Integer monthday();
+      PageBean<Income> findBy(byte status,int currentpage,int pagesize);
 }

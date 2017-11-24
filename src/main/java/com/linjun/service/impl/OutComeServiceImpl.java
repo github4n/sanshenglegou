@@ -1,6 +1,7 @@
 package com.linjun.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.OutcomeMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.Outcome;
@@ -24,25 +25,31 @@ public class OutComeServiceImpl implements OutComeService {
         PageHelper.startPage(currentPage,pagesize);
         OutcomeCriteria outcomeCriteria=new OutcomeCriteria();
         List<Outcome> list=outcomeMapper.selectByExample(outcomeCriteria);
-        long total=countOutCome();
-        int pages,size;
-        if (total%currentPage==0){
-            pages= (int) (total/currentPage);
-        }else {
-            pages= (int) (total/currentPage)+1;
-        }
-        if (pages*pagesize==total){
-            size=currentPage*pages;
-        }else {
-            if (currentPage<pages){
-                size=currentPage*pagesize;
+        if (list!=null&&list.size()>0){
+            long total=countOutCome();
+            int pages,size;
+            if (total%currentPage==0){
+                pages= (int) (total/currentPage);
             }else {
-                size=(int)total;
+                pages= (int) (total/currentPage)+1;
             }
+            if (pages*pagesize==total){
+                size=currentPage*pages;
+            }else {
+                if (currentPage<pages){
+                    size=currentPage*pagesize;
+                }else {
+                    size=(int)total;
+                }
+            }
+
+            PageBean<Outcome> lists=new PageBean<Outcome>(total,currentPage,pagesize,pages,size,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
         }
 
-        PageBean<Outcome> lists=new PageBean<Outcome>(total,currentPage,pagesize,pages,size,list);
-        return lists;
+
     }
 
     @Override
@@ -287,5 +294,39 @@ public class OutComeServiceImpl implements OutComeService {
         c.roll(Calendar.DATE,-1);
         int months=c.get(Calendar.DATE);
         return months;
+    }
+
+    @Override
+    public PageBean<Outcome> findBy(byte status, int currentPage, int pagesize) {
+        PageHelper.startPage(currentPage,pagesize);
+        OutcomeCriteria outcomeCriteria=new OutcomeCriteria();
+        OutcomeCriteria.Criteria criteria=outcomeCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+        List<Outcome> list=outcomeMapper.selectByExample(outcomeCriteria);
+        if (list!=null&list.size()>0){
+            long total=countOutCome();
+            int pages,size;
+            if (total%currentPage==0){
+                pages= (int) (total/currentPage);
+            }else {
+                pages= (int) (total/currentPage)+1;
+            }
+            if (pages*pagesize==total){
+                size=currentPage*pages;
+            }else {
+                if (currentPage<pages){
+                    size=currentPage*pagesize;
+                }else {
+                    size=(int)total;
+                }
+            }
+
+            PageBean<Outcome> lists=new PageBean<Outcome>(total,currentPage,pagesize,pages,size,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
+        }
+
+
     }
 }

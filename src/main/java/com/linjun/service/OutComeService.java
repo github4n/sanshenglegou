@@ -15,4 +15,5 @@ public interface OutComeService {
      List<Float> weekMoney();
      List<Float> monthMoneys();
      Integer countDay();
+     PageBean<Outcome> findBy(byte status,int currentPage,int paegsize);
 }

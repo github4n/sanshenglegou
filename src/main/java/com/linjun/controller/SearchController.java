@@ -57,6 +57,7 @@ public class SearchController {
 ){
     try{
         PageBean<MemberApply> list=memberApplyService.findBy(condition,page,pagesize);
+        System.out.println(list);
         return  new JsonResult("200",list);
     }catch (Exception e){
         return  new JsonResult("500",e.getMessage());

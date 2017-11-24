@@ -364,6 +364,24 @@ public class AdminController {
         }
 
     }
+//    支出状态数据获取
+    @GetMapping(value = "/getStatusIncome")
+    public  JsonResult getStatusIncome(
+            @RequestParam(value = "status")byte status,
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+        try{
+            PageBean<Income> list=inComeService.findBy(status,page,pagesize);
+            return new JsonResult("200",list);
+        }catch (Exception e){
+            return new JsonResult("500",e.getMessage());
+        }
+
+    }
+
+
+
 //    支出列表
     @GetMapping(value = "/getOutcomeList")
     public  JsonResult getOutcomeList(
@@ -378,6 +396,9 @@ public class AdminController {
             }
 
     }
+
+
+
 //  会员申请
     @GetMapping(value = "/getMemberApply")
     public JsonResult getMenberApply(

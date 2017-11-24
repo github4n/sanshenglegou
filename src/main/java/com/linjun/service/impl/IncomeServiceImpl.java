@@ -1,6 +1,7 @@
 package com.linjun.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.IncomeMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.Income;
@@ -25,25 +26,29 @@ public class IncomeServiceImpl implements InComeService {
         PageHelper.startPage(currentpage,pagesize);
         IncomeCriteria incomeCriteria=new IncomeCriteria();
         List<Income> list=incomeMapper.selectByExample(incomeCriteria);
+         if (list!=null&&list.size()>0){
+             long total=countIncome();
+             int pages,sise;
+             if (total%currentpage==0){
+                 pages= (int) (total/currentpage);
+             }else {
+                 pages= (int) (total/currentpage)+1;
+             }
+             if (pages*pagesize==total){
+                 sise=currentpage*pagesize;
+             }else {
+                 if (currentpage<pages){
+                     sise=currentpage*pagesize;
+                 }else {
+                     sise= (int) total;
+                 }
+             }
+             PageBean<Income> lists=new PageBean<Income>(total,currentpage,pagesize,pages,sise,list);
+             return lists;
+         }else {
+             throw new PeopleException("查询失败");
+         }
 
-        long total=countIncome();
-        int pages,sise;
-        if (total%currentpage==0){
-            pages= (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            sise=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
-                sise=currentpage*pagesize;
-            }else {
-                sise= (int) total;
-            }
-        }
-        PageBean<Income> lists=new PageBean<Income>(total,currentpage,pagesize,pages,sise,list);
-        return lists;
 
     }
 
@@ -225,4 +230,38 @@ public class IncomeServiceImpl implements InComeService {
         c.roll(Calendar.DATE,-1);
         int months=c.get(Calendar.DATE);
         return months;    }
+
+    @Override
+    public PageBean<Income> findBy(byte status, int currentpage, int pagesize) {
+        PageHelper.startPage(currentpage,pagesize);
+        IncomeCriteria incomeCriteria=new IncomeCriteria();
+        IncomeCriteria.Criteria criteria=incomeCriteria.createCriteria();
+        criteria.andStutasEqualTo(status);
+
+        List<Income> list=incomeMapper.selectByExample(incomeCriteria);
+      if (list!=null&&list.size()>0){
+          long total=countIncome();
+          int pages,sise;
+          if (total%currentpage==0){
+              pages= (int) (total/currentpage);
+          }else {
+              pages= (int) (total/currentpage)+1;
+          }
+          if (pages*pagesize==total){
+              sise=currentpage*pagesize;
+          }else {
+              if (currentpage<pages){
+                  sise=currentpage*pagesize;
+              }else {
+                  sise= (int) total;
+              }
+          }
+          PageBean<Income> lists=new PageBean<Income>(total,currentpage,pagesize,pages,sise,list);
+          return lists;
+      }else {
+          throw new PeopleException("查询失败");
+      }
+
+
+    }
 }

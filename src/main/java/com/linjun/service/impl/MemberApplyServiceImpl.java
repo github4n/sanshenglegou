@@ -21,24 +21,29 @@ public class MemberApplyServiceImpl implements MemberApplyService {
         PageHelper.startPage(currentpage,pagesize);
         MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
         List<MemberApply> list=memberApplyMapper.selectByExample(memberApplyCriteria);
-        long total=countMapply();
-        int pages,size;
-        if (total%currentpage==0){
-            pages= (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            size=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
+        if (list.size()>0&&list!=null){
+            long total=countMapply();
+            int pages,size;
+            if (total%currentpage==0){
+                pages= (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
                 size=currentpage*pagesize;
             }else {
-                size= (int) total;
+                if (currentpage<pages){
+                    size=currentpage*pagesize;
+                }else {
+                    size= (int) total;
+                }
             }
+            PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
         }
-        PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
-        return lists;
+
     }
 
     @Override
@@ -75,24 +80,31 @@ public class MemberApplyServiceImpl implements MemberApplyService {
         criteria.andStutasEqualTo(status);
 
         List<MemberApply> list=memberApplyMapper.selectByExample(memberApplyCriteria);
-        long total=countMapply();
-        int pages,size;
-        if (total%currentpage==0){
-            pages= (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            size=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
+        if (list!=null&&list.size()>0){
+
+            long total=countMapply();
+            int pages,size;
+            if (total%currentpage==0){
+                pages= (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
                 size=currentpage*pagesize;
             }else {
-                size= (int) total;
+                if (currentpage<pages){
+                    size=currentpage*pagesize;
+                }else {
+                    size= (int) total;
+                }
             }
+            PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
+            return lists;
+        }else {
+            throw  new PeopleException("查询失败");
         }
-        PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
-        return lists;
+
+
 
     }
 
@@ -109,26 +121,33 @@ public class MemberApplyServiceImpl implements MemberApplyService {
         PageHelper.startPage(currentpage,pagesize);
         MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
         MemberApplyCriteria.Criteria criteria=memberApplyCriteria.createCriteria();
-           criteria.andBankacountLike(condition);
+
            criteria.andUsernameLike(condition);
         List<MemberApply> list=memberApplyMapper.selectByExample(memberApplyCriteria);
-        long total=countMapply();
-        int pages,size;
-        if (total%currentpage==0){
-            pages= (int) (total/currentpage);
-        }else {
-            pages= (int) (total/currentpage)+1;
-        }
-        if (pages*pagesize==total){
-            size=currentpage*pagesize;
-        }else {
-            if (currentpage<pages){
+        if (list!=null&&list.size()>0){
+            long total=countMapply();
+            int pages,size;
+            if (total%currentpage==0){
+                pages= (int) (total/currentpage);
+            }else {
+                pages= (int) (total/currentpage)+1;
+            }
+            if (pages*pagesize==total){
                 size=currentpage*pagesize;
             }else {
-                size= (int) total;
+                if (currentpage<pages){
+                    size=currentpage*pagesize;
+                }else {
+                    size= (int) total;
+                }
             }
+            PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
+            return lists;
+        }else {
+            throw new PeopleException("查询失败");
+
         }
-        PageBean<MemberApply> lists=new PageBean<MemberApply>(total,currentpage,pagesize,pages,size,list);
-        return lists;
+
+
     }
 }
