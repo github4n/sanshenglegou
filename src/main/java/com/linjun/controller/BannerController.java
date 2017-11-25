@@ -74,10 +74,8 @@ public class BannerController {
     //   首页轮播图的添加
     @PostMapping(value = "/uploadBanner")
     public JsonResult uploadBanner(
-            @RequestParam(value = "status")byte status,
             @RequestParam(value = "file") MultipartFile files) throws ParseException
             {
-
                 String filePath = "/Users/linjun/deaProjects/image/";
                 String fileName = files.getOriginalFilename();
                 String stuffxName = fileName.substring(fileName.lastIndexOf("."));
@@ -90,7 +88,7 @@ public class BannerController {
                 Date date=sdf2.parse(b);
                 Banner banner=new Banner();
                 banner.setImageurl(fileName);
-                banner.setIsstart(status);
+
                 Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
                 String upToken=auth.uploadToken(QiNiuconfig.bucket);
                 UploadManager uploadManager=new UploadManager(new Configuration(Zone.zone0()));

@@ -28,7 +28,6 @@ public class SearchController {
     UserService userService;
     @Autowired
     OrderService orderService;
-
     @Autowired
     GoodsService goodsService;
     @Autowired
