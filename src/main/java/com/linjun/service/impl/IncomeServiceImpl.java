@@ -274,7 +274,7 @@ public class IncomeServiceImpl implements InComeService {
             IncomeCriteria.Criteria criteria=incomeCriteria.createCriteria();
             criteria.andPaynameLike(('%'+(String)condition+'%'));
              list=incomeMapper.selectByExample(incomeCriteria);
-        }else if (condition instanceof Long){
+        }else if (condition instanceof Long || condition instanceof  Integer){
             list=incomeMapper.dimfind('%'+(Long)condition+'%');
         }
         if (list!=null&&list.size()>0){
@@ -309,7 +309,7 @@ public class IncomeServiceImpl implements InComeService {
         List<Income> list=new ArrayList<Income>();
         if (condition instanceof String){
             list=incomeMapper.dimfindStrStatus('%'+(String)condition+'%',status);
-        }else if (condition instanceof Long){
+        }else if (condition instanceof Long || condition instanceof  Integer){
             list=incomeMapper.dimfindandstatus('%'+(Long)condition+'%',status);
         }
         if (list!=null&&list.size()>0){

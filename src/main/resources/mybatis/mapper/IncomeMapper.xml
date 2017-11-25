@@ -92,10 +92,6 @@
 
     SELECT  * FROM t_income WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT}
   </select>
-
-
-
-
   <select id="dimfindandstatus" resultMap="BaseResultMap">
     SELECT  * FROM t_income WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT} and stutas = #{status,jdbcType=TINYINT}
   </select>

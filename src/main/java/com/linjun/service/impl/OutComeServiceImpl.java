@@ -336,7 +336,7 @@ public class OutComeServiceImpl implements OutComeService {
         List<Outcome>  list=new ArrayList<Outcome>();
         if (condition instanceof String){
             list=outcomeMapper.dimfindStr('%'+(String)condition+'%');
-        }else if (condition instanceof  Long){
+        }else if (condition instanceof  Long ||  condition instanceof  Integer){
             list=outcomeMapper.dimfind('%'+(Long)condition+'%');
         }
         if (list!=null&list.size()>0){
@@ -370,7 +370,7 @@ public class OutComeServiceImpl implements OutComeService {
         List<Outcome>  list=new ArrayList<Outcome>();
         if (condition instanceof String){
             list=outcomeMapper.dimfindStrStatus('%'+(String)condition+'%',status);
-        }else if (condition instanceof  Long){
+        }else if (condition instanceof  Long || condition instanceof  Integer){
             list=outcomeMapper.dimfindandstatus('%'+(Long)condition+'%',status);
         }
         if (list!=null&list.size()>0){

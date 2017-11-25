@@ -364,6 +364,17 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="dimfindStr" resultMap="BaseResultMap">
+    SELECT  * FROM t_user WHERE  concat(username,',',OpenID,',',city,',',province,',',country,',',sex,',',email,',',tel) LIKE #{temp,jdbcType=VARCHAR}
+  </select>
+  <select id="dimfindStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_user WHERE  id = #{temp,jdbcType=BIGINT} and isstart = #{status,jdbcType=TINYINT}
+  </select>
+  <select id="dimfindStrStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_user WHERE  concat(username,',',OpenID,',',city,',',province,',',country,',',sex,',',email,',',tel) LIKE #{temp,jdbcType=VARCHAR} and role = #{status,jdbcType=TINYINT}
+  </select>
+
   <update id="updateByPrimaryKey" parameterType="com.linjun.model.User">
     update t_user
     set username = #{username,jdbcType=VARCHAR},

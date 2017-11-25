@@ -8,17 +8,39 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 public class textmain {
 
 
    public  static void main(String[] args) throws ParseException {
-          System.out.println(getpost(7));
-       Calendar rightNow=Calendar.getInstance();
-       int day = rightNow.get(rightNow.DAY_OF_WEEK);//获取时间
-       System.out.println(day);
+//       String a="21324";
+//       Integer b=null;
+//if (isInteger(a)){
+//    b=Integer.valueOf(a);
+//    System.out.println(b);
+       String condition="sdfhsf";
+       Object conditions=null;
+       if (isInteger(condition)){
+           conditions=Integer.valueOf(condition);
+           System.out.println("wweew");
+       }else {
+           conditions=condition;
+           System.out.println("哈哈");
+       }
 
-   }
+}
+
+
+
+
+
+
+
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
+    }
 
     private static Date getpost(int post) {
         Calendar calendar = Calendar.getInstance();

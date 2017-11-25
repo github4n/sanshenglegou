@@ -6,6 +6,7 @@ import com.linjun.model.*;
 import com.linjun.pojo.OrderListAdmin;
 import com.linjun.service.*;
 import com.qiniu.util.Json;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sun.jvm.hotspot.debugger.Page;
@@ -13,6 +14,7 @@ import sun.jvm.hotspot.debugger.Page;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 //搜索类
 @RestController
@@ -51,7 +53,11 @@ public class SearchController {
     StoreApplyService storeApplyService;
     @Autowired
     WithDrawApplyService withDrawApplyService;
-
+//   判断是否全部为数字的方法
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
+    }
 //    会员申请搜索
 @GetMapping(value = "/searchMember")
     public JsonResult searchMember(
@@ -177,12 +183,20 @@ public class SearchController {
 //收入搜索
     @GetMapping(value = "/searchIncome")
     public  JsonResult searchIncome(
-            @RequestParam(value = "condition") Object condition,
+            @RequestParam(value = "condition") String condition,
             @RequestParam(value = "page")int page,
             @RequestParam(value = "pagesize")int pagesize
     ){
+                Object conditions=null;
+                if (isInteger(condition)){
+                    conditions=Integer.valueOf(condition);
+                }else {
+                    conditions=condition;
+                }
+
+
          try{
-            PageBean<Income> list=inComeService.search(condition,page,pagesize);
+            PageBean<Income> list=inComeService.search(conditions,page,pagesize);
             return  new JsonResult("200",list);
          }catch (Exception e){
              return  new JsonResult("500",e.getMessage());
@@ -191,13 +205,20 @@ public class SearchController {
 //收入状态搜索
     @GetMapping(value = "/searchIncomeStatus")
     public  JsonResult searchIncomStatus(
-            @RequestParam(value = "condition") Object condition,
+            @RequestParam(value = "condition") String condition,
             @RequestParam(value = "status")byte status,
             @RequestParam(value = "page")int page,
             @RequestParam(value = "pagesize")int pagesize
     ){
+        Object conditions=null;
+        if (isInteger(condition)){
+            conditions=Integer.valueOf(condition);
+        }else {
+            conditions=condition;
+        }
+
        try{
-           PageBean<Income> list=inComeService.searchByStatus(condition,status,page,pagesize);
+           PageBean<Income> list=inComeService.searchByStatus(conditions,status,page,pagesize);
            return  new JsonResult("200",list);
        }catch (Exception e){
            return  new JsonResult("500",e.getMessage());
@@ -206,12 +227,18 @@ public class SearchController {
 //支出搜索
     @GetMapping(value = "/searchOutcome")
     public  JsonResult searchOutcome(
-            @RequestParam(value = "condition") Object condition,
+            @RequestParam(value = "condition") String condition,
             @RequestParam(value = "page")int page,
             @RequestParam(value = "pagesize")int pagesize
     ){
+        Object conditions=null;
+        if (isInteger(condition)){
+            conditions=Integer.valueOf(condition);
+        }else {
+            conditions=condition;
+        }
   try{
-      PageBean<Outcome> list=outComeService.search(condition,page,pagesize);
+      PageBean<Outcome> list=outComeService.search(conditions,page,pagesize);
       return  new JsonResult("200",list);
   }catch (Exception e){
       return  new JsonResult("500",e.getMessage());
@@ -220,13 +247,19 @@ public class SearchController {
 // 支出状态搜索
     @GetMapping(value = "/searchOutcomeStatus")
     public  JsonResult searchOutcomeStatus(
-            @RequestParam(value = "condition") Object condition,
+            @RequestParam(value = "condition") String condition,
             @RequestParam(value = "status")byte status,
             @RequestParam(value = "page")int page,
             @RequestParam(value = "pagesize")int pagesize
     ){
+        Object conditions=null;
+        if (isInteger(condition)){
+            conditions=Integer.valueOf(condition);
+        }else {
+            conditions=condition;
+        }
         try{
-            PageBean<Outcome> list=outComeService.searchByStatus(condition,status,page,pagesize);
+            PageBean<Outcome> list=outComeService.searchByStatus(conditions,status,page,pagesize);
             return  new JsonResult("200",list);
 
         }catch (Exception e){
@@ -328,12 +361,18 @@ public class SearchController {
 //    商品搜索
     @GetMapping(value = "/searchGoods")
     public  JsonResult searchGoods(
-            @RequestParam(value = "condition") Object condition,
+            @RequestParam(value = "condition") String condition,
             @RequestParam(value = "page")int page,
             @RequestParam(value = "pagesize")int pagesize
     ){
+        Object conditions=null;
+        if (isInteger(condition)){
+            conditions=Integer.valueOf(condition);
+        }else {
+            conditions=condition;
+        }
           try{
-            PageBean<Goods> list=goodsService.search(condition,page,pagesize);
+            PageBean<Goods> list=goodsService.search(conditions,page,pagesize);
             return  new JsonResult("200",list);
           }catch (Exception e){
               return  new JsonResult("500",e.getMessage());
@@ -343,18 +382,67 @@ public class SearchController {
 //  商品状态搜索
     @GetMapping(value = "/searchGoodsStatus")
     public  JsonResult searchGoodStatus(
-            @RequestParam(value = "condition") Object condition,
+            @RequestParam(value = "condition") String condition,
             @RequestParam(value = "status")byte status,
             @RequestParam(value = "page")int page,
             @RequestParam(value = "pagesize")int pagesize
     ){
+        Object conditions=null;
+        if (isInteger(condition)){
+            conditions=Integer.valueOf(condition);
+        }else {
+            conditions=condition;
+        }
          try{
-             PageBean<Goods> list=goodsService.searchByStatus(condition,status,page,pagesize);
+             PageBean<Goods> list=goodsService.searchByStatus(conditions,status,page,pagesize);
              return  new JsonResult("200",list);
          }catch (Exception e){
              return  new JsonResult("500",e.getMessage());
          }
     }
-//    用户状态的搜索
+//    用户的搜索
+    @GetMapping(value = "/searchUser")
+    public  JsonResult searchUser(
+            @RequestParam(value = "condition") String condition,
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+                Object conditions=null;
+        if (isInteger(condition)) {
+             conditions= Integer.valueOf(condition);
+        }else {
+          conditions=condition;
+        }
+
+        try{
+           PageBean<User> list=userService.search(conditions,page,pagesize);
+            return  new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
+//用户状态搜索
+    @GetMapping(value = "/searchUserStatus")
+    public  JsonResult searchUserStatus(
+            @RequestParam(value = "condition") String condition,
+            @RequestParam(value = "status")byte status,
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize
+    ){
+        Object conditions=null;
+        if (isInteger(condition)) {
+            conditions= Integer.valueOf(condition);
+        }else {
+            conditions=condition;
+        }
+        try{
+            PageBean<User> list=userService.searchByStatus(conditions,status,page,pagesize);
+            return  new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
+
+
 
 }

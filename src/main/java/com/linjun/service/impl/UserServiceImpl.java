@@ -2,6 +2,7 @@ package com.linjun.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.domain.PageList;
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.UserMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.User;
@@ -248,24 +249,28 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(cuurrentPage,pageSize);
         UserCriteria userCriteria=new UserCriteria();
         List<User> list=userMapper.selectByExample(userCriteria);
-        long total=countUser();
-        int pages,sise;
-        if (total%cuurrentPage==0){
-            pages= (int) (total/cuurrentPage);
-        }else {
-            pages= (int) (total/cuurrentPage)+1;
-        }
-        if (pages*pageSize==total){
-            sise=cuurrentPage*pageSize;
-        }else {
-            if (cuurrentPage<pages){
+        if (list!=null&& list.size()>0){
+            long total=countUser();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pageSize==total){
                 sise=cuurrentPage*pageSize;
             }else {
-                sise= (int) total;
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pageSize;
+                }else {
+                    sise= (int) total;
+                }
             }
+            PageBean<User> lists=new PageBean<User>(total,cuurrentPage,pageSize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
         }
-        PageBean<User> lists=new PageBean<User>(total,cuurrentPage,pageSize,pages,sise,list);
-        return lists;
 
     }
 
@@ -339,5 +344,74 @@ public class UserServiceImpl implements UserService {
         }
         return list;
 
+    }
+
+    @Override
+    public PageBean<User> search(Object condition, int cuurrentPage, int pageSize) {
+        PageHelper.startPage(cuurrentPage,pageSize);
+        List<User> list=new ArrayList<User>();
+        if (condition instanceof  String){
+            list=userMapper.dimfindStr('%'+(String)condition+'%');
+        }else if (condition instanceof Long || condition instanceof  Integer){
+            UserCriteria userCriteria=new UserCriteria();
+            UserCriteria.Criteria criteria=userCriteria.createCriteria();
+            criteria.andIdEqualTo((Long) condition);
+            list=userMapper.selectByExample(userCriteria);
+        }
+        if (list!=null&& list.size()>0){
+            long total=countUser();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pageSize==total){
+                sise=cuurrentPage*pageSize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pageSize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<User> lists=new PageBean<User>(total,cuurrentPage,pageSize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+    }
+
+    @Override
+    public PageBean<User> searchByStatus(Object condition, byte status,int cuurrentPage, int pageSize) {
+        PageHelper.startPage(cuurrentPage,pageSize);
+        List<User> list=new ArrayList<User>();
+        if (condition instanceof  String){
+            list=userMapper.dimfindStrStatus('%'+(String)condition+'%',status);
+        }else if (condition instanceof Long || condition instanceof  Integer){
+           list=userMapper.dimfindStatus('%'+(Long)condition+'%',status);
+        }
+        if (list!=null&& list.size()>0){
+            long total=countUser();
+            int pages,sise;
+            if (total%cuurrentPage==0){
+                pages= (int) (total/cuurrentPage);
+            }else {
+                pages= (int) (total/cuurrentPage)+1;
+            }
+            if (pages*pageSize==total){
+                sise=cuurrentPage*pageSize;
+            }else {
+                if (cuurrentPage<pages){
+                    sise=cuurrentPage*pageSize;
+                }else {
+                    sise= (int) total;
+                }
+            }
+            PageBean<User> lists=new PageBean<User>(total,cuurrentPage,pageSize,pages,sise,list);
+            return lists;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
     }
 }

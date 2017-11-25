@@ -203,7 +203,7 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> list=new ArrayList<Goods>();
         if (condition instanceof  String){
             list=goodsMapper.dimfindStr('%'+(String)condition+'%');
-        }else  if (condition instanceof  Long){
+        }else  if (condition instanceof  Long || condition instanceof  Integer){
             GoodsCriteria goodsCriteria=new GoodsCriteria();
             GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
             criteria.andIdEqualTo('%'+(Long)condition+'%');
@@ -239,7 +239,7 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods> list=new ArrayList<Goods>();
         if (condition instanceof  String){
             list=goodsMapper.dimfindStrStatus('%'+(String)condition+'%',status);
-        }else  if (condition instanceof  Long){
+        }else  if (condition instanceof  Long || condition instanceof  Integer){
             list=goodsMapper.dimfindStatus('%'+(Long)condition+'%',status);
         }
         if (list!=null&&list.size()>0){

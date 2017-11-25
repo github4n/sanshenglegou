@@ -32,4 +32,9 @@ public interface UserService {
       Integer monthDay();
       Long countMenber();
    List<Integer> lookuser();
+
+   PageBean<User> search(Object condition,int currentpage,int pagesize);
+   PageBean<User> searchByStatus(Object condition,byte status,int currentpage,int pagesize);
+
+
 }
