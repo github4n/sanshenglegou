@@ -165,7 +165,7 @@ public class SearchController {
 
     }
 //提现申请状态搜索
-    @GetMapping(value = "/searchWithDraw")
+    @GetMapping(value = "/searchWithDrawStatus")
     public  JsonResult searchWithDraw(
             @RequestParam(value = "condition") String condition,
             @RequestParam(value = "status")byte status,
