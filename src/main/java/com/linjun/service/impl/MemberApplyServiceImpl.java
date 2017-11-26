@@ -7,6 +7,7 @@ import com.linjun.entity.PageBean;
 import com.linjun.model.MemberApply;
 import com.linjun.model.MemberApplyCriteria;
 import com.linjun.service.MemberApplyService;
+import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -182,5 +183,44 @@ public class MemberApplyServiceImpl implements MemberApplyService {
 
         }
 
+    }
+
+    @Override
+    public MemberApply add(MemberApply memberApply) {
+        long result=memberApplyMapper.insertSelective(memberApply);
+        if (result>0){
+            return memberApplyMapper.selectByPrimaryKey(result);
+        }else {
+        throw new PeopleException("添加失败");
+        }
+
+    }
+
+    @Override
+    public MemberApply isexit(MemberApply memberApply) {
+        MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
+        MemberApplyCriteria.Criteria criteria=memberApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(memberApply.getUserid());
+        List<MemberApply> list=memberApplyMapper.selectByExample(memberApplyCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+         throw new PeopleException("获取数据失败");
+        }
+
+    }
+
+    @Override
+    public MemberApply isStatus(MemberApply memberApply) {
+        MemberApplyCriteria memberApplyCriteria=new MemberApplyCriteria();
+        MemberApplyCriteria.Criteria criteria=memberApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(memberApply.getUserid());
+        criteria.andStutasEqualTo(memberApply.getStutas());
+        List<MemberApply> list=memberApplyMapper.selectByExample(memberApplyCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
     }
 }

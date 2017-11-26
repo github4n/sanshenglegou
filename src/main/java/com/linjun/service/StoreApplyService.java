@@ -12,6 +12,7 @@ public interface StoreApplyService {
      Long count(byte status);
      PageBean<StoreApply> search(String condition,int currentpage,int pagesize);
      PageBean<StoreApply> searchByStatus(String condition,byte status,int currentpage,int pagesize);
-
-
+     StoreApply add(StoreApply storeApply);
+     StoreApply isexit(StoreApply storeApply);
+     StoreApply isStutsa(StoreApply storeApply);
 }

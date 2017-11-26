@@ -172,4 +172,42 @@ public class WithDrawServiceImpl implements WithDrawApplyService {
             throw new PeopleException("获取数据失败");
         }
     }
+
+    @Override
+    public WithDrawApply add(WithDrawApply withDrawApply) {
+        long result= withDrawApplyMapper.insertSelective(withDrawApply);
+        if (result>0){
+            return withDrawApplyMapper.selectByPrimaryKey(result);
+        }else {
+         throw new PeopleException("添加失败");
+        }
+    }
+
+    @Override
+    public WithDrawApply isexit(WithDrawApply withDrawApply) {
+        WithDrawApplyCriteria withDrawApplyCriteria=new WithDrawApplyCriteria();
+        WithDrawApplyCriteria.Criteria criteria=withDrawApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(withDrawApply.getUserid());
+        List<WithDrawApply> list=withDrawApplyMapper.selectByExample(withDrawApplyCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+        throw new PeopleException("获取数据失败");
+        }
+
+    }
+
+    @Override
+    public WithDrawApply isStatus(WithDrawApply withDrawApply) {
+        WithDrawApplyCriteria withDrawApplyCriteria=new WithDrawApplyCriteria();
+        WithDrawApplyCriteria.Criteria criteria=withDrawApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(withDrawApply.getUserid());
+        criteria.andStutasEqualTo(withDrawApply.getStutas());
+        List<WithDrawApply> list=withDrawApplyMapper.selectByExample(withDrawApplyCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+    }
 }

@@ -170,4 +170,43 @@ public class StoreApplyServiceImpl implements StoreApplyService {
             throw new PeopleException("获取数据失败");
         }
     }
+
+    @Override
+    public StoreApply add(StoreApply storeApply) {
+        long result=storeApplyMapper.insertSelective(storeApply);
+        if (result>0){
+            return storeApplyMapper.selectByPrimaryKey(result);
+        }else {
+        throw new PeopleException("添加失败");
+        }
+
+    }
+
+    @Override
+    public StoreApply isexit(StoreApply storeApply) {
+        StoreApplyCriteria storeApplyCriteria=new StoreApplyCriteria();
+        StoreApplyCriteria.Criteria criteria=storeApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(storeApply.getUserid());
+        List<StoreApply> list=storeApplyMapper.selectByExample(storeApplyCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+           throw new PeopleException("获取数据失败");
+        }
+
+    }
+
+    @Override
+    public StoreApply isStutsa(StoreApply storeApply) {
+        StoreApplyCriteria storeApplyCriteria=new StoreApplyCriteria();
+        StoreApplyCriteria.Criteria criteria=storeApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(storeApply.getUserid());
+        criteria.andStutasEqualTo(storeApply.getStutas());
+        List<StoreApply> list=storeApplyMapper.selectByExample(storeApplyCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
+    }
 }

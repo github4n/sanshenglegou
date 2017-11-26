@@ -12,5 +12,7 @@ public interface WithDrawApplyService {
     Long acountByStatus(byte status);
     PageBean<WithDrawApply> search(String condition,int currentpage,int pagesize);
     PageBean<WithDrawApply> searchByStatus(String condition,byte status,int currentpage,int pagesize);
-
+     WithDrawApply add(WithDrawApply withDrawApply);
+     WithDrawApply isexit(WithDrawApply withDrawApply);
+     WithDrawApply isStatus(WithDrawApply withDrawApply);
 }

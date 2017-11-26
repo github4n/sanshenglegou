@@ -15,8 +15,15 @@ import java.util.List;
 public class StoreServiceImpl implements StoreService {
     @Autowired
     StoreMapper storeMapper;
-    public boolean add(Store store) {
-        return storeMapper.insertSelective(store)>0;
+    public Store add(Store store) {
+        long result=storeMapper.insertSelective(store);
+        if (result>0){
+            return storeMapper.selectByPrimaryKey(result);
+        }else {
+            throw  new PeopleException("添加失败");
+        }
+
+
     }
 
     public int deletebyid(long id) {

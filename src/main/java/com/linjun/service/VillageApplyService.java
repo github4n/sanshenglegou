@@ -13,4 +13,7 @@ public interface VillageApplyService {
      Long acountBystatus(byte status);
      PageBean<VillageApply> search(String condition,int currentpage,int pagesize);
      PageBean<VillageApply> searchByStatus(String condition,byte status,int currentpage,int pagesize);
+     VillageApply add(VillageApply villageApply);
+    VillageApply isexit(VillageApply villageApply);
+    VillageApply isStatus(VillageApply villageApply);
 }

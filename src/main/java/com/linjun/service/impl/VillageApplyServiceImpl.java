@@ -171,4 +171,41 @@ public class VillageApplyServiceImpl implements VillageApplyService {
             throw new PeopleException("获取数据失败");
         }
     }
+
+    @Override
+    public VillageApply add(VillageApply villageApply) {
+        long result=villageApplyMapper.insertSelective(villageApply);
+        if (result>0){
+            return villageApplyMapper.selectByPrimaryKey(result);
+        }else {
+         throw  new PeopleException("添加失败");
+        }
+    }
+
+    @Override
+    public VillageApply isexit(VillageApply villageApply) {
+        VillageApplyCriteria villageApplyCriteria=new VillageApplyCriteria();
+        VillageApplyCriteria.Criteria criteria=villageApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(villageApply.getUserid());
+          List<VillageApply> list=villageApplyMapper.selectByExample(villageApplyCriteria);
+          if (list!=null&&list.size()>0){
+              return list.get(0);
+          }else {
+              throw new PeopleException("查询失败");
+          }
+    }
+
+    @Override
+    public VillageApply isStatus(VillageApply villageApply) {
+        VillageApplyCriteria villageApplyCriteria=new VillageApplyCriteria();
+        VillageApplyCriteria.Criteria criteria=villageApplyCriteria.createCriteria();
+        criteria.andUseridEqualTo(villageApply.getUserid());
+        criteria.andStutasEqualTo(villageApply.getStutas());
+        List<VillageApply> list=villageApplyMapper.selectByExample(villageApplyCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+            throw new PeopleException("查询失败");
+        }
+    }
 }
