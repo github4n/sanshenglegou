@@ -25,8 +25,13 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     UserMapper userMapper;
 
-    public boolean add(Order order) {
-        return orderMapper.insertSelective(order) > 0;
+    public Order add(Order order) {
+        long result=orderMapper.insertSelective(order);
+        if (result>0){
+            return orderMapper.selectByPrimaryKey(result);
+        }else {
+            throw new PeopleException("添加失败");
+        }
     }
 
     public int deletebyuserid(long id, long goodsID) {
@@ -34,15 +39,24 @@ public class OrderServiceImpl implements OrderService {
         OrderCriteria.Criteria criteria = orderCriteria.createCriteria();
         criteria.andGoodsidEqualTo(goodsID);
         criteria.andUseridEqualTo(id);
-
-        return orderMapper.deleteByExample(orderCriteria);
+       int result=orderMapper.deleteByExample(orderCriteria);
+       if (result>0){
+           return result;
+       }else {
+           throw new PeopleException("删除失败");
+       }
     }
 
     public List<Order> findByuserid(long id) {
         OrderCriteria orderCriteria = new OrderCriteria();
         OrderCriteria.Criteria criteria = orderCriteria.createCriteria();
         criteria.andUseridEqualTo(id);
-        return orderMapper.selectByExample(orderCriteria);
+        List<Order> list=orderMapper.selectByExample(orderCriteria);
+        if (list.size()>0&&list!=null){
+            return list;
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
     }
 
     public List<Order> findAll() {
@@ -51,14 +65,15 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectByExample(orderCriteria);
     }
 
-    public int update(long userid, long orderId, Order order) {
+    public Order update(Order order) {
+      int result=orderMapper.updateByPrimaryKeySelective(order);
+      if (result>0){
+          return orderMapper.selectByPrimaryKey(order.getId());
+      }else {
+          throw new PeopleException("更新失败");
+      }
 
-        OrderCriteria orderCriteria = new OrderCriteria();
-        OrderCriteria.Criteria criteria = orderCriteria.createCriteria();
-        criteria.andUseridEqualTo(userid);
-        criteria.andIdEqualTo(orderId);
 
-        return orderMapper.updateByExample(order, orderCriteria);
     }
 
     @Override
@@ -679,6 +694,20 @@ public class OrderServiceImpl implements OrderService {
             return lists;
         }else {
             throw new PeopleException("获取数据失败");
+        }
+    }
+
+    @Override
+    public List<Order> getOrderStatus(Long userid, byte status) {
+        OrderCriteria orderCriteria=new OrderCriteria();
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andUseridEqualTo(userid);
+        criteria.andIspayEqualTo(status);
+        List<Order> list=orderMapper.selectByExample(orderCriteria);
+        if (list!=null&&list.size()>0){
+            return list;
+        }else {
+            throw new PeopleException("查询失败");
         }
     }
 }

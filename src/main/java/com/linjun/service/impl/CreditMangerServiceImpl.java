@@ -1,11 +1,14 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.CreditMangerMapper;
 import com.linjun.model.CreditManger;
 import com.linjun.model.CreditMangerCriteria;
 import com.linjun.service.CreditMangerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CreditMangerServiceImpl implements CreditMangerService {
@@ -36,6 +39,11 @@ public class CreditMangerServiceImpl implements CreditMangerService {
         CreditMangerCriteria creditMangerCriteria=new CreditMangerCriteria();
         CreditMangerCriteria.Criteria criteria=creditMangerCriteria.createCriteria();
         criteria.andUseridEqualTo(userid);
-        return (CreditManger) creditMangerMapper.selectByExample(creditMangerCriteria);
+        List<CreditManger> list=creditMangerMapper.selectByExample(creditMangerCriteria);
+        if (list!=null&&list.size()>0){
+            return  list.get(0);
+        }else {
+            throw new PeopleException("查询失败");
+        }
     }
 }

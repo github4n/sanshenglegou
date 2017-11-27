@@ -24,7 +24,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
-        return null;
+
+        long result=userMapper.insertSelective(user);
+        if (result>0){
+            return userMapper.selectByPrimaryKey(result);
+        }else{
+            throw new PeopleException("添加失败");
+        }
+
+
     }
 
     @Override
@@ -221,6 +229,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User loginByUsername(User user) {
+
+
+
+
         return null;
     }
 
@@ -241,7 +253,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) {
-        return null;
+        int result=userMapper.updateByPrimaryKeySelective(user);
+        if (result>0){
+            return userMapper.selectByPrimaryKey(user.getId());
+        }else {
+      throw new PeopleException("更新用户数据失败");
+        }
     }
 
     @Override
@@ -344,6 +361,19 @@ public class UserServiceImpl implements UserService {
         }
         return list;
 
+    }
+
+    @Override
+    public User findByOpenid(User user) {
+        UserCriteria userCriteria=new UserCriteria();
+        UserCriteria.Criteria criteria=userCriteria.createCriteria();
+        criteria.andOpenidEqualTo(user.getOpenid());
+        List<User> list=userMapper.selectByExample(userCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else{
+          throw new PeopleException("查询失败");
+        }
     }
 
     @Override

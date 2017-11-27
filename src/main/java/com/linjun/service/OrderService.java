@@ -6,11 +6,11 @@ import com.linjun.model.Order;
 import java.util.List;
 
 public interface OrderService {
-    public boolean add(Order order);
+    public Order add(Order order);
     public  int deletebyuserid(long id,long goodsID);
     public List<Order> findByuserid(long id);
     public List<Order>  findAll();
-    int update(long userid,long orderId,Order order);
+    Order update(Order order);
     Order createOrder(Order order);
     List<Order> queryOrder(long storid);
     Order findByOrder(long id,long goodsID);
@@ -34,4 +34,5 @@ public interface OrderService {
     PageBean<Order> findAllOStore(long storid,int cuurrentPage,int pagesize);
     PageBean<Order> search(Long condition,int currentpage,int pagesize);
     PageBean<Order> searchByStatus(Long condition,byte status,int currentpage,int pagesize);
+    List<Order> getOrderStatus(Long userid,byte status);
 }

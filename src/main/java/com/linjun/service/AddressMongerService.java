@@ -12,5 +12,5 @@ public interface AddressMongerService {
     public  int deleteByuan(long userid,String name);
     AddressManger findbyid(long id);
     AddressManger findByUseridDefault(long userid);
-    int delelet(long userid,long id);
+    int delelet(long id);
 }

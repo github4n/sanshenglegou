@@ -7,14 +7,20 @@ import com.linjun.model.ShoppingCartCriteria;
 import com.linjun.service.ShoppingcartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.plugin.javascript.JSClassLoader;
 
 import java.util.List;
 @Service
 public class ShoppingcartServiceImpl implements ShoppingcartService {
     @Autowired
     ShoppingCartMapper shoppingCartMapper;
-    public boolean add(ShoppingCart shoppingCart) {
-        return shoppingCartMapper.insertSelective(shoppingCart)>0;
+    public ShoppingCart add(ShoppingCart shoppingCart) {
+        long result=shoppingCartMapper.insertSelective(shoppingCart);
+        if (result>0){
+            return shoppingCartMapper.selectByPrimaryKey(result);
+        }else {
+            throw new PeopleException("添加失败");
+        }
     }
 
     public int deletebygoodsid(long goodsID,long userid) {
@@ -22,7 +28,12 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
         ShoppingCartCriteria.Criteria criteria=shoppingCartCriteria.createCriteria();
         criteria.andGoodsidEqualTo(goodsID);
         criteria.andUseridEqualTo(userid);
-        return shoppingCartMapper.deleteByExample(shoppingCartCriteria);
+        int result=shoppingCartMapper.deleteByExample(shoppingCartCriteria);
+        if (result>0){
+            return result;
+        }else {
+            throw new PeopleException("删除失败");
+        }
     }
 
     public List<ShoppingCart> findAll() {
@@ -51,7 +62,12 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
         ShoppingCartCriteria shoppingCartCriteria=new ShoppingCartCriteria();
         ShoppingCartCriteria.Criteria criteria=shoppingCartCriteria.createCriteria();
         criteria.andUseridEqualTo(userid);
-        return shoppingCartMapper.selectByExample(shoppingCartCriteria);
+        List<ShoppingCart>list= shoppingCartMapper.selectByExample(shoppingCartCriteria);
+        if (list!=null&&list.size()>0){
+            return list;
+        }else {
+            throw new PeopleException("查询失败");
+        }
     }
 
     @Override
@@ -64,5 +80,15 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
         }
 
 
+    }
+
+    @Override
+    public int deleteByid(ShoppingCart shoppingCart) {
+        int result=shoppingCartMapper.deleteByPrimaryKey(shoppingCart.getId());
+        if (result>0){
+            return result;
+        }else {
+            throw new PeopleException("删除失败");
+        }
     }
 }

@@ -33,8 +33,12 @@ public class AddressMongerServiceImpl implements AddressMongerService {
         AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();
         AddressMangerCriteria.Criteria criteria=addressMangerCriteria.createCriteria();
         criteria.andUseridEqualTo(userid);
-
-        return addressMangerMapper.selectByExample(addressMangerCriteria);
+  List<AddressManger> list=addressMangerMapper.selectByExample(addressMangerCriteria);
+        if (list!=null&&list.size()>0){
+            return list;
+        }else {
+            throw new PeopleException("查询失败");
+        }
     }
 
     public AddressManger findByIsDeafult(long userid, int label) {
@@ -73,10 +77,12 @@ public class AddressMongerServiceImpl implements AddressMongerService {
     }
 
     @Override
-    public int delelet(long userid, long id) {
-        AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();
-        addressMangerCriteria.createCriteria().andUseridEqualTo(userid);
-        addressMangerCriteria.createCriteria().andIdEqualTo(id);
-        return addressMangerMapper.deleteByExample(addressMangerCriteria);
+    public int delelet(long id) {
+       int result=addressMangerMapper.deleteByPrimaryKey(id);
+       if (result>0){
+           return result;
+       }else {
+           throw new PeopleException("删除失败");
+       }
     }
 }
