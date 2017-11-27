@@ -1,5 +1,6 @@
 package com.linjun.service.impl;
 
+import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.CreditDetailMapper;
 import com.linjun.model.CreditDetail;
 import com.linjun.model.CreditDetailCriteria;
@@ -36,6 +37,11 @@ public class CreditDetailServiceImpl implements CreditDetialService {
         CreditDetailCriteria creditDetailCriteria=new CreditDetailCriteria();
         CreditDetailCriteria.Criteria criteria=creditDetailCriteria.createCriteria();
         criteria.andUseridEqualTo(userid);
-        return creditDetailMapper.selectByExample(creditDetailCriteria);
+        List<CreditDetail>list= creditDetailMapper.selectByExample(creditDetailCriteria);
+        if (list!=null&&list.size()>0){
+            return list;
+        }else {
+            throw new PeopleException("获取积分失败");
+        }
     }
 }

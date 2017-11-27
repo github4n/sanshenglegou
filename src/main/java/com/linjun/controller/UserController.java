@@ -60,6 +60,8 @@ public class UserController {
     CreditMangerService creditMangerService;
     @Autowired
     ShoppingcartService shoppingcartService;
+    @Autowired
+    CreditDetialService creditDetialService;
 
 
 // 用户注册
@@ -360,7 +362,20 @@ private  int rands(){
                 return  new JsonResult("500",e.getMessage());
             }
     }
+//    用户积分详情
+    @GetMapping(value = "/getcreditDetail")
+    public JsonResult getcreditDetail(
+            @RequestParam(value = "userid")Long userid
+    ){
+         try{
+             List<CreditDetail>list=creditDetialService.findbyuserid(userid);
+             return  new JsonResult("200",list);
+         }catch (Exception e){
+             return new JsonResult("500",e.getMessage());
+         }
 
-  
+    }
+
+
 
 }
