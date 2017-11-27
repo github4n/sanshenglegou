@@ -7,6 +7,8 @@
     <result column="userID" jdbcType="BIGINT" property="userid" />
     <result column="addCredit" jdbcType="BIGINT" property="addcredit" />
     <result column="consumCredit" jdbcType="BIGINT" property="consumcredit" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="changTime" jdbcType="TIMESTAMP" property="changtime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, creditID, userID, addCredit, consumCredit
+    id, creditID, userID, addCredit, consumCredit, status, changTime
   </sql>
   <select id="selectByExample" parameterType="com.linjun.model.CreditDetailCriteria" resultMap="BaseResultMap">
     select
@@ -105,9 +107,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_creditDetail (creditID, userID, addCredit, 
-      consumCredit)
+      consumCredit, status, changTime
+      )
     values (#{creditid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, #{addcredit,jdbcType=BIGINT}, 
-      #{consumcredit,jdbcType=BIGINT})
+      #{consumcredit,jdbcType=BIGINT}, #{status,jdbcType=TINYINT}, #{changtime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.CreditDetail">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -127,6 +131,12 @@
       <if test="consumcredit != null">
         consumCredit,
       </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="changtime != null">
+        changTime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="creditid != null">
@@ -140,6 +150,12 @@
       </if>
       <if test="consumcredit != null">
         #{consumcredit,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="changtime != null">
+        #{changtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -167,6 +183,12 @@
       <if test="record.consumcredit != null">
         consumCredit = #{record.consumcredit,jdbcType=BIGINT},
       </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.changtime != null">
+        changTime = #{record.changtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -178,7 +200,9 @@
       creditID = #{record.creditid,jdbcType=BIGINT},
       userID = #{record.userid,jdbcType=BIGINT},
       addCredit = #{record.addcredit,jdbcType=BIGINT},
-      consumCredit = #{record.consumcredit,jdbcType=BIGINT}
+      consumCredit = #{record.consumcredit,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=TINYINT},
+      changTime = #{record.changtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +222,12 @@
       <if test="consumcredit != null">
         consumCredit = #{consumcredit,jdbcType=BIGINT},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="changtime != null">
+        changTime = #{changtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -206,7 +236,9 @@
     set creditID = #{creditid,jdbcType=BIGINT},
       userID = #{userid,jdbcType=BIGINT},
       addCredit = #{addcredit,jdbcType=BIGINT},
-      consumCredit = #{consumcredit,jdbcType=BIGINT}
+      consumCredit = #{consumcredit,jdbcType=BIGINT},
+      status = #{status,jdbcType=TINYINT},
+      changTime = #{changtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

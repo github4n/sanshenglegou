@@ -27,6 +27,4 @@ public interface VillageApplyMapper {
     int updateByPrimaryKeySelective(VillageApply record);
 
     int updateByPrimaryKey(VillageApply record);
-    List<VillageApply> dimfind(String temp);
-    List<VillageApply> dimfindandstatus(String temp,byte status);
 }

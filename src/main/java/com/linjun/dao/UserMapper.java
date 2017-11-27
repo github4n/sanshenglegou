@@ -27,10 +27,4 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    List<User> dimfindStr(String temp);
-    List<User> dimfindStatus(Long temp,byte status);
-    List<User> dimfindStrStatus(String temp,byte status);
-
-
-
 }

@@ -40,11 +40,6 @@
       </foreach>
     </where>
   </sql>
-
-
-
-
-
   <sql id="Update_By_Example_Where_Clause">
     <where>
       <foreach collection="example.oredCriteria" item="criteria" separator="or">
@@ -98,14 +93,6 @@
     from t_memberApply
     where id = #{id,jdbcType=BIGINT}
   </select>
-
-  <select id="dimfind" resultMap="BaseResultMap">
-    SELECT  * FROM t_memberApply WHERE  concat(username,',',bankacount) LIKE #{temp,jdbcType=VARCHAR}
-  </select>
-  <select id="dimfindandstatus" resultMap="BaseResultMap">
-    SELECT  * FROM t_memberApply WHERE  concat(username,',',bankacount) LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_memberApply
     where id = #{id,jdbcType=BIGINT}
@@ -258,9 +245,6 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-
-
-
   <update id="updateByPrimaryKey" parameterType="com.linjun.model.MemberApply">
     update t_memberApply
     set userID = #{userid,jdbcType=BIGINT},

@@ -1,6 +1,7 @@
 package com.linjun.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class CreditDetailCriteria {
@@ -401,6 +402,126 @@ public class CreditDetailCriteria {
 
         public Criteria andConsumcreditNotBetween(Long value1, Long value2) {
             addCriterion("consumCredit not between", value1, value2, "consumcredit");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Byte value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Byte value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Byte value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Byte value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Byte value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Byte value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Byte> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Byte> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Byte value1, Byte value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Byte value1, Byte value2) {
+            addCriterion("status not between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeIsNull() {
+            addCriterion("changTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeIsNotNull() {
+            addCriterion("changTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeEqualTo(Date value) {
+            addCriterion("changTime =", value, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeNotEqualTo(Date value) {
+            addCriterion("changTime <>", value, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeGreaterThan(Date value) {
+            addCriterion("changTime >", value, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("changTime >=", value, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeLessThan(Date value) {
+            addCriterion("changTime <", value, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeLessThanOrEqualTo(Date value) {
+            addCriterion("changTime <=", value, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeIn(List<Date> values) {
+            addCriterion("changTime in", values, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeNotIn(List<Date> values) {
+            addCriterion("changTime not in", values, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeBetween(Date value1, Date value2) {
+            addCriterion("changTime between", value1, value2, "changtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangtimeNotBetween(Date value1, Date value2) {
+            addCriterion("changTime not between", value1, value2, "changtime");
             return (Criteria) this;
         }
     }

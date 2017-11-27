@@ -1,5 +1,7 @@
 package com.linjun.model;
 
+import java.util.Date;
+
 public class CreditDetail {
     private Long id;
 
@@ -10,6 +12,10 @@ public class CreditDetail {
     private Long addcredit;
 
     private Long consumcredit;
+
+    private Byte status;
+
+    private Date changtime;
 
     public Long getId() {
         return id;
@@ -49,5 +55,21 @@ public class CreditDetail {
 
     public void setConsumcredit(Long consumcredit) {
         this.consumcredit = consumcredit;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Date getChangtime() {
+        return changtime;
+    }
+
+    public void setChangtime(Date changtime) {
+        this.changtime = changtime;
     }
 }

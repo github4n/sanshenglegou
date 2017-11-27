@@ -240,5 +240,13 @@
 		>
 			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
 		</table>
+		<table tableName="t_coupan"
+			   domainObjectName="Coupan" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
 	</context>
 </generatorConfiguration>  

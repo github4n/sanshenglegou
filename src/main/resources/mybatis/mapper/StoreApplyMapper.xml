@@ -90,14 +90,6 @@
       order by ${orderByClause}
     </if>
   </select>
-
-  <select id="dimfind" resultMap="BaseResultMap">
-    SELECT  * FROM t_storeApply WHERE  concat(username,',',bankacount,',',tel) LIKE #{temp,jdbcType=VARCHAR}
-  </select>
-  <select id="dimfindandstatus" resultMap="BaseResultMap">
-    SELECT  * FROM t_storeApply WHERE  concat(username,',',bankacount,',',tel) LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
-  </select>
-
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

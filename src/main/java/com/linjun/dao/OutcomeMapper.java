@@ -27,8 +27,4 @@ public interface OutcomeMapper {
     int updateByPrimaryKeySelective(Outcome record);
 
     int updateByPrimaryKey(Outcome record);
-    List<Outcome> dimfind(Long temp);
-    List<Outcome> dimfindandstatus(Long temp,byte status);
-    List<Outcome> dimfindStrStatus(String temp,byte status);
-    List<Outcome> dimfindStr(String temp);
 }

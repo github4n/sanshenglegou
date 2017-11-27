@@ -1,342 +1,382 @@
 SET FOREIGN_KEY_CHECKS=0;
+-- 管理员表
 DROP TABLE IF EXISTS `t_admin`;
 CREATE TABLE `t_admin` (
-`id` bigint not null AUTO_INCREMENT,
-`account` varchar(32) not null,
-`passworld` varchar(64) not null,
-`grade` tinyint  DEFAULT '0',
-`jurisdiction` tinyint  DEFAULT '0',
-PRIMARY KEY (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `account` varchar(32) not null comment'账户名',
+  `passworld` varchar(64) not null comment'密码',
+  `grade` tinyint  DEFAULT '0'comment'管理员等级',
+  `jurisdiction` varchar(128)  DEFAULT '0' comment'描述',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+INSERT INTO `t_admin` (`id`,`account`,`passworld`,`grade`,`jurisdiction`)
+VALUES(1,'admin','admin',1,'');
+
+-- 轮播图表
+DROP TABLE IF EXISTS `t_banner`;
+CREATE TABLE `t_banner` (
+  `id` bigint not null AUTO_INCREMENT,
+  `imageurl` varchar(62) not null comment'图片地址',
+  `isstart`  tinyint DEFAULT '1',
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 用户表
 DROP TABLE IF EXISTS `t_user`;
 CREATE TABLE `t_user`(
-`id` bigint not null AUTO_INCREMENT,
-`username` varchar(64) not null,
-`passworld` varchar(64) not null,
-`token` varchar(128) not null,
-`role` tinyint ,
- `sex` varchar(32) ,
- `tel` varchar(64) ,
-  `email` varchar(64),
- `state` tinyint,
-`createTime` DATETIME not null,
-`login` DATETIME ,
- `ip` varchar(64) not null,
- PRIMARY KEY (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `username` varchar(64) not null comment'昵称',
+  `OpenID` varchar(64) not null comment'用户的openid',
+  `token` varchar(128) not null comment'token值',
+  `role` tinyint DEFAULT '0' comment'是否会员',
+  `city` varchar(64) comment'城市',
+  `province` varchar(64) comment'省',
+  `country` varchar(64) comment'国家',
+  `sex` varchar(32) comment'性别',
+  `tel` varchar(64) comment'电话',
+  `email` varchar(64) comment'邮箱',
+  `headimage` varchar(128) comment'头像图片',
+  `state` tinyint DEFAULT '1' comment'是否启用用户 1为启用',
+  `createTime` DATETIME comment'创建时间',
+  `login` DATETIME comment'登入时间' ,
+  `ip` varchar(64) comment'最近一次的登入的ip地址' ,
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 用户地址管理表
 DROP TABLE IF EXISTS `t_addressManger`;
 CREATE TABLE `t_addressManger`(
-`id` bigint not null AUTO_INCREMENT,
-`userID` bigint not null,
-`receivePeople` varchar(64) not null,
-`receiveTel` varchar(64) not null,
-`province` varchar(32) not null,
-`city` varchar(32) not null,
-`county` varchar (32) not null,
-`addressDetail` varchar(128) ,
-`isDefault` tinyint ,
-PRIMARY KEY (`id`),
-KEY `addressid` (`userID`),
-CONSTRAINT `addressid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `userID` bigint not null comment'用户id',
+  `receivePeople` varchar(64) not null comment'收货人',
+  `receiveTel` varchar(64) not null comment'收货人电话',
+  `province` varchar(32) not null comment'省',
+  `city` varchar(32) not null comment'市',
+  `county` varchar (32) not null comment'县',
+  `addressDetail` varchar(128) comment'详细地址' ,
+  `isDefault` tinyint comment'是否为默认地址',
+  PRIMARY KEY (`id`),
+  KEY `addressid` (`userID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 积分管理表
 DROP TABLE IF EXISTS `t_creditManger`;
 CREATE TABLE `t_creditManger`(
- `id` bigint not null AUTO_INCREMENT,
- `userID` bigint not null,
- `creditSum` bigint ,
- `consumedCredit` bigint,
- `getCredit` bigint,
- PRIMARY KEY (`id`),
-KEY `credit` (`userID`),
-CONSTRAINT `credit` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `userID` bigint not null comment'用户的id',
+  `creditSum` bigint comment'积分总和',
+  `consumedCredit` bigint comment'消费积分',
+  `getCredit` bigint comment'获得积分',
+  PRIMARY KEY (`id`),
+  KEY `credit` (`userID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 用户积分表细节
 DROP TABLE IF EXISTS `t_creditDetail`;
 CREATE TABLE `t_creditDetail`(
   `id` bigint not null AUTO_INCREMENT,
-  `creditID` bigint not null,
-  `userID` bigint not null,
-  `addCredit` bigint,
-  `consumCredit` bigint,
+  `creditID` bigint not null comment'积分id',
+  `userID` bigint not null comment'用户id',
+  `addCredit` bigint comment'增加的积分',
+  `consumCredit` bigint comment'消费积分',
+  `status` tinyint,
+  `changTime` DATETIME,
   PRIMARY KEY (`id`),
   KEY `creditdetailid` (`creditID`),
-  KEY `cdetail` (`userID`),
-  CONSTRAINT `creditdetailid` FOREIGN KEY (`creditID`) REFERENCES `t_creditManger`(`id`),
-  CONSTRAINT `cdetail` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
+  KEY `cdetail` (`userID`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+-- 优惠券表
+DROP TABLE IF EXISTS `t_coupan`;
+CREATE TABLE `t_coupan`(
+  `id` bigint not null AUTO_INCREMENT,
+  `available` varchar(64),
+  `discount` varchar(64),
+  `denominations`varchar(64),
+  `origin_condition`varchar(64),
+  `reason` varchar(64),
+  `value` varchar(64),
+  `condition` varchar(64),
+  `name` varchar(64),
+  `start_at` varchar(64),
+  `end_at` varchar(64),
+  PRIMARY KEY (`id`)
+
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 
+
+
+-- 用户收藏表
 DROP TABLE IF EXISTS `t_collect`;
 CREATE TABLE `t_collect`(
-`id` bigint not null AUTO_INCREMENT,
-`userID`  bigint not null,
-`goodsID` bigint not null,
-`createTime` DATETIME not null,
-PRIMARY KEY (`id`),
-KEY `collectid` (`userID`),
-CONSTRAINT `collectid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `userID`  bigint not null comment'用户id',
+  `goodsID` bigint not null comment'商品id',
+  `createTime` DATETIME not null comment'收藏时间',
+  PRIMARY KEY (`id`),
+  KEY `collectid` (`userID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `t_recommend`;
-CREATE TABLE `t_recommend`(
-`id` bigint not null AUTO_INCREMENT,
-`userID` bigint not null,
-`createTime` DATETIME not null,
-`type` varchar(32) not null,
-`isCheck` tinyint not null,
-`recommendName` varchar(64) not null,
-PRIMARY KEY (`id`),
-KEY `recommendid` (`userID`),
-CONSTRAINT `recommendid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `t_offLine`;
-CREATE TABLE `t_offLine`(
-`id` bigint not null AUTO_INCREMENT,
-`userID` bigint not null,
-`offlinrUserID` bigint not null,
-`fatherUserID` bigint not null,
-`isFather` tinyint not null,
-`createTime` DATETIME not null,
- PRIMARY KEY (`id`),
- KEY `offlineid` (`userID`),
- CONSTRAINT `offlineid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `t_sign`;
-CREATE TABLE `t_sign`(
-`id` bigint not null AUTO_INCREMENT,
-`userID` bigint not null,
-`expersum` bigint ,
-`monthSignCount` int,
-`lastSiglns` datetime,
-PRIMARY KEY (`id`),
-KEY `signid` (`userID`),
-CONSTRAINT `signid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `t_siglnDetail`;
-CREATE TABLE `t_siglnDetail`(
-	`id` bigint not null AUTO_INCREMENT,
-	`signID` bigint not null,
-	`userID` bigint not null,
-	`expencePiont` int,
-	`tradePoint` int,
-	`dataCreate` datetime,
-	PRIMARY KEY (`id`),
-	KEY `sdetailid` (`userID`),
-	KEY `sdetailsi` (`signID`),
-	CONSTRAINT `sdetailid` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`),
-	CONSTRAINT `sdetailsi` FOREIGN KEY (`signID`) REFERENCES `t_sign` (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `t_Advertsing`;
-CREATE TABLE `t_Advertsing` (
-	`id` bigint not null AUTO_INCREMENT,
-	`name` varchar(32),
-	`body` varchar(500),
-	`linkUrl` varchar(32),
-	`imageId` bigint,
-	`stardate` datetime,
-	`enddate` datetime,
-	`dataCreate` datetime,
-	PRIMARY KEY (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE if EXISTS `t_AdvertsingPosing`;
-CREATE TABLE `t_AdvertsingPosing`(
-	`id` bigint not null AUTO_INCREMENT,
-	`description` varchar(64),
-	`imageId` bigint,
-	`isEnable` ENUM('1','0') DEFAULT '1',
-	PRIMARY KEY (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE if EXISTS `t_AdvertsinglnPosing`;
-CREATE TABLE `t_AdvertsinglnPosing`(
-	`advertsingID` bigint,
-	`postingID` bigint
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-ALTER TABLE `t_AdvertsinglnPosing` ADD CONSTRAINT ap_pk PRIMARY KEY(`advertsingID`,`postingID`);
-ALTER TABLE `t_AdvertsinglnPosing` ADD CONSTRAINT ap_pk1 FOREIGN KEY (`advertsingID`) REFERENCES `t_Advertsing`(`id`);
-ALTER TABLE `t_AdvertsinglnPosing` ADD CONSTRAINT ap_pk2  FOREIGN KEY (`postingID`) REFERENCES `t_AdvertsingPosing`(`id`);
-ALTER TABLE `t_AdvertsinglnPosing` DROP FOREIGN KEY ap_pk1;
-ALTER TABLE `t_AdvertsinglnPosing` DROP FOREIGN KEY ap_pk2;
-
+-- 文章管理
 DROP TABLE IF EXISTS `t_article`;
 CREATE TABLE `t_article`(
-`id` bigint not null AUTO_INCREMENT,
-`content` varchar(5000),
-`title` varchar(64),
-`looksum` bigint,
- PRIMARY KEY (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `content` varchar(5000) comment'内容',
+  `title` varchar(64) comment'标题',
+  `looksum` bigint comment'是否启用',
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 村庄的头条页
 DROP TABLE IF EXISTS `t_articleculture`;
 CREATE TABLE `t_articleculture`(
-`id` bigint not null AUTO_INCREMENT,
-`title` varchar(64) not null,
-`content` varchar(5000),
-`looksum` bigint,
-PRIMARY KEY (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `title` varchar(64) not null comment'标题',
+  `content` varchar(5000)comment'内容',
+  `looksum` bigint comment'是否启用',
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 店铺表
 DROP TABLE IF EXISTS `t_store`;
 CREATE TABLE `t_store`(
-`id` bigint not null AUTO_INCREMENT,
-`createTime` datetime,
-`storeName` varchar(64) not null,
-`storeAddress` varchar(64),
-`storeType` varchar(32) not null,
-`storer` varchar(32) not null,
-`stroelogo` varchar(64),
-`scope` varchar(64),
-`tel` varchar(64),
-`isAuth` tinyint DEFAULT '0',
-`storeUserID` bigint not null,
-`passworld` varchar(64) not null,
-`introduce` varchar(128),
-PRIMARY KEY (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `createTime` datetime comment'创建时间',
+  `storeName` varchar(64) not null comment'店铺名字',
+  `storeAddress` varchar(64) comment'店铺地址',
+  `storeType` varchar(32) not null comment'店铺类型',
+  `storer` varchar(32) not null comment'店主',
+  `stroelogo` varchar(64) comment'店铺logo',
+  `scope` varchar(64) comment'店铺行业',
+  `tel` varchar(64) comment'电话',
+  `isAuth` tinyint DEFAULT '1' comment'是否启用',
+  `storeUserID` bigint not null comment'用户id',
+  `passworld` varchar(64) not null comment'密码',
+  `introduce` varchar(128) comment'描述',
+  `type` tinyint comment'店铺属于那种类型',
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 订单表
 DROP TABLE IF EXISTS `t_order`;
 CREATE TABLE `t_order`(
-`id` bigint not null AUTO_INCREMENT,
-`userID` bigint not null,
-`storeID` bigint not null,
-`orderCode` bigint not null,
-`goodsName` varchar(64) not null,
-`goodsID` bigint not null,
-`addressID`bigint,
-`marketPricce` FLOAT(5,2),
-`memberPrice` FLOAT(5,2),
-`goodSum` int(10) DEFAULT '0',
-`priceSum` FLOAT(5,2),
-`sendTime` DATETIME,
-`logistics` varchar(32),
-`payTime` DATETIME,
-`isreceive` tinyint DEFAULT '0',
-`isPay` tinyint DEFAULT '0',
-PRIMARY KEY (`id`),
-KEY `orderid` (`userID`),
-CONSTRAINT `orderid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `userID` bigint not null comment'用户id',
+  `storeID` bigint not null comment'商铺id',
+  `orderCode` bigint not null comment'订单流水号',
+  `goodsName` varchar(64) not null comment'商品名称',
+  `goodsID` bigint not null comment'商品id',
+  `addressID`bigint comment'地址管理表id',
+  `marketPricce` FLOAT(10,2) comment'市场价',
+  `memberPrice` FLOAT(10,2) comment'会员价',
+  `goodSum` int(10) DEFAULT '0' comment'商品数量',
+  `priceSum` FLOAT(10,2) comment'总价',
+  `sendTime` DATETIME comment'发货时间',
+  `createTime` DATETIME comment'创建时间',
+  `payTime` DATETIME comment'支付时间',
+  `cancel` DATETIME comment'取消时间',
+  `completeTime` DATETIME comment'完成时间',
+  `logistics` varchar(32) comment'物流单位',
+  `message` varchar(1200) comment'留言',
+  `logisticsCode`bigint comment'物流编码',
+  `isPay` tinyint DEFAULT '0' comment'订单状态' ,
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 收入表
+DROP TABLE IF EXISTS `t_income`;
+CREATE TABLE `t_income`(
+  `id` bigint not null AUTO_INCREMENT,
+  `orderCode` bigint not null comment'订单流水号',
+  `orderId` bigint not null comment'订单id',
+  `payName` varchar(128) comment'支付人',
+  `payID` bigint comment'支付id',
+  `price` FLOAT(10,2) comment'总价',
+  `payTime` DATETIME comment'支付时间',
+  `stutas` tinyint DEFAULT '0' comment'状态',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 支出表
+DROP TABLE IF EXISTS `t_outcome`;
+CREATE TABLE `t_outcome`(
+  `id` bigint not null AUTO_INCREMENT,
+  `orderCode` bigint not null comment'订单流水号',
+  `payName` varchar(128) comment'收款人',
+  `payAcount` bigint comment'收款账号',
+  `price` FLOAT(10,2) comment'金额',
+  `dopayName` varchar(128) comment'审核人',
+  `payTime` DATETIME comment'支付时间',
+  `stutas` tinyint DEFAULT '0' comment'状态',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 会员申请
+DROP TABLE IF EXISTS `t_memberApply`;
+CREATE TABLE `t_memberApply`(
+  `id` bigint not null AUTO_INCREMENT,
+  `userID` bigint comment'用户id',
+  `username`varchar(128) comment'用户名字',
+  `identityImage` varchar(128) comment'身份证证明',
+  `identityImages` varchar(128) comment'身份证反面',
+  `bankacount` varchar(128) comment'银行账户',
+  `appleTime` DATETIME comment'申请时间',
+  `stutas` tinyint DEFAULT '0' comment'状态',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 村村通申请
+DROP TABLE IF EXISTS `t_villageApply`;
+CREATE TABLE `t_villageApply`(
+  `id` bigint not null AUTO_INCREMENT,
+  `userID` bigint comment'用户id',
+  `username`varchar(128) comment'申请者名字',
+  `identityImage` varchar(128) comment'身份证正面',
+  `identityImages` varchar(128) comment'身份证反面',
+  `bankacount` varchar(128) comment'银行账户',
+  `appleTime` DATETIME comment'申请时间',
+  `stutas` tinyint DEFAULT '0' comment'状态',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 店铺申请
+DROP TABLE IF EXISTS `t_storeApply`;
+CREATE TABLE `t_storeApply`(
+  `id` bigint not null AUTO_INCREMENT,
+  `userID` bigint comment'申请者id',
+  `username`varchar(128) comment'申请者名字',
+  `identityImage` varchar(128) comment'身份证正面',
+  `identityImages` varchar(128) comment'身份证反面',
+  `bankacount` varchar(128) comment'银行账户',
+  `tel` varchar(128) comment'电话',
+  `businessImages` varchar(128) comment'营业执照',
+  `appleTime` DATETIME comment'申请时间',
+  `stutas` tinyint DEFAULT '0'comment'状态',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 提现申请
+DROP TABLE IF EXISTS `t_withDrawApply`;
+CREATE TABLE `t_withDrawApply`(
+  `id` bigint not null AUTO_INCREMENT,
+  `userID` bigint comment'申请id',
+  `username`varchar(128) comment'申请者名字',
+  `storeName`varchar(128) comment'店铺名字',
+  `price` FLOAT(10,2) comment'金额',
+  `bankacount` varchar(128) comment'银行账户',
+  `appleTime` DATETIME comment'申请时间',
+  `stutas` tinyint DEFAULT '0' comment'状态',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 物流表
 DROP TABLE IF EXISTS `t_logistics`;
 CREATE TABLE `t_logistics`(
-`id` bigint not null AUTO_INCREMENT,
-`orderId` bigint not null,
-`userID` bigint not null,
-`logisticsName` varchar(32) not null,
-`logisticsState` varchar(64) ,
-PRIMARY KEY(`id`),
-KEY `logisticsid` (`orderId`),
-KEY `luserid` (`userID`),
-CONSTRAINT `logisticsid`FOREIGN KEY (`orderId`) REFERENCES `t_order` (`id`),
-CONSTRAINT `luserid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `orderId` bigint not null comment'订单id',
+  `userID` bigint not null comment'用户id',
+  `logisticsName` varchar(32) not null comment'物流名称',
+  `logisticsState` varchar(64) comment'物流编号' ,
+  PRIMARY KEY(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `t_orderDetail`;
-CREATE TABLE `t_orderDetail`(
-`id` bigint not null AUTO_INCREMENT,
-`orderId` bigint not null,
-`orderState` varchar(32),
- PRIMARY KEY (`id`),
- KEY `orderdetailid` (`orderId`),
- CONSTRAINT `orderdetailid` FOREIGN KEY (`orderId`) REFERENCES `t_order` (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `t_goodsBand`;
-CREATE TABLE `t_goodsBand`(
-`id` bigint not null AUTO_INCREMENT,
-`bandName` varchar(32) not null,
-`description` varchar(128),
-PRIMARY KEY (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
+-- 商品类型
 DROP TABLE IF EXISTS `t_goodsType`;
 CREATE TABLE `t_goodsType`(
-`id` bigint not null,
-`TypeName` varchar(32),
-`fatherTypeID` bigint,
-`isFather` tinyint DEFAULT '0',
-PRIMARY KEY (`id`)
+  `id` bigint not null,
+  `TypeName` varchar(32) comment'类别名称',
+  `fatherTypeID` bigint comment'父级id',
+  `isFather` tinyint DEFAULT '0'comment'是否为父级',
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS `t_goodsAttribute`;
-CREATE TABLE `t_goodsAttribute`(
-`id`bigint not null AUTO_INCREMENT,
-`attributeName` varchar(32),
-`TypeID` bigint not null,
-`isKey` tinyint DEFAULT '0',
-PRIMARY KEY (`id`),
-KEY `attributeid` (`TypeID`),
-CONSTRAINT `attributeid` FOREIGN KEY (`TypeID`) REFERENCES `t_goodsType` (`id`)
-)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+INSERT INTO `t_goodsType` (`id`,`TypeName`,`fatherTypeID`,`isFather`)
+VALUES(1,'综合',0,1),
+  (2,'主商城',0,1),
+  (3,'鱼禽肉蛋',1,0),
+  (4,'蔬菜花果',1,0),
+  (5,'园林花卉',1,0),
+  (6,'粮油食品',1,0),
+  (7,'农机设备',1,0),
+  (8,'生态花果',1,0),
+  (9,'土地改良',1,0),
+  (10,'有机种植',1,0),
+  (11,'农副产品',1,0),
+  (12,'虫草保健',1,0),
+  (13,'食品保健',2,0),
+  (14,'美容护理',2,0),
+  (15,'手机数码',2,0),
+  (16,'装修建材',2,0),
+  (17,'男女服饰',2,0),
+  (18,'鞋帽箱包',2,0),
+  (19,'饰品摆件',2,0),
+  (20,'珠宝首饰',2,0),
+  (21,'日用刚需',2,0),
+  (22,'母婴童装',2,0);
 
-
+-- 商品表
 DROP TABLE IF EXISTS `t_goods`;
 CREATE TABLE `t_goods`(
-`id` bigint not null AUTO_INCREMENT,
-`goodsName` varchar(128),
-`goodsBandID` bigint not null,
-`TypeID` bigint not null,
-`goodsSum` bigint,
-`marketPrive` FLOAT(5,2),
-`memberPrice` FLOAT(5,2),
-`sendCredit` int,
-`storeID` bigint not null,
-`shop` varchar(32) not null,
-`soldamount` bigint ,
-`isstart` tinyint DEFAULT "1",
-`createTime` DATETIME,
-PRIMARY KEY (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `goodsName` varchar(128) comment'商品名称',
+  `TypeID` bigint not null comment'类型id',
+  `goodsSum` bigint comment'商品库存',
+  `marketPrive` FLOAT(10,2) comment'市场价',
+  `memberPrice` FLOAT(10,2) comment'会员价',
+  `sendCredit` int comment'赠送积分',
+  `storeID` bigint not null comment'店铺id',
+  `shop` varchar(32) not null comment'店铺名称',
+  `soldamount` bigint comment'售出数量',
+  `isstart` tinyint DEFAULT "1" comment'是否上架',
+  `createTime` DATETIME comment'创建时间',
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-
+-- 商品图片表
 DROP TABLE IF EXISTS `t_goodsImage`;
 CREATE TABLE `t_goodsImage`(
-`id` bigint not null AUTO_INCREMENT,
-`goodsID` bigint not null,
-`IamgeAddress` varchar(128),
-`isKeyIamge` tinyint DEFAULT '0',
-`createTime` datetime,
-PRIMARY KEY (`id`),
-KEY `imageid` (`goodsID`),
-CONSTRAINT `imageid` FOREIGN KEY (`goodsID`) REFERENCES `t_goods` (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `goodsID` bigint not null comment'图片id',
+  `IamgeAddress` varchar(128) comment'图片地址',
+  `isKeyIamge` tinyint DEFAULT '0' comment'是否为主图',
+  `createTime` datetime comment'创建时间',
+  PRIMARY KEY (`id`),
+  KEY `imageid` (`goodsID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 商品细节
+DROP TABLE IF EXISTS `t_goodsDetail`;
+CREATE TABLE `t_goodsDetail`(
+  `id` bigint not null AUTO_INCREMENT,
+  `goodsID` bigint not null comment'商品id',
+  `content` varchar(2280) comment'描述',
+  PRIMARY KEY (`id`),
+  KEY `imageid` (`goodsID`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- 评价表
 DROP TABLE IF EXISTS `t_evaluate`;
 CREATE TABLE `t_evaluate`(
-`id` bigint not null AUTO_INCREMENT,
-`goodsID` bigint not null,
-`userID` bigint not null,
-`content` varchar(64),
-PRIMARY KEY (`id`),
-KEY `evgoods` (`goodsID`),
-KEY `evuserid` (`userID`),
-CONSTRAINT `evgoods` FOREIGN KEY (`goodsID`) REFERENCES `t_goods`(`id`),
-CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `t_user` (`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `goodsID` bigint not null comment'商品id',
+  `userID` bigint not null comment'用户id',
+  `content` varchar(64) comment'内容',
+  PRIMARY KEY (`id`),
+  KEY `evgoods` (`goodsID`),
+  KEY `evuserid` (`userID`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- 购物车
 DROP TABLE IF EXISTS `t_shoppingcart`;
 CREATE TABLE `t_shoppingcart`(
-`id` bigint not null AUTO_INCREMENT,
-`goodsID` bigint not null,
-`storeID` bigint not null,
-`userID` bigint not null,
-`storeName` varchar(64),
-`goodsName` varchar(64),
-`memberPrice`FLOAT(5,2),
-`number`bigint,
- PRIMARY KEY (`id`),
- KEY `cartid`(`goodsID`),
- KEY `shopcartid` (`userID`),
- CONSTRAINT `cartid` FOREIGN KEY (`goodsID`) REFERENCES `t_goods`(`id`),
- CONSTRAINT `shopcartid` FOREIGN KEY (`userID`) REFERENCES `t_user`(`id`)
+  `id` bigint not null AUTO_INCREMENT,
+  `goodsID` bigint not null comment'商品id',
+  `storeID` bigint not null comment'店铺id',
+  `userID` bigint not null comment'用户id',
+  `storeName` varchar(64) comment'店铺名称',
+  `goodsName` varchar(64) comment'商品名称',
+  `memberPrice`FLOAT(5,2) comment'价格' ,
+  `number`bigint comment'数量',
+  PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
