@@ -28,7 +28,6 @@ public class CreditDetailServiceImpl implements CreditDetialService {
         CreditDetailCriteria creditDetailCriteria=new CreditDetailCriteria();
         CreditDetailCriteria.Criteria criteria=creditDetailCriteria.createCriteria();
         criteria.andUseridEqualTo(creditid);
-
         return creditDetailMapper.deleteByExample(creditDetailCriteria);
     }
 

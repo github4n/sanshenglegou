@@ -41,12 +41,17 @@ public class AddressMongerServiceImpl implements AddressMongerService {
         }
     }
 
-    public AddressManger findByIsDeafult(long userid, int label) {
+    public AddressManger findByIsDeafult(long userid) {
         AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();
         AddressMangerCriteria.Criteria criteria=addressMangerCriteria.createCriteria();
         criteria.andUseridEqualTo(userid);
-        criteria.andIsdefaultEqualTo((byte) label);
-        return (AddressManger) addressMangerMapper.selectByExample(addressMangerCriteria);
+        criteria.andIsdefaultEqualTo((byte)1);
+        List<AddressManger> list=addressMangerMapper.selectByExample(addressMangerCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+            throw new PeopleException("获取数据失败");
+        }
     }
     public int deleteByuan(long userid, String name) {
         AddressMangerCriteria addressMangerCriteria=new AddressMangerCriteria();

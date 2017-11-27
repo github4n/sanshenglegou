@@ -5,6 +5,7 @@ import com.linjun.common.JsonResult;
 import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.ShoppingCartMapper;
 import com.linjun.model.*;
+import com.linjun.pojo.Address;
 import com.linjun.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -309,11 +310,21 @@ private  int rands(){
 //    获取用户地址列表
     @GetMapping(value = "/getAddressList")
     public  JsonResult getAddressList(
-            @RequestParam(value = "userID")long userid
+            @RequestParam(value = "userID")long userID
     ){
          try{
-             List<AddressManger> list=addressMongerService.findByuser(userid);
-             return new JsonResult("200",list);
+             List<AddressManger> list=addressMongerService.findByuser(userID);
+             List<Address> addresslist=new ArrayList<Address>();
+             Address address=new Address();
+             for (AddressManger data: list) {
+                address.setId(data.getId());
+                address.setAddress(data.getAddressdetail());
+                address.setTel(data.getReceivetel());
+                address.setIsDefault(data.getIsdefault());
+
+                addresslist.add(address);
+             }
+             return new JsonResult("200",addresslist);
          }catch (Exception e){
              return new JsonResult("500",e.getMessage());
          }
@@ -370,7 +381,18 @@ private  int rands(){
          }
 
     }
-
+//    获取用户默认地址
+    @GetMapping(value = "/getDefaultAddress")
+    public  JsonResult getDefaultAddress(
+            @RequestParam(value ="userid")Long userid
+    ){
+       try{
+           AddressManger addressManger=addressMongerService.findByUseridDefault(userid);
+           return  new JsonResult("200",addressManger);
+       }catch (Exception e){
+           return new JsonResult("500",e.getMessage());
+       }
+    }
 
 
 }

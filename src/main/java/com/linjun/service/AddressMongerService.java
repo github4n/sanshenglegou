@@ -8,7 +8,7 @@ public interface AddressMongerService {
     public AddressManger add(AddressManger addressManger);
     public  int deleteByuserid(long userid);
     public List<AddressManger> findByuser(long userid);
-    public AddressManger findByIsDeafult(long userid,int label);
+    public AddressManger findByIsDeafult(long userid);
     public  int deleteByuan(long userid,String name);
     AddressManger findbyid(long id);
     AddressManger findByUseridDefault(long userid);
