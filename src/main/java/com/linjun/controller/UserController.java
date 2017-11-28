@@ -6,6 +6,7 @@ import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.ShoppingCartMapper;
 import com.linjun.model.*;
 import com.linjun.pojo.Address;
+import com.linjun.pojo.Cart;
 import com.linjun.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -344,8 +345,8 @@ private  int rands(){
 
     }
 //    用户支付状态的订单
-    @GetMapping(value = "/getOrdernotpay")
-    public  JsonResult getOrdernotpay(
+    @GetMapping(value = "/getOrderStatus")
+    public  JsonResult getOrderStatus(
             @RequestParam(value = "userid")Long userid,
             @RequestParam(value = "status")Byte status
     ){
@@ -363,7 +364,23 @@ private  int rands(){
     ){
             try{
                 List<ShoppingCart> list=shoppingcartService.findByuserid(userid);
-                return new JsonResult("200",list);
+                Cart cart=new Cart();
+                List<Cart> cartList=new ArrayList<Cart>();
+                for (ShoppingCart data:list){
+                    cart.setGoodsid(data.getGoodsid());
+                    cart.setGoodimage(goodsImageService.findMainImage(data.getGoodsid()).getIamgeaddress());
+                    cart.setGoodsname(data.getGoodsname());
+                    cart.setMemberprice(data.getMemberprice());
+                    cart.setNumber(data.getNumber());
+                    cart.setStoreid(data.getStoreid());
+                    cart.setStorename(data.getStorename());
+                    cart.setUserid(data.getUserid());
+                     cart.setId(data.getId());
+                    cartList.add(cart);
+                }
+
+
+                return new JsonResult("200",cartList);
             }catch (Exception e){
                 return  new JsonResult("500",e.getMessage());
             }
@@ -393,6 +410,28 @@ private  int rands(){
            return new JsonResult("500",e.getMessage());
        }
     }
+//批量删除购物车数据
+    @DeleteMapping(value = "/deletecart")
+    public  JsonResult deletecart(
+            @RequestParam(value = "cartids")List<Long> cartids
+    ){
+                List<ShoppingCart> list=new ArrayList<ShoppingCart>();
+                ShoppingCart shoppingCart=new ShoppingCart();
+        for (Long id:cartids) {
+            shoppingCart.setId(id);
+            list.add(shoppingCart);
+        }
+         try{
+             int result=shoppingcartService.deleteByList(list);
+             return  new JsonResult("200",result);
+         }catch (Exception e){
+             return  new JsonResult("500",e.getMessage());
+         }
+
+
+    }
+
+
 
 
 }

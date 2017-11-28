@@ -91,4 +91,24 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
             throw new PeopleException("删除失败");
         }
     }
+
+    @Override
+    public int deleteByList(List<ShoppingCart> shoppingCart) {
+        int temp=0;
+        for (int i = 0; i < shoppingCart.size(); i++) {
+            int result=shoppingCartMapper.deleteByPrimaryKey(shoppingCart.get(i).getId());
+            if (result>0){
+                temp+=1;
+            }else {
+
+            }
+        }
+        if (temp==shoppingCart.size()){
+            return  shoppingCart.size();
+        }else {
+            throw  new PeopleException("批量删除失败");
+        }
+
+    }
+
 }

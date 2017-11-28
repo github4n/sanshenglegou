@@ -13,4 +13,5 @@ public interface ShoppingcartService {
     public  List<ShoppingCart> findByuserid(long userid);
     ShoppingCart addCart(ShoppingCart shoppingCart);
     int deleteByid(ShoppingCart shoppingCart);
+    int deleteByList(List<ShoppingCart> shoppingCart);
 }
