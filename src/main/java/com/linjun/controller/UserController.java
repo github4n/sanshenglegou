@@ -516,6 +516,7 @@ private  int rands(){
                goodsModel.setMemberprice(goodsService.findByid(data.getGoodsid()).getMemberprice());
                goodsModel.setId(data.getId());
                goodsModel.setGoodsSum(goodsService.findByid(data.getGoodsid()).getGoodssum());
+               goodsModel.setContent(goodsDetailService.findByID(data.getGoodsid()).getContent());
                list.add(goodsModel);
            }
           return  new JsonResult("200",list);

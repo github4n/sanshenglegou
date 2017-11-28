@@ -11,6 +11,15 @@ public class GoodsModel {
     private  long soldamount;
     private String storename;
     private long goodsSum;
+    private  String content;
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
 
     public long getId() {
         return id;
