@@ -7,6 +7,8 @@ import com.linjun.dao.ShoppingCartMapper;
 import com.linjun.model.*;
 import com.linjun.pojo.Address;
 import com.linjun.pojo.Cart;
+import com.linjun.pojo.GoodsModel;
+import com.linjun.pojo.Ordermodel;
 import com.linjun.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class UserController {
     UserService userService;
     @Autowired
     OrderService orderService;
-
+      @Autowired
+      CollectService collectService;
     @Autowired
     GoodsService goodsService;
     @Autowired
@@ -281,7 +284,7 @@ private  int rands(){
 
 
 //添加地址管理
-    @PostMapping(value = "addAdressManger")
+    @PostMapping(value = "/addAdressManger")
     public  JsonResult addAddressManger(
             @RequestBody AddressManger addressManger
     ){
@@ -296,7 +299,7 @@ private  int rands(){
 
 
 //删除地址
-    @DeleteMapping(value = "deleteAddress")
+    @DeleteMapping(value = "/deleteAddress")
     public  JsonResult deleteAddressManger(
             @RequestParam(value = "addressid")long addressid
     ){
@@ -338,7 +341,39 @@ private  int rands(){
     ){
            try{
                List<Order> list=orderService.findByuserid(userid);
-               return new JsonResult("200",list);
+               List<Ordermodel> orderlist=new ArrayList<Ordermodel>();
+               Ordermodel ordermodel=new Ordermodel();
+               for (Order data:list) {
+                   ordermodel.setAddressid(data.getAddressid());
+                   ordermodel.setCancel(data.getCancel());
+                   ordermodel.setCompletetime(data.getCompletetime());
+                   ordermodel.setCreatetime(data.getCreatetime());
+                   ordermodel.setGoodiamge(goodsImageService.findMainImage(data.getGoodsid()).getIamgeaddress());
+                   ordermodel.setGoodsname(data.getGoodsname());
+                   ordermodel.setIspay(data.getIspay());
+                   ordermodel.setGoodsum(data.getGoodsum());
+                   ordermodel.setUserid(data.getUserid());
+                   ordermodel.setPricesum(data.getPricesum());
+                   ordermodel.setStoreid(data.getStoreid());
+                   ordermodel.setSendtime(data.getSendtime());
+                   ordermodel.setLogistics(data.getLogistics());
+                   ordermodel.setLogisticscode(data.getLogisticscode());
+                   ordermodel.setPaytime(data.getPaytime());
+                   ordermodel.setMessage(data.getMessage());
+                   ordermodel.setOrdercode(data.getOrdercode());
+                   ordermodel.setId(data.getId());
+                   if (userService.findByID(data.getUserid()).getRole()==1){
+                       ordermodel.setPrice(data.getMemberprice());
+                   }else{
+                       ordermodel.setPrice(data.getMemberprice());
+                   }
+                   ordermodel.setCreatetime(data.getCreatetime());
+                   orderlist.add(ordermodel);
+               }
+
+
+
+               return new JsonResult("200",orderlist);
            }catch (Exception e){
                return new JsonResult("500",e.getMessage());
            }
@@ -351,8 +386,41 @@ private  int rands(){
             @RequestParam(value = "status")Byte status
     ){
            try{
+
                List<Order> list=orderService.getOrderStatus(userid,status);
-               return new JsonResult("200",list);
+
+                   List<Ordermodel> orderlist=new ArrayList<Ordermodel>();
+                   Ordermodel ordermodel=new Ordermodel();
+                   for (Order data:list) {
+                       ordermodel.setAddressid(data.getAddressid());
+                       ordermodel.setCancel(data.getCancel());
+                       ordermodel.setCompletetime(data.getCompletetime());
+                       ordermodel.setCreatetime(data.getCreatetime());
+                       ordermodel.setGoodiamge(goodsImageService.findMainImage(data.getGoodsid()).getIamgeaddress());
+                       ordermodel.setGoodsname(data.getGoodsname());
+                       ordermodel.setIspay(data.getIspay());
+                       ordermodel.setGoodsum(data.getGoodsum());
+                       ordermodel.setUserid(data.getUserid());
+                       ordermodel.setPricesum(data.getPricesum());
+                       ordermodel.setStoreid(data.getStoreid());
+                       ordermodel.setSendtime(data.getSendtime());
+                       ordermodel.setLogistics(data.getLogistics());
+                       ordermodel.setLogisticscode(data.getLogisticscode());
+                       ordermodel.setPaytime(data.getPaytime());
+                       ordermodel.setMessage(data.getMessage());
+                       ordermodel.setOrdercode(data.getOrdercode());
+                       ordermodel.setId(data.getId());
+                       ordermodel.setStorename(storeService.findByid(data.getStoreid()).getStorename());
+                       if (userService.findByID(data.getUserid()).getRole()==1){
+                           ordermodel.setPrice(data.getMemberprice());
+                       }else{
+                           ordermodel.setPrice(data.getMemberprice());
+                       }
+                       ordermodel.setCreatetime(data.getCreatetime());
+                       orderlist.add(ordermodel);
+                   }
+
+               return new JsonResult("200",orderlist);
            }catch (Exception e){
                return  new JsonResult("500",e.getMessage());
            }
@@ -428,9 +496,44 @@ private  int rands(){
              return  new JsonResult("500",e.getMessage());
          }
 
-
     }
+//获取收藏列表
+    @GetMapping(value = "/getcollect")
+    public  JsonResult getCollect(
+            @RequestParam(value = "userid")Long userid
+    ){
+       try{
 
+          List<Collect> collect=collectService.findByuserid(userid);
+           GoodsModel goodsModel=new GoodsModel();
+           List<GoodsModel> list=new ArrayList<GoodsModel>();
+           for (Collect data:collect) {
+               goodsModel.setGoodsName(goodsService.findByid(data.getGoodsid()).getGoodsname());
+               goodsModel.setImageaddress(goodsImageService.findMainImage(data.getGoodsid()).getIamgeaddress());
+               goodsModel.setSoldamount(goodsService.findByid(data.getGoodsid()).getSoldamount());
+               goodsModel.setStorename(goodsService.findByid(data.getGoodsid()).getShop());
+               goodsModel.setPrice(goodsService.findByid(data.getGoodsid()).getMarketprive());
+               goodsModel.setMemberprice(goodsService.findByid(data.getGoodsid()).getMemberprice());
+               goodsModel.setId(data.getId());
+               goodsModel.setGoodsSum(goodsService.findByid(data.getGoodsid()).getGoodssum());
+               list.add(goodsModel);
+           }
+          return  new JsonResult("200",list);
+       }catch (Exception e){
+           return new JsonResult("500",e.getMessage());
+       }
+    }
+    @DeleteMapping(value = "/deletecollect")
+    public  JsonResult deletecollect(
+            @RequestParam(value = "collectid")Long collectid
+    ){
+        try{
+            int result=collectService.deleteByUserid(collectid);
+            return  new JsonResult("200",result);
+        }catch (Exception e){
+            return new JsonResult("500",e.getMessage());
+        }
+    }
 
 
 

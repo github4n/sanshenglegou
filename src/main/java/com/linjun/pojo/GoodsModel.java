@@ -7,13 +7,16 @@ public class GoodsModel {
     private  String imageaddress;
     private String goodsName;
     private float price;
+    private float memberprice;
     private  long soldamount;
+    private String storename;
+    private long goodsSum;
 
     public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -41,11 +44,35 @@ public class GoodsModel {
         this.price = price;
     }
 
+    public float getMemberprice() {
+        return memberprice;
+    }
+
+    public void setMemberprice(float memberprice) {
+        this.memberprice = memberprice;
+    }
+
     public long getSoldamount() {
         return soldamount;
     }
 
     public void setSoldamount(long soldamount) {
         this.soldamount = soldamount;
+    }
+
+    public String getStorename() {
+        return storename;
+    }
+
+    public void setStorename(String storename) {
+        this.storename = storename;
+    }
+
+    public long getGoodsSum() {
+        return goodsSum;
+    }
+
+    public void setGoodsSum(long goodsSum) {
+        this.goodsSum = goodsSum;
     }
 }
