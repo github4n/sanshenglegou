@@ -13,8 +13,10 @@ import com.linjun.service.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.jvm.hotspot.oops.LongField;
 
 
+import javax.xml.bind.util.JAXBSource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -102,52 +104,6 @@ public class UserController {
    return new JsonResult("500",e.getMessage());
   }
  }
-
-
-
- private  String randommuber(){
-     Random rand = new Random();
-     char[] letters=new char[]{'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q',
-             'R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i',
-             'j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','r',
-             '0','1','2','3','4','5','6','7','8','9'};
-     String str = "";
-     int index;
-     boolean[] flags = new boolean[letters.length];//默认为false
-     for(int i=0;i<5;i++){
-         do{
-             index = rand.nextInt(letters.length);
-         }while(flags[index]==true);
-         char c = letters[index];
-         str += c;
-         flags[index]=true;
-     }
-  return str;
- }
-private  int rands(){
-    int[] array = {0,1,2,3,4,5,6,7,8,9};
-    Random rand = new Random();
-    for (int i = 10; i > 1; i--) {
-        int index = rand.nextInt(i);
-        int tmp = array[index];
-        array[index] = array[i - 1];
-        array[i - 1] = tmp;
-    }
-    int result = 0;
-    for(int i = 0; i < 6; i++)
-        result = result * 10 + array[i];
-    return result;
-}
-
-
-
-
-
-
-
-
-
-
 
 // 用户登入
    @GetMapping(value = "/login")
@@ -535,6 +491,27 @@ private  int rands(){
             return new JsonResult("500",e.getMessage());
         }
     }
+     @PostMapping(value ="/addcollect")
+    public JsonResult addcollect(
+            @RequestParam(value = "userid")Long userid,
+            @RequestParam(value = "goodsid")Long goodsid
+     ){
+         try{
+             Collect collect=new Collect();
+             collect.setUserid(userid);
+             collect.setGoodsid(goodsid);
+             String a= String.valueOf(new Date());
+             SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+             SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+             String b=sdf2.format(sdf1.parse(a));
+             Date date=sdf2.parse(b);
+             collect.setCreatetime(date);
+             Collect collect1=collectService.add(collect);
+             return  new JsonResult("200",collect);
+         }catch (Exception e){
+             return  new JsonResult("500",e.getMessage());
+         }
+     }
 
 
 
