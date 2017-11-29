@@ -245,6 +245,20 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="dimfind" resultMap="BaseResultMap">
+
+    SELECT  * FROM t_outcome WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT}
+  </select>
+  <select id="dimfindStr" resultMap="BaseResultMap">
+
+    SELECT  * FROM t_outcome WHERE  concat(payName,',',dopayName) LIKE #{temp,jdbcType=VARCHAR}
+  </select>
+  <select id="dimfindandstatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_outcome WHERE  concat(orderCode,',',id) LIKE #{temp,jdbcType=BIGINT} and stutas = #{status,jdbcType=TINYINT}
+  </select>
+  <select id="dimfindStrStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_outcome WHERE  concat(payName,',',dopayName) LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
+  </select>
   <update id="updateByPrimaryKey" parameterType="com.linjun.model.Outcome">
     update t_outcome
     set orderCode = #{ordercode,jdbcType=BIGINT},

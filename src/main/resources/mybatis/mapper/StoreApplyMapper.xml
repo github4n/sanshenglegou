@@ -276,6 +276,12 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="dimfind" resultMap="BaseResultMap">
+    SELECT  * FROM t_storeApply WHERE  concat(username,',',bankacount,',',tel) LIKE #{temp,jdbcType=VARCHAR}
+  </select>
+  <select id="dimfindandstatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_storeApply WHERE  concat(username,',',bankacount,',',tel) LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
+  </select>
   <update id="updateByPrimaryKey" parameterType="com.linjun.model.StoreApply">
     update t_storeApply
     set userID = #{userid,jdbcType=BIGINT},

@@ -27,4 +27,7 @@ public interface GoodsMapper {
     int updateByPrimaryKeySelective(Goods record);
 
     int updateByPrimaryKey(Goods record);
+    List<Goods> dimfindStr(String temp);
+    List<Goods> dimfindStatus(Long temp,byte status);
+    List<Goods> dimfindStrStatus(String temp,byte status);
 }

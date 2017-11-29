@@ -266,5 +266,24 @@ public class GoodsServiceImpl implements GoodsService {
         }
     }
 
+    @Override
+    public List<Goods> searchgoods(Object condition) {
+        List<Goods> list=new ArrayList<Goods>();
+        if (condition instanceof  String){
+            list=goodsMapper.dimfindStr('%'+(String)condition+'%');
+        }else  if (condition instanceof  Long || condition instanceof  Integer){
+            GoodsCriteria goodsCriteria=new GoodsCriteria();
+            GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
+            criteria.andIdEqualTo('%'+(Long)condition+'%');
+            list=goodsMapper.selectByExample(goodsCriteria);
+        }
+        if (list!=null&&list.size()>0){
+            return  list;
+        }else {
+            throw new PeopleException("查询失败");
+        }
+
+    }
+
 
 }

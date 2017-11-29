@@ -3,6 +3,7 @@ package com.linjun.controller;
 import com.linjun.common.JsonResult;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
+import com.linjun.pojo.GoodsModel;
 import com.linjun.pojo.OrderListAdmin;
 import com.linjun.service.*;
 import com.qiniu.util.Json;
@@ -378,6 +379,42 @@ public class SearchController {
           }
 
     }
+    //    移动端搜索商品功能
+    @GetMapping(value = "/searchgoodsyidong")
+    public JsonResult searchgoods(
+            @RequestParam(value = "condition")String condition
+    ){
+        try{
+            Object conditions=null;
+            if (isInteger(condition)){
+                conditions=Integer.valueOf(condition);
+            }else {
+                conditions=condition;
+            }
+
+        List<Goods> list=goodsService.searchgoods(conditions);
+            GoodsModel goodsModel=new GoodsModel();
+            List<GoodsModel> goodslist=new ArrayList<GoodsModel>();
+            for (Goods data:list) {
+                goodsModel.setContent(goodsDetailService.findByGoodsid(data.getId()).getContent());
+                goodsModel.setGoodsSum(data.getGoodssum());
+                goodsModel.setId(data.getId());
+                goodsModel.setMemberprice(data.getMemberprice());
+                goodsModel.setPrice(data.getMarketprive());
+                goodsModel.setStorename(data.getShop());
+                goodsModel.setSoldamount(data.getSoldamount());
+                goodsModel.setGoodsName(data.getGoodsname());
+                goodslist.add(goodsModel);
+            }
+            return new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+
+    }
+
+
+
 //  商品状态搜索
     @GetMapping(value = "/searchGoodsStatus")
     public  JsonResult searchGoodStatus(

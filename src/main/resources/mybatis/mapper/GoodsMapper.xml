@@ -304,6 +304,16 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="dimfindStr" resultMap="BaseResultMap">
+
+    SELECT  * FROM t_goods WHERE  concat(goodsName,',',shop) LIKE #{temp,jdbcType=VARCHAR}
+  </select>
+  <select id="dimfindStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_goods WHERE  id = #{temp,jdbcType=BIGINT} and isstart = #{status,jdbcType=TINYINT}
+  </select>
+  <select id="dimfindStrStatus" resultMap="BaseResultMap">
+    SELECT  * FROM t_goods WHERE  concat(goodsName,',',shop) LIKE #{temp,jdbcType=VARCHAR} and isstart = #{status,jdbcType=TINYINT}
+  </select>
   <update id="updateByPrimaryKey" parameterType="com.linjun.model.Goods">
     update t_goods
     set goodsName = #{goodsname,jdbcType=VARCHAR},

@@ -3,6 +3,8 @@ package com.linjun.service;
 import com.linjun.entity.PageBean;
 import com.linjun.model.Goods;
 
+import java.util.List;
+
 public interface GoodsService {
 
      boolean delete(long id);
@@ -19,4 +21,5 @@ public interface GoodsService {
     PageBean<Goods> findBy(byte status,int currentpage,int paegsize);
     PageBean<Goods> search(Object condition,int currentpage,int paegsize);
     PageBean<Goods> searchByStatus(Object condition,byte status,int currentpage,int pagesize);
+    List<Goods> searchgoods(Object condition);
 }
