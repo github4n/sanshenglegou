@@ -15,12 +15,18 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
     @Autowired
     ShoppingCartMapper shoppingCartMapper;
     public ShoppingCart add(ShoppingCart shoppingCart) {
-        long result=shoppingCartMapper.insertSelective(shoppingCart);
-        if (result>0){
-            return shoppingCartMapper.selectByPrimaryKey(result);
+
+        if (!isExit(shoppingCart)){
+            long result=shoppingCartMapper.insertSelective(shoppingCart);
+            if (result>0){
+                return shoppingCartMapper.selectByPrimaryKey(result);
+            }else {
+                throw new PeopleException("添加失败");
+            }
         }else {
-            throw new PeopleException("添加失败");
+            throw  new PeopleException("已经存在购物车");
         }
+
     }
 
     public int deletebygoodsid(long goodsID,long userid) {
@@ -109,6 +115,20 @@ public class ShoppingcartServiceImpl implements ShoppingcartService {
             throw  new PeopleException("批量删除失败");
         }
 
+    }
+
+    @Override
+    public boolean isExit(ShoppingCart shoppingCart) {
+           ShoppingCartCriteria shoppingCartCriteria=new ShoppingCartCriteria();
+        ShoppingCartCriteria.Criteria criteria=shoppingCartCriteria.createCriteria();
+        criteria.andUseridEqualTo(shoppingCart.getUserid());
+        criteria.andGoodsidEqualTo(shoppingCart.getGoodsid());
+        List<ShoppingCart> list=shoppingCartMapper.selectByExample(shoppingCartCriteria);
+        if (list!=null&&list.size()>0) {
+            return  true;
+        }else {
+            return  false;
+        }
     }
 
 }

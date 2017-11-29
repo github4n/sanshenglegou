@@ -14,4 +14,5 @@ public interface ShoppingcartService {
     ShoppingCart addCart(ShoppingCart shoppingCart);
     int deleteByid(ShoppingCart shoppingCart);
     int deleteByList(List<ShoppingCart> shoppingCart);
+    boolean isExit(ShoppingCart shoppingCart);
 }

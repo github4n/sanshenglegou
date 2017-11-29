@@ -12,6 +12,15 @@ public class GoodsModel {
     private String storename;
     private long goodsSum;
     private  String content;
+   private  long storeid;
+
+    public long getStoreid() {
+        return storeid;
+    }
+
+    public void setStoreid(long storeid) {
+        this.storeid = storeid;
+    }
 
     public String getContent() {
         return content;

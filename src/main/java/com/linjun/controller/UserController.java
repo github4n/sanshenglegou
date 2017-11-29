@@ -471,6 +471,7 @@ public class UserController {
                goodsModel.setPrice(goodsService.findByid(data.getGoodsid()).getMarketprive());
                goodsModel.setMemberprice(goodsService.findByid(data.getGoodsid()).getMemberprice());
                goodsModel.setId(data.getId());
+               goodsModel.setStoreid(goodsService.findByid(data.getGoodsid()).getStoreid());
                goodsModel.setGoodsSum(goodsService.findByid(data.getGoodsid()).getGoodssum());
                goodsModel.setContent(goodsDetailService.findByGoodsid(data.getGoodsid()).getContent());
                list.add(goodsModel);
@@ -512,7 +513,31 @@ public class UserController {
              return  new JsonResult("500",e.getMessage());
          }
      }
+//     得到商品详情页数据
+    @GetMapping(value = "/getgoodsdetail")
+    public JsonResult getgoodsdetail(
+            @RequestParam(value = "goodsid")Long goodsid
+    ){
 
+                try{
+                    Goods goods=goodsService.findByid(goodsid);
+                    GoodsModel goodsModel=new GoodsModel();
+                    goodsModel.setStoreid(goods.getStoreid());
+                    goodsModel.setGoodsName(goods.getGoodsname());
+                    goodsModel.setSoldamount(goods.getSoldamount());
+                    goodsModel.setPrice(goods.getMarketprive());
+                    goodsModel.setStorename(goods.getShop());
+                    goodsModel.setMemberprice(goods.getMemberprice());
+                    goodsModel.setGoodsSum(goods.getGoodssum());
+                    goodsModel.setImageaddress(goodsImageService.findMainImage(goodsid).getIamgeaddress());
+                    goodsModel.setContent(goodsDetailService.findByGoodsid(goodsid).getContent());
+                    goodsModel.setId(goods.getId());
+                    return new JsonResult("200",goodsModel);
+                }catch (Exception e){
+                    return  new JsonResult("500",e.getMessage());
+                }
+
+    }
 
 
 }
