@@ -31,7 +31,7 @@ public class RecommendController {
                 GoodsModel goodsModel = new GoodsModel();
                 goodsModel.setPrice(goods.getMemberprice());
                 goodsModel.setSoldamount(goods.getSoldamount());
-                goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(i).getIamgeaddress());
+                goodsModel.setImageaddress(goodsImageService.findimage(i));
                 goodsModel.setGoodsName(goods.getGoodsname());
                 goodsModel.setId(goods.getId());
                 list.add(goodsModel);

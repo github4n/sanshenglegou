@@ -29,7 +29,7 @@ public class CompositeController {
                 GoodsModel goodsModel = new GoodsModel();
                 goodsModel.setId(list.getId());
                 goodsModel.setGoodsName(list.getGoodsname());
-                goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+                goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
                 goodsModel.setPrice(list.getMemberprice());
                 goodsModel.setSoldamount(list.getSoldamount());
                 goodsModelList.add(goodsModel);
@@ -51,7 +51,7 @@ public JsonResult getnurse(@PathVariable int page){
                 GoodsModel goodsModel = new GoodsModel();
                 goodsModel.setId(list.getId());
                 goodsModel.setGoodsName(list.getGoodsname());
-                goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+                goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
                 goodsModel.setPrice(list.getMemberprice());
                 goodsModel.setSoldamount(list.getSoldamount());
                 goodsModelList.add(goodsModel);
@@ -73,7 +73,7 @@ public JsonResult getPhone(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);
@@ -95,7 +95,7 @@ public JsonResult getFinish(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);
@@ -117,7 +117,7 @@ public JsonResult getCloth(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);
@@ -139,7 +139,7 @@ public JsonResult getShoe(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);
@@ -161,7 +161,7 @@ public JsonResult getAccessories(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);
@@ -183,7 +183,7 @@ public JsonResult getJewlry(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);
@@ -205,7 +205,7 @@ public JsonResult getWash(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);
@@ -227,7 +227,7 @@ public JsonResult getBady(@PathVariable int page){
             GoodsModel goodsModel = new GoodsModel();
             goodsModel.setId(list.getId());
             goodsModel.setGoodsName(list.getGoodsname());
-            goodsModel.setImageaddress("http://oz4zfzmr0.bkt.clouddn.com/"+goodsImageService.findMainImage(list.getId()).getIamgeaddress());
+            goodsModel.setImageaddress(goodsImageService.findimage(list.getId()));
             goodsModel.setPrice(list.getMemberprice());
             goodsModel.setSoldamount(list.getSoldamount());
             goodsModelList.add(goodsModel);

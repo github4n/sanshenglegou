@@ -8,6 +8,7 @@ import com.linjun.service.GoodsImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class GoodsImageServiceImpl implements GoodsImageService {
@@ -64,6 +65,25 @@ public class GoodsImageServiceImpl implements GoodsImageService {
             return goodsImageMapper.selectByPrimaryKey((long) result);
         }else {
             throw new PeopleException("新建失败");
+        }
+    }
+
+    @Override
+    public List<String> findimage(long goodsid) {
+        GoodsImageCriteria goodsImageCriteria=new GoodsImageCriteria();
+        GoodsImageCriteria.Criteria criteria=goodsImageCriteria.createCriteria();
+        criteria.andGoodsidEqualTo(goodsid);
+
+        List<GoodsImage> list=goodsImageMapper.selectByExample(goodsImageCriteria);
+        List<String> iamgelist=new ArrayList<String>();
+        if (list!=null&&list.size()==1){
+            for (GoodsImage data:list) {
+                iamgelist.add(data.getIamgeaddress());
+            }
+
+            return iamgelist ;
+        }else {
+            throw new PeopleException("查询失败");
         }
     }
 }

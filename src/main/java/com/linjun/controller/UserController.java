@@ -465,7 +465,7 @@ public class UserController {
            List<GoodsModel> list=new ArrayList<GoodsModel>();
            for (Collect data:collect) {
                goodsModel.setGoodsName(goodsService.findByid(data.getGoodsid()).getGoodsname());
-               goodsModel.setImageaddress(goodsImageService.findMainImage(data.getGoodsid()).getIamgeaddress());
+               goodsModel.setImageaddress(goodsImageService.findimage(data.getGoodsid()));
                goodsModel.setSoldamount(goodsService.findByid(data.getGoodsid()).getSoldamount());
                goodsModel.setStorename(goodsService.findByid(data.getGoodsid()).getShop());
                goodsModel.setPrice(goodsService.findByid(data.getGoodsid()).getMarketprive());
@@ -518,7 +518,6 @@ public class UserController {
     public JsonResult getgoodsdetail(
             @RequestParam(value = "goodsid")Long goodsid
     ){
-
                 try{
                     Goods goods=goodsService.findByid(goodsid);
                     GoodsModel goodsModel=new GoodsModel();
@@ -529,8 +528,8 @@ public class UserController {
                     goodsModel.setStorename(goods.getShop());
                     goodsModel.setMemberprice(goods.getMemberprice());
                     goodsModel.setGoodsSum(goods.getGoodssum());
-                    goodsModel.setImageaddress(goodsImageService.findMainImage(goodsid).getIamgeaddress());
-                    goodsModel.setContent(goodsDetailService.findByGoodsid(goodsid).getContent());
+                   goodsModel.setImageaddress(goodsImageService.findimage(goodsid));
+                goodsModel.setContent(goodsDetailService.findByGoodsid(goodsid).getContent());
                     goodsModel.setId(goods.getId());
                     return new JsonResult("200",goodsModel);
                 }catch (Exception e){

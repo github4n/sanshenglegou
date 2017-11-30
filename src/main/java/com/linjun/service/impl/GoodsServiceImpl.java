@@ -285,5 +285,18 @@ public class GoodsServiceImpl implements GoodsService {
 
     }
 
+    @Override
+    public List<Goods> findBystoreid(Long storeid) {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
+        criteria.andStoreidEqualTo(storeid);
+        List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
+if (list!=null&&list.size()>0){
+    return list;
+}else {
+   throw new PeopleException("获取失败");
+}
+    }
+
 
 }

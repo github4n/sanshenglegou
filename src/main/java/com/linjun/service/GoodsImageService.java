@@ -11,4 +11,5 @@ public interface GoodsImageService {
     public List<GoodsImage> find(long goodsid);
     GoodsImage findMainImage(long goodsid);
     GoodsImage built(GoodsImage goodsImage);
+    List<String> findimage(long goodsImage);
 }

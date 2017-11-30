@@ -5,6 +5,7 @@ import com.linjun.config.QiNiuconfig;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
 import com.linjun.pojo.GoodsList;
+import com.linjun.pojo.GoodsModel;
 import com.linjun.pojo.OrderDetailList;
 import com.linjun.pojo.OrderList;
 import com.linjun.service.*;
@@ -518,6 +519,85 @@ public JsonResult addGoods(
                 return new JsonResult("200",goodsImage);
     }
 
+//  获取店铺信息
+    @GetMapping(value = "/getstoreinfo")
+    public JsonResult getstoreinfo(
+            @RequestParam(value = "storeid")Long storeid
+    ){
+           try{
+               Store store=storeService.findByid(storeid);
+               return  new JsonResult("200",store);
+
+           }catch (Exception e){
+               return  new JsonResult("500",e.getMessage());
+           }
+    }
+//    获取店铺的商品发送移动端
+    @GetMapping(value = "/getstoregoodsmobil")
+    public  JsonResult getstoregoodsmobil(
+            @RequestParam(value ="storeid")Long storeid
+    ){
+                try{
+
+                     List<Goods> goodslist=goodsService.findBystoreid(storeid);
+                    GoodsModel goodsModel=new GoodsModel();
+                    List<GoodsModel> list=new ArrayList<GoodsModel>();
+                    for (Goods data:goodslist) {
+                        goodsModel.setGoodsName(goodsService.findByid(data.getId()).getGoodsname());
+                        goodsModel.setImageaddress(goodsImageService.findimage(data.getId()));
+                        goodsModel.setSoldamount(goodsService.findByid(data.getId()).getSoldamount());
+                        goodsModel.setStorename(goodsService.findByid(data.getId()).getShop());
+                        goodsModel.setPrice(goodsService.findByid(data.getId()).getMarketprive());
+                        goodsModel.setMemberprice(goodsService.findByid(data.getId()).getMemberprice());
+                        goodsModel.setId(data.getId());
+                        goodsModel.setStoreid(goodsService.findByid(data.getId()).getStoreid());
+                        goodsModel.setGoodsSum(goodsService.findByid(data.getId()).getGoodssum());
+                        goodsModel.setContent(goodsDetailService.findByGoodsid(data.getId()).getContent());
+                        list.add(goodsModel);}
+                    return  new JsonResult("200",list);
+                }catch (Exception e){
+                    return  new JsonResult("500",e.getMessage());
+                }
+    }
+//    随机商家列表
+    @GetMapping(value = "/getrandomstore")
+    public JsonResult getrandomstore(){
+        try{
+            int sum = (int) storeService.countStore();
+            int n=1;
+            if (sum>8){
+                 n=6;
+            }else {
+                n=sum;
+            }
+            HashSet<Integer> set = new HashSet<Integer>();
+
+              randomCommon(0, sum, n,set);
+           List<Store> list = new ArrayList<Store>();
+//            for (int i : random) {
+                Store store=storeService.findByid(1);
+                list.add(store);
+           // }
+            return  new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
+    //    去重算法
+    public  void randomCommon(int min, int max,int n, HashSet<Integer> set){
+        if (n > (max - min + 1) || max < min) {
+        }
+        for (int i = 0; i < n; i++) {
+            // 调用Math.random()方法
+            int num = (int) (Math.random() * (max - min)) + min;
+            set.add(num);// 将不同的数存入HashSet中
+        }
+        int setSize = set.size();
+        // 如果存入的数小于指定生成的个数，则调用递归再生成剩余个数的随机数，如此循环，直到达到指定大小
+        if (setSize < n) {
+            randomCommon(min, max, n - setSize, set);// 递归
+        }
+    }
 
 
 

@@ -1,10 +1,11 @@
 package com.linjun.pojo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class GoodsModel {
     private long id;
-    private  String imageaddress;
+    private List<String> imageaddress;
     private String goodsName;
     private float price;
     private float memberprice;
@@ -38,11 +39,12 @@ public class GoodsModel {
         this.id = id;
     }
 
-    public String getImageaddress() {
+
+    public List<String> getImageaddress() {
         return imageaddress;
     }
 
-    public void setImageaddress(String imageaddress) {
+    public void setImageaddress(List<String> imageaddress) {
         this.imageaddress = imageaddress;
     }
 
