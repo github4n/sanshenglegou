@@ -23,4 +23,6 @@ public interface GoodsService {
     PageBean<Goods> searchByStatus(Object condition,byte status,int currentpage,int pagesize);
     List<Goods> searchgoods(Object condition);
     List<Goods> findBystoreid(Long storeid);
+    List<Goods> gettypeGoods(long storeid);
+
 }

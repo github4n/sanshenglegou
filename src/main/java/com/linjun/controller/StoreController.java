@@ -540,9 +540,10 @@ public JsonResult addGoods(
                 try{
 
                      List<Goods> goodslist=goodsService.findBystoreid(storeid);
-                    GoodsModel goodsModel=new GoodsModel();
                     List<GoodsModel> list=new ArrayList<GoodsModel>();
                     for (Goods data:goodslist) {
+                        GoodsModel goodsModel=new GoodsModel();
+
                         goodsModel.setGoodsName(goodsService.findByid(data.getId()).getGoodsname());
                         goodsModel.setImageaddress(goodsImageService.findimage(data.getId()));
                         goodsModel.setSoldamount(goodsService.findByid(data.getId()).getSoldamount());

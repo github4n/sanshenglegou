@@ -298,5 +298,17 @@ if (list!=null&&list.size()>0){
 }
     }
 
+    @Override
+    public List<Goods> gettypeGoods(long storeid) {
+        GoodsCriteria goodsCriteria=new GoodsCriteria();
+        goodsCriteria.createCriteria().andStoreidEqualTo(storeid);
+        List<Goods> list=goodsMapper.selectByExample(goodsCriteria);
+        if (list!=null&&list.size()>0){
+            return list;
+        }else {
+            throw new PeopleException("获取失败");
+        }
+    }
+
 
 }

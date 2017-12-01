@@ -47,10 +47,7 @@ public class GoodsDetailServiceImpl implements GoodsDetailService {
         GoodsDetailCriteria.Criteria criteria=goodsDetailCriteria.createCriteria();
         criteria.andGoodsidEqualTo(goodid);
         List<GoodsDetail> list=goodsDetailMapper.selectByExample(goodsDetailCriteria);
-        if (list!=null&&list.size()>0){
             return list.get(0);
-        }else {
-         throw new PeopleException("获取详情失败");
-        }
+
     }
 }

@@ -461,9 +461,10 @@ public class UserController {
        try{
 
           List<Collect> collect=collectService.findByuserid(userid);
-           GoodsModel goodsModel=new GoodsModel();
            List<GoodsModel> list=new ArrayList<GoodsModel>();
            for (Collect data:collect) {
+               GoodsModel goodsModel=new GoodsModel();
+
                goodsModel.setGoodsName(goodsService.findByid(data.getGoodsid()).getGoodsname());
                goodsModel.setImageaddress(goodsImageService.findimage(data.getGoodsid()));
                goodsModel.setSoldamount(goodsService.findByid(data.getGoodsid()).getSoldamount());
@@ -529,7 +530,7 @@ public class UserController {
                     goodsModel.setMemberprice(goods.getMemberprice());
                     goodsModel.setGoodsSum(goods.getGoodssum());
                    goodsModel.setImageaddress(goodsImageService.findimage(goodsid));
-//                goodsModel.setContent(goodsDetailService.findByGoodsid(goodsid).getContent());
+              goodsModel.setContent(goodsDetailService.findByGoodsid(goodsid).getContent());
                     goodsModel.setId(goods.getId());
                     return new JsonResult("200",goodsModel);
                 }catch (Exception e){

@@ -393,9 +393,9 @@ public class SearchController {
             }
 
         List<Goods> list=goodsService.searchgoods(conditions);
-            GoodsModel goodsModel=new GoodsModel();
             List<GoodsModel> goodslist=new ArrayList<GoodsModel>();
             for (Goods data:list) {
+                GoodsModel goodsModel=new GoodsModel();
                 goodsModel.setContent(goodsDetailService.findByGoodsid(data.getId()).getContent());
                 goodsModel.setGoodsSum(data.getGoodssum());
                 goodsModel.setId(data.getId());
