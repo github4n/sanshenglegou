@@ -1,19 +1,11 @@
 package com.linjun.config;
 
-import com.linjun.common.JsonResult;
-import com.linjun.controller.StoreController;
-import com.linjun.model.Goods;
-import com.qiniu.common.Zone;
-import com.qiniu.storage.BucketManager;
-import com.qiniu.storage.Configuration;
-import com.qiniu.util.Auth;
+
 
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class textmain {
@@ -21,17 +13,52 @@ public class textmain {
 
    public  static void main(String[] args) throws ParseException {
 
-       Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
-       BucketManager bucketManager=new BucketManager(auth,new Configuration(Zone.zone0()));
-       String imagurl="tupian1.jpg";
-       try {           System.out.println("成是功");
+       List<Integer> list=new ArrayList<Integer>();
+       String a= String.valueOf(new Date());
+       SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+       SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       String b= null;
+       Date date=null;
+       Date date1=null;
+       Date date2=null;
+       Date v=null;
+       try {
+           Date d=sdf1.parse(a);
+           b = sdf2.format(d);
+           v=d;
+           System.out.println(v);
+           date=sdf2.parse(b);
+           System.out.println(date);
 
-           bucketManager.delete(QiNiuconfig.bucket,imagurl);
-           System.out.println("成功");
-       } catch (Exception e) {
+       } catch (ParseException e) {
            e.printStackTrace();
        }
 
+       Calendar calendar=Calendar.getInstance();
+       calendar.setTime(date);
+       int dayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
+       Calendar c=Calendar.getInstance();
+       c.set(Calendar.DATE,1);
+       c.roll(Calendar.DATE,-1);
+       int months=c.get(Calendar.DATE);
+
+       for (int i = 1; i <6 ; i++) {
+           SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-"+i+" 00:00:00");
+           SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+i+" 23:59:59");
+           try {
+               b=sdf3.format(v);
+               date1=sdf2.parse(b);
+               System.out.println(date1);
+               String ds=sdf4.format(v);
+               System.out.println(ds);
+               date2=sdf2.parse(ds);
+               System.out.println(date2);
+
+           } catch (ParseException e) {
+               e.printStackTrace();
+           }
+
+       }
 
 
    }

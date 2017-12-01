@@ -1,7 +1,7 @@
 package com.linjun.common;
 
 /**
- * Created by JUNZI on 2015/8/16.
+ * Created by linjun on 2015/8/16.
  */
 public class JsonResult {
     public JsonResult(){}

@@ -478,14 +478,19 @@ public class OrderServiceImpl implements OrderService {
         String currentTime=String.valueOf(new Date());
         SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-01 00:00:00");
         String b= null;
         Date date=null;
         Date date1=null;
         Date date2=null;
+        Date v=null;
         try {
-            b=sdf2.format(sdf1.parse(currentTime));
+            Date d=sdf1.parse(currentTime);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
             date=sdf2.parse(b);
+            System.out.println(date);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -496,15 +501,16 @@ public class OrderServiceImpl implements OrderService {
         c.set(Calendar.DATE,1);
         c.roll(Calendar.DATE,-1);
         int months=c.get(Calendar.DATE);
-        try {
-            date1=sdf3.parse(b);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        for (int i=1;i<months+1;i++){
+
+        for (int i = 1; i <months+1 ; i++) {
+
+            SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-"+i+" 00:00:00");
             SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+i+" 23:59:59");
             try {
-                date2=sdf4.parse(b);
+                b=sdf3.format(v);
+                date1=sdf2.parse(b);
+                String ds=sdf4.format(v);
+                date2=sdf2.parse(ds);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -557,33 +563,39 @@ public class OrderServiceImpl implements OrderService {
       String currentTime=String.valueOf(new Date());
         SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-01 00:00:00");
         String b= null;
         Date date=null;
         Date date1=null;
         Date date2=null;
+        Date v=null;
         try {
-            b=sdf2.format(sdf1.parse(currentTime));
+            Date d=sdf1.parse(currentTime);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
             date=sdf2.parse(b);
+            System.out.println(date);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
-         Calendar calendar=Calendar.getInstance();
+        Calendar calendar=Calendar.getInstance();
         calendar.setTime(date);
         int dayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
         Calendar c=Calendar.getInstance();
         c.set(Calendar.DATE,1);
         c.roll(Calendar.DATE,-1);
         int months=c.get(Calendar.DATE);
-        try {
-            date1=sdf3.parse(b);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        for (int i=1;i<months+1;i++){
+
+        for (int i = 1; i <months+1 ; i++) {
+
+            SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-"+i+" 00:00:00");
             SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+i+" 23:59:59");
             try {
-                date2=sdf4.parse(b);
+                b=sdf3.format(v);
+                date1=sdf2.parse(b);
+                String ds=sdf4.format(v);
+                date2=sdf2.parse(ds);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

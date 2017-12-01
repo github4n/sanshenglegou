@@ -529,7 +529,7 @@ public class UserController {
                     goodsModel.setMemberprice(goods.getMemberprice());
                     goodsModel.setGoodsSum(goods.getGoodssum());
                    goodsModel.setImageaddress(goodsImageService.findimage(goodsid));
-                goodsModel.setContent(goodsDetailService.findByGoodsid(goodsid).getContent());
+//                goodsModel.setContent(goodsDetailService.findByGoodsid(goodsid).getContent());
                     goodsModel.setId(goods.getId());
                     return new JsonResult("200",goodsModel);
                 }catch (Exception e){
