@@ -331,6 +331,20 @@ CREATE TABLE `t_goods`(
   `createTime` DATETIME comment'创建时间',
   PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+-- 积分商品表
+DROP TABLE IF EXISTS `t_creditgoods`;
+CREATE TABLE `t_creditgoods`(
+  `id` bigint not null AUTO_INCREMENT,
+  `creditgood` varchar(128) comment'积分商品名称',
+  `imageurl` varchar(128) comment'积分商品图片',
+  `cregoodsSum` bigint comment'积分商品库存',
+  `soldamount` bigint comment'售出数量',
+  `isstart` tinyint DEFAULT "1" comment'是否上架',
+  `createTime` DATETIME comment'创建时间',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
 -- 商品图片表
 DROP TABLE IF EXISTS `t_goodsImage`;
 CREATE TABLE `t_goodsImage`(

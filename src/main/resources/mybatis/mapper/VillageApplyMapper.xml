@@ -251,7 +251,6 @@
   <select id="dimfindandstatus" resultMap="BaseResultMap">
     SELECT  * FROM t_villageApply WHERE  concat(username,',',bankacount) LIKE #{temp,jdbcType=VARCHAR} and stutas = #{status,jdbcType=TINYINT}
   </select>
-
   <update id="updateByPrimaryKey" parameterType="com.linjun.model.VillageApply">
     update t_villageApply
     set userID = #{userid,jdbcType=BIGINT},
