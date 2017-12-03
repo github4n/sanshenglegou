@@ -444,4 +444,27 @@ public class UserServiceImpl implements UserService {
             throw new PeopleException("获取数据失败");
         }
     }
+
+    @Override
+    public User findByopenid(String openid) {
+        UserCriteria userCriteria=new UserCriteria();
+        UserCriteria.Criteria criteria=userCriteria.createCriteria();
+        criteria.andOpenidEqualTo(openid);
+        List<User> list=userMapper.selectByExample(userCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+            throw new PeopleException("不存在");
+        }
+    }
+
+    @Override
+    public boolean isExitByopenid(String openid) {
+        try{
+            User user=findByopenid(openid);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

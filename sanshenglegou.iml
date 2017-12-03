@@ -74,6 +74,7 @@
     <orderEntry type="library" name="Maven: com.qiniu:happy-dns-java:0.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.8" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.8" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.41" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger-ui:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-spring-web:2.2.2" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger2:2.2.2" level="project" />

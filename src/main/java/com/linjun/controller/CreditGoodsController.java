@@ -119,5 +119,7 @@ public class CreditGoodsController {
                  return  new JsonResult("500",e.getMessage());
              }
     }
+//    购买积分商品
+
 
 }

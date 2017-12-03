@@ -35,6 +35,6 @@ public interface UserService {
       User findByOpenid(User user);
    PageBean<User> search(Object condition,int currentpage,int pagesize);
    PageBean<User> searchByStatus(Object condition,byte status,int currentpage,int pagesize);
-
-
+  User findByopenid(String openid);
+   boolean isExitByopenid(String openid);
 }
