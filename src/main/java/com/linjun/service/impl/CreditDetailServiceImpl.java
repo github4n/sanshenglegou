@@ -16,11 +16,13 @@ public class CreditDetailServiceImpl implements CreditDetialService {
     public boolean add(CreditDetail creditDetial) {
         return creditDetailMapper.insertSelective(creditDetial)>0;
     }
-    public int update(long id, CreditDetail creditDetial) {
-        CreditDetailCriteria creditDetailCriteria=new CreditDetailCriteria();
-        CreditDetailCriteria.Criteria criteria=creditDetailCriteria.createCriteria();
-        criteria.andUseridEqualTo(id);
-        return creditDetailMapper.deleteByExample(creditDetailCriteria);
+    public CreditDetail update( CreditDetail creditDetial) {
+        int result=creditDetailMapper.updateByPrimaryKeySelective(creditDetial);
+        if (result>0){
+            return creditDetailMapper.selectByPrimaryKey(creditDetial.getId());
+        }else {
+            throw new PeopleException("更新失败");
+        }
     }
 
     public int deletebyid(long creditid) {

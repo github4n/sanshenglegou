@@ -13,9 +13,10 @@ public class textmain {
 
    public  static void main(String[] args) throws ParseException {
 
+       long a= new Date().getTime();
 
 
-
+System.out.println(a);
 
    }
 

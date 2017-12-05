@@ -2,14 +2,18 @@ package com.linjun.controller;
 
 import com.linjun.common.JsonResult;
 import com.linjun.entity.PageBean;
-import com.linjun.model.Creditgoods;
+import com.linjun.model.*;
 import com.linjun.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sun.jvm.hotspot.interpreter.BytecodeGetPut;
 import sun.plugin2.message.JavaScriptBaseMessage;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping(value = "/credit")
@@ -56,6 +60,8 @@ public class CreditGoodsController {
     CreditDetialService creditDetialService;
     @Autowired
     CreditGoodsService creditGoodsService;
+    @Autowired
+    CreditByUserService creditByUserService;
 
 //    获取全部积分商品
     @GetMapping(value = "/getcreditgoods")
@@ -120,6 +126,68 @@ public class CreditGoodsController {
              }
     }
 //    购买积分商品
+   @PutMapping(value = "/buycreditgoods")
+    public  JsonResult buy(
+            @RequestParam(value = "creditgoodsid")long creditgoodsid,
+            @RequestParam(value = "userid")long userid
+   ){
+       try{
+           Creditgoods creditg=creditGoodsService.finbyid(creditgoodsid);
+           CreditManger creditManger=creditMangerService.findByuserid(userid);
+           long goodsum=creditg.getCregoodssum();
+           long creditsum=creditg.getPrice();
+           goodsum=goodsum-1;
+           Creditgoods creditgoods=new Creditgoods();
+           creditgoods.setCregoodssum(goodsum);
 
+          long creditsuma=creditManger.getCreditsum()-creditsum;
+           CreditManger creditManger1=new CreditManger();
+           creditManger1.setCreditsum(creditsuma);
+           creditManger1.setId(creditManger.getId());
+           long creditsums=creditManger.getConsumedcredit()+creditsum;
+           creditManger1.setConsumedcredit(creditsums);
+           creditMangerService.updateByuserid(creditManger1);
+//           更新积分细节
+           String a= String.valueOf(new Date());
+           SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+           SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+           String b=sdf2.format(sdf1.parse(a));
+           Date date=sdf2.parse(b);
+           CreditDetail creditDetail=new CreditDetail();
+           creditDetail.setStatus((byte) 1);
+           creditDetail.setUserid(userid);
+           creditDetail.setChangtime(date);
+           creditDetail.setConsumcredit(creditsum);
+           Creditbyuser creditbyuser=new Creditbyuser();
+           creditbyuser.setUserid(userid);
+           creditbyuser.setCreatetime(date);
+           creditbyuser.setCreditgoodid(creditgoodsid);
+
+           creditByUserService.add(creditbyuser);
+           creditDetialService.update(creditDetail);
+           creditGoodsService.update(creditgoods);
+           return  new JsonResult("200",goodsum);
+       }catch (Exception e){
+           return new JsonResult("500",e.getMessage());
+       }
+   }
+//  获取用户的兑换记录
+    @GetMapping(value = "/getuserconvent")
+    public JsonResult getuserconvent(
+            @RequestParam(value = "userid")long userid
+    ){
+       try{
+           List<Creditbyuser> list=creditByUserService.findbyuseri(userid);
+           List<Creditgoods> creditgoods=new ArrayList<Creditgoods>();
+           for (Creditbyuser data:list) {
+               Creditgoods creditgoods1=creditGoodsService.finbyid(data.getCreditgoodid());
+               creditgoods.add(creditgoods1);
+           }
+           return  new JsonResult("200",creditgoods);
+       }catch (Exception e){
+           return  new JsonResult("500",e.getMessage());
+       }
+
+    }
 
 }

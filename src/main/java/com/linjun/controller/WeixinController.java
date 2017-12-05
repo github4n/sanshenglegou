@@ -33,7 +33,7 @@ public class WeixinController {
 //    校验微信服务器
     private Logger logger = LoggerFactory.getLogger(getClass());
 private String TOKEN="weixin";
-@GetMapping(value = "/")
+@GetMapping(value = "/weixn")
     public  String checkName(@RequestParam(name = "signature") String signature,
                              @RequestParam(name = "timestamp") String timestamp,
                              @RequestParam(name = "nonce") String nonce,
@@ -55,7 +55,6 @@ private String TOKEN="weixin";
         logger.error("微信-签名校验失败");
         return "";
     }
-
 }
 
 //微信用户信息的获取
@@ -79,14 +78,11 @@ private String TOKEN="weixin";
            String nickName,sex,openid = "";
            String REDIRECT_URI = "http://linjunjj.free.ngrok.cc/wechat";
            String SCOPE = "snsapi_userinfo";
-
            String getCodeUrl = UserInfoUtil.getCode(APPID, REDIRECT_URI, SCOPE);
            logger.info("第一步:用户授权, get Code URL:{}", getCodeUrl);
-
            // 替换字符串，获得请求access token URL
            String tokenUrl = UserInfoUtil.getWebAccess(APPID, SECRET, CODE);
            logger.info("第二步:get Access Token URL:{}", tokenUrl);
-
            // 通过https方式请求获得web_access_token
            String response = HttpsUtil.httpsRequestToString(tokenUrl, "GET", null);
 
@@ -129,10 +125,14 @@ private String TOKEN="weixin";
                              SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
                              SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                              String b=sdf2.format(sdf1.parse(a));
+                             System.out.println(b);
                              Date date=sdf2.parse(b);
-                           user.setLogin(date);
+                             System.out.println(date);
+                           user.setLogin(new Date());
                           User user1=   userService.updateUser(user);
-                             return  new JsonResult("200",user1);
+                          String time =sdf2.format(user1.getLogin());
+
+                             return  new JsonResult("200",user);
                          }else {
                              User user=new User();
                              user.setUsername(nickName);
@@ -144,7 +144,7 @@ private String TOKEN="weixin";
                              user.setHeadimage(headimage);
                              user.setOpenid(openid);
                              String a= String.valueOf(new Date());
-                             user.setToken(a);
+                             user.setToken(String.valueOf(new Date().getTime()));
                              SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
                              SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                              String b=sdf2.format(sdf1.parse(a));
@@ -173,11 +173,6 @@ private String TOKEN="weixin";
        return new JsonResult("","");
 
    }
-
-
-
-
-
 
     /**
      * 排序方法

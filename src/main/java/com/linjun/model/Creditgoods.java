@@ -13,6 +13,8 @@ public class Creditgoods {
 
     private Long soldamount;
 
+    private Long price;
+
     private Byte isstart;
 
     private Date createtime;
@@ -55,6 +57,14 @@ public class Creditgoods {
 
     public void setSoldamount(Long soldamount) {
         this.soldamount = soldamount;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     public Byte getIsstart() {

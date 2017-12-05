@@ -281,7 +281,6 @@ public class UserController {
                 address.setAddress(data.getAddressdetail());
                 address.setTel(data.getReceivetel());
                 address.setIsDefault(data.getIsdefault());
-
                 addresslist.add(address);
              }
              return new JsonResult("200",addresslist);

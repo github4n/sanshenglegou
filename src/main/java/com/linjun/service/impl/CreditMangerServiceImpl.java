@@ -19,12 +19,13 @@ public class CreditMangerServiceImpl implements CreditMangerService {
         return creditMangerMapper.insertSelective(creditManger)>0;
     }
 
-    public int updateByuserid(long userid, CreditManger creditManger) {
-        CreditMangerCriteria creditMangerCriteria=new CreditMangerCriteria();
-        CreditMangerCriteria.Criteria criteria=creditMangerCriteria.createCriteria();
-        criteria.andUseridEqualTo(userid);
-
-        return creditMangerMapper.updateByExampleSelective(creditManger,creditMangerCriteria);
+    public CreditManger updateByuserid(CreditManger creditManger) {
+       int result=creditMangerMapper.updateByPrimaryKeySelective(creditManger);
+        if (result>0){
+            return creditMangerMapper.selectByPrimaryKey(creditManger.getId());
+        }else {
+            throw  new PeopleException("失败");
+        }
     }
 
     public int deleteByuserid(long userid) {
