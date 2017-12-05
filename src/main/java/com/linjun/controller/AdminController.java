@@ -8,6 +8,7 @@ import com.linjun.model.*;
 import com.linjun.pojo.*;
 import com.linjun.service.*;
 import com.qiniu.util.Json;
+import io.swagger.models.auth.In;
 import org.mapstruct.TargetType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -116,7 +117,13 @@ public class AdminController {
              userData.setNewuser(nowuser);
              userData.setWeekUser(workuser);
              userData.setMonthUser(monthuser);
-             userData.setMonthday(userService.monthDay());
+             int months=userService.monthDay();
+             List<Integer> list=new ArrayList<Integer>();
+            for (int i = 1; i <months+1; i++) {
+                list.add(i);
+            }
+
+             userData.setMonthday(list);
        return  new JsonResult("200",userData);
 
         }catch (Exception e){
@@ -245,7 +252,7 @@ public class AdminController {
 
 //    获取所有商品
     @GetMapping(value = "/getGoodsAll")
-    public JsonResult getGoodsAll(@RequestParam(value = "page")int page,@RequestParam(value = "pagesise")int pagesize){
+    public JsonResult getGoodsAll(@RequestParam(value = "page")int page,@RequestParam(value = "pagesize")int pagesize){
             PageBean<Goods> goodslist=goodsService.goodsAll(page,pagesize);
             List<GoodsListAdmin> list=new ArrayList<GoodsListAdmin>();
             try{
@@ -259,10 +266,13 @@ public class AdminController {
                   admindata.setMemberPrice(data.getMemberprice());
                   admindata.setSoldamount(data.getSoldamount());
                   admindata.setStoreid(data.getStoreid());
-                  admindata.setStorename(storeService.findByid(data.getId()).getStorename());
-                  admindata.setStorer(storeService.findByid(data.getId()).getStorer());
-                  String a=null;
-                  try{
+                  Store store=storeService.findByid(data.getId());
+                  if (store!=null){
+                      admindata.setStorename(store.getStorename());
+                      admindata.setStorer(store.getStorer());
+                  }
+                 String a=null;
+                 try{
                       a=goodsImageService.findMainImage(data.getId()).getIamgeaddress();
                   }catch (Exception e){
                       a=null;
@@ -270,11 +280,11 @@ public class AdminController {
                   admindata.setGoodsimage(a);
                   admindata.setTypeName(goodsTypeService.findById(data.getId()).getTypename());
                     SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
                     admindata.setCreateTime(df.format(data.getCreatetime()));
                     list.add(admindata);
                 }
-                return new JsonResult("200",list);
+                PageBean<GoodsListAdmin> goodslists=new PageBean<GoodsListAdmin>(goodslist.getTotal(),goodslist.getPageNum(),goodslist.getPageSize(),goodslist.getPages(),goodslist.getSize(),list);
+                return new JsonResult("200",goodslists);
 
 
             }catch (Exception e){
