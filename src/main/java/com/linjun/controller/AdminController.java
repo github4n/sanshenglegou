@@ -62,6 +62,7 @@ public class AdminController {
                             @RequestParam(value = "passworld",required = false)String passworld){
         Admin admin1=new Admin();
         admin1.setAccount(admin);
+//        
         admin1.setPassworld(passworld);
         try {
             Admin admin2 = adminService.login(admin1);
