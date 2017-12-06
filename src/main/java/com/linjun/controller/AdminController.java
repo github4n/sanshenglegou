@@ -83,11 +83,15 @@ public class AdminController {
            hearData.setSumStore(storeService.countStore());
            hearData.setSumMember(userService.countMenber());
            hearData.setMonthMoney(orderService.monthMoney());
-           hearData.setMonthOrder(orderService.monthOrder());
-           hearData.setMonthMoney(orderService.monthMoney());
-           hearData.setMonthOrder(orderService.monthOrder());
+           hearData.setMonthOrder(orderService.monthorderPlan());
            hearData.setMonthvistor(userService.lookuser());
            hearData.setMonthpay(orderService.monthOrder());
+            int months=userService.monthDay();
+            List<Integer> list=new ArrayList<Integer>();
+            for (int i = 1; i <months+1; i++) {
+                list.add(i);
+            }
+            hearData.setMonth(list);
           return  new JsonResult("200",hearData);
 
         }catch (Exception e){
@@ -371,6 +375,7 @@ public class AdminController {
              }else {
                  orderListAdmin.setPrice(data.getMarketpricce());
              }
+
              orderListAdmin.setRevierPeople(addressMongerService.findByUseridDefault(data.getUserid()).getReceivepeople());
              orderListAdmin.setTel(addressMongerService.findByUseridDefault(data.getUserid()).getReceivetel());
              orderListAdmin.setId(data.getId());

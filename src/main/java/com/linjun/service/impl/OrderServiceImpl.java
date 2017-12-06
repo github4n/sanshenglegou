@@ -13,6 +13,7 @@ import io.swagger.models.auth.In;
 import netscape.javascript.JSException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.jvm.hotspot.debugger.LongHashMap;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -473,6 +474,93 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Integer> monthorderPlan() {
+        List<Integer> list=new ArrayList<Integer>();
+        String currentTime=String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String b= null;
+        Date date=null;
+        Date date1=null;
+        Date date2=null;
+        Date v=null;
+        try {
+            Date d=sdf1.parse(currentTime);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
+            date=sdf2.parse(b);
+            System.out.println(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.DATE,1);
+        c.roll(Calendar.DATE,-1);
+        int months=c.get(Calendar.DATE);
+
+        for (int i = 1; i <months+1 ; i++) {
+
+            SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-"+i+" 00:00:00");
+            SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+i+" 23:59:59");
+            try {
+                b=sdf3.format(v);
+                date1=sdf2.parse(b);
+                String ds=sdf4.format(v);
+                date2=sdf2.parse(ds);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Integer notpay;
+            Integer pay;
+            Integer sendGoods;
+            Integer cancel;
+            Integer complete;
+            OrderCriteria orderCriteria=new OrderCriteria();
+            OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+            criteria.andPaytimeBetween(date1,date2);
+            criteria.andIspayEqualTo((byte) 0);
+            List<Order> list1=orderMapper.selectByExample(orderCriteria);
+            notpay=list1.size();
+            OrderCriteria orderCriteria1=new OrderCriteria();
+            OrderCriteria.Criteria criteria1=orderCriteria.createCriteria();
+            criteria.andPaytimeBetween(date1,date2);
+            criteria.andIspayEqualTo((byte) 1);
+            List<Order> list2=orderMapper.selectByExample(orderCriteria);
+            pay=list2.size();
+            OrderCriteria orderCriteria2=new OrderCriteria();
+            OrderCriteria.Criteria criteria2=orderCriteria.createCriteria();
+            criteria.andPaytimeBetween(date1,date2);
+            criteria.andIspayEqualTo((byte) 2);
+            List<Order> list3=orderMapper.selectByExample(orderCriteria);
+            sendGoods=list3.size();
+            OrderCriteria orderCriteria3=new OrderCriteria();
+            OrderCriteria.Criteria criteria3=orderCriteria.createCriteria();
+            criteria.andPaytimeBetween(date1,date2);
+            criteria.andIspayEqualTo((byte) 3);
+            List<Order> list4=orderMapper.selectByExample(orderCriteria);
+            cancel=list4.size();
+            OrderCriteria orderCriteria4=new OrderCriteria();
+            OrderCriteria.Criteria criteria4=orderCriteria.createCriteria();
+            criteria.andPaytimeBetween(date1,date2);
+            criteria.andIspayEqualTo((byte) 4);
+            List<Order> list5=orderMapper.selectByExample(orderCriteria);
+            complete=list5.size();
+            list.add(notpay);
+            list.add(pay);
+            list.add(sendGoods);
+            list.add(cancel);
+            list.add(complete);
+
+        }
+        return list;
+    }
+
+    @Override
     public List<Float> monthMoney() {
         List<Float> list=new ArrayList<Float>();
         String currentTime=String.valueOf(new Date());
@@ -517,6 +605,8 @@ public class OrderServiceImpl implements OrderService {
             OrderCriteria orderCriteria=new OrderCriteria();
             OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
             criteria.andPaytimeBetween(date1,date2);
+            criteria.andIspayNotEqualTo((byte) 0);
+            criteria.andIspayNotEqualTo((byte) 4);
             List<Order> list1=orderMapper.selectByExample(orderCriteria);
             Float sumMoney=null;
             for (int j = 0; j <list1.size() ; j++) {

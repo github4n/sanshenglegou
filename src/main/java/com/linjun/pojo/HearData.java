@@ -11,6 +11,15 @@ public class HearData {
     private  List<Integer> monthOrder;
     private List<Integer> monthvistor;
     private  List<Integer> monthpay;
+  private  List<Integer> month;
+
+    public List<Integer> getMonth() {
+        return month;
+    }
+
+    public void setMonth(List<Integer> month) {
+        this.month = month;
+    }
 
     public Long getSumOrder() {
         return sumOrder;

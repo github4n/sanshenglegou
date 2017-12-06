@@ -27,6 +27,7 @@ public interface OrderService {
       Float sumMoney();
       List<Float> weekMoney();
       List<Long> weekorderPlan();
+      List<Integer> monthorderPlan();
       List<Float> monthMoney();
         PageBean<Order> findBy(byte status,int currentpage,int pagesize);
        List<Integer> monthOrder();

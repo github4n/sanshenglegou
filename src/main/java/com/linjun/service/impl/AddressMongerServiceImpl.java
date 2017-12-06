@@ -73,12 +73,9 @@ public class AddressMongerServiceImpl implements AddressMongerService {
         criteria.andUseridEqualTo(userid);
         criteria.andIsdefaultEqualTo((byte) 1);
         List<AddressManger> list=addressMangerMapper.selectByExample(addressMangerCriteria);
-        if (list!=null&&list.size()==1){
             AddressManger addressManger=list.get(0);
             return addressManger;
-        }else {
-            throw new PeopleException("查询失败");
-        }
+
     }
 
     @Override
