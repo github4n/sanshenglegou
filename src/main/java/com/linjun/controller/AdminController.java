@@ -482,10 +482,10 @@ public class AdminController {
              dealImsgeData.setOutcome(outComeService.sumOutcome());
              dealImsgeData.setTodayincome(inComeService.todayincome());
              dealImsgeData.setTodayoutcome(outComeService.todayOutcome());
-             List<Float> list=new ArrayList<Float>();
-             list.add(inComeService.monthcome());
-             list.add(outComeService.monthMoney());
-             dealImsgeData.setMonthcome(list);
+             List<Float> lists=new ArrayList<Float>();
+             lists.add(inComeService.monthcome());
+             lists.add(outComeService.monthMoney());
+             dealImsgeData.setMonthcome(lists);
              dealImsgeData.setMonthMeneyincome(inComeService.monthincome());
              dealImsgeData.setMonthMeneyoutcome(outComeService.monthMoneys());
              dealImsgeData.setWeekIncome(inComeService.weekincome());
@@ -621,6 +621,7 @@ public class AdminController {
           }
 
     }
+//
 
 //村村通申请
     @GetMapping(value = "/getVillageApply")
