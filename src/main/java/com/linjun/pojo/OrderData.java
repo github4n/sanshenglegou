@@ -12,7 +12,7 @@ public class OrderData {
     private List<Float> weekMoney;
     private  List<Integer> monthMoney;
     private  List<Long> weekPlan;
-    private  Integer monthDay;
+    private  List<Integer> monthDay;
 
     public Long getId() {
         return id;
@@ -86,11 +86,11 @@ public class OrderData {
         this.weekPlan = weekPlan;
     }
 
-    public Integer getMonthDay() {
+    public List<Integer> getMonthDay() {
         return monthDay;
     }
 
-    public void setMonthDay(Integer monthDay) {
+    public void setMonthDay(List<Integer> monthDay) {
         this.monthDay = monthDay;
     }
 }

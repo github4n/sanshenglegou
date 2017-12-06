@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.sound.sampled.Line;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -62,7 +63,7 @@ public class AdminController {
                             @RequestParam(value = "passworld",required = false)String passworld){
         Admin admin1=new Admin();
         admin1.setAccount(admin);
-//        
+//
         admin1.setPassworld(passworld);
         try {
             Admin admin2 = adminService.login(admin1);
@@ -406,7 +407,12 @@ public class AdminController {
             orderData.setTodayMoney(todaymoneyPay);
              orderData.setOrderSum(sumOredr);
              orderData.setWeekPlan(weekorderplan);
-             orderData.setMonthDay(orderService.monthday());
+             List<Integer> list=new ArrayList<Integer>();
+             long monthdays=orderService.monthday();
+          for (int i = 1; i <monthdays+1 ; i++) {
+                list.add(i);
+          }
+             orderData.setMonthDay(list);
 
     return  new JsonResult("200",orderData);
       }catch (Exception e) {
@@ -467,7 +473,12 @@ public class AdminController {
         try{
             DealImsgeData dealImsgeData=new DealImsgeData();
             dealImsgeData.setIncome(inComeService.sumincome());
-             dealImsgeData.setMoneyDay(inComeService.monthday());
+            long monthdays=inComeService.monthday();
+            List<Integer> list=new ArrayList<Integer>();
+            for (int i = 1; i <monthdays+1 ; i++) {
+                list.add(i);
+            }
+             dealImsgeData.setMoneyDay(list);
              dealImsgeData.setOutcome(outComeService.sumOutcome());
              dealImsgeData.setTodayincome(inComeService.todayincome());
              dealImsgeData.setTodayoutcome(outComeService.todayOutcome());

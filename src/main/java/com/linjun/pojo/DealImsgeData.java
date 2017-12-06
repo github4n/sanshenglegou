@@ -14,13 +14,13 @@ public class DealImsgeData {
     private List<Float> monthcome;
     private List<Float> monthMeneyincome;
     private  List<Float> monthMeneyoutcome;
-    private  Integer moneyDay;
+    private  List<Integer> moneyDay;
 
-    public Integer getMoneyDay() {
+    public List<Integer> getMoneyDay() {
         return moneyDay;
     }
 
-    public void setMoneyDay(Integer moneyDay) {
+    public void setMoneyDay(List<Integer> moneyDay) {
         this.moneyDay = moneyDay;
     }
 
