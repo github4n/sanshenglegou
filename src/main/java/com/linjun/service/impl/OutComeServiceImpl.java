@@ -122,13 +122,15 @@ public class OutComeServiceImpl implements OutComeService {
         Date date=null;
         Date date1=null;
         Date date2=null;
+        Date v=null;
         try {
-            b = sdf2.format(sdf1.parse(a));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        try {
+            Date d=sdf1.parse(a);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
             date=sdf2.parse(b);
+            System.out.println(date);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -140,13 +142,15 @@ public class OutComeServiceImpl implements OutComeService {
         c.roll(Calendar.DATE,-1);
         int months=c.get(Calendar.DATE);
         try {
-            date1=sdf3.parse(b);
+            b=sdf3.format(v);
+            date1=sdf2.parse(b);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+months+" 23:59:59");
         try {
-            date2=sdf4.parse(b);
+            b=sdf4.format(v);
+            date2=sdf2.parse(b);
 
         } catch (ParseException e) {
             e.printStackTrace();
