@@ -7,5 +7,5 @@ public interface GoodsDetailService {
    boolean delete(long id);
    GoodsDetail findByID(long id);
    GoodsDetail findByGoodsid(long goodid);
-
+   int deletebygoodid(long goodid);
 }

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.linjun.common.JsonResult;
+import com.linjun.config.WeixinConfig;
 import com.linjun.model.User;
 import com.linjun.service.UserService;
 import com.linjun.util.HttpsUtil;
@@ -59,8 +60,7 @@ private String TOKEN="weixin";
 
 //微信用户信息的获取
 //    微信登入
- public  static  final  String WX_APPID="wx3d391035e237c6bc";
-    public  static  final  String WX_APPSECRET="15c1963c192fe4e9be18735422ab8cab";
+
    @GetMapping(value = "/wechat")
    public JsonResult wechatLogin(
            @RequestParam(value = "code",required = false)String code,
@@ -70,13 +70,13 @@ private String TOKEN="weixin";
        logger.info("用户同意授权,获取code:{} , state:{}", code, state);
        if (code !=null||!(code.equals(""))){
 
-           String APPID = WX_APPID;
-           String SECRET = WX_APPSECRET;
+           String APPID = WeixinConfig.WX_APPID;
+           String SECRET = WeixinConfig.WX_APPSECRET;
            String CODE = code;
            String WebAccessToken = "";
            String openId = "";
            String nickName,sex,openid = "";
-           String REDIRECT_URI = "http://linjunjj.free.ngrok.cc/wechat";
+           String REDIRECT_URI = WeixinConfig.REDIRECT_URI;
            String SCOPE = "snsapi_userinfo";
            String getCodeUrl = UserInfoUtil.getCode(APPID, REDIRECT_URI, SCOPE);
            logger.info("第一步:用户授权, get Code URL:{}", getCodeUrl);

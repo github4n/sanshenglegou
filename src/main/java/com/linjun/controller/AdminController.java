@@ -3,10 +3,16 @@ package com.linjun.controller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.linjun.common.JsonResult;
+import com.linjun.config.ImageConfig;
+import com.linjun.config.QiNiuconfig;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
 import com.linjun.pojo.*;
 import com.linjun.service.*;
+import com.qiniu.common.Zone;
+import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.Configuration;
+import com.qiniu.util.Auth;
 import com.qiniu.util.Json;
 import io.swagger.models.auth.In;
 import org.mapstruct.TargetType;
@@ -14,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.sound.sampled.Line;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -659,6 +666,31 @@ public class AdminController {
            @RequestParam(value = "id")long id
     ){
           try{
+              VillageApply villageApply=villageApplyService.findbyid(id);
+              String imagurl=villageApply.getIdentityimage();
+              imagurl=imagurl.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
+              System.out.println(imagurl);
+              Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
+              BucketManager bucketManager=new BucketManager(auth,new Configuration(Zone.zone0()));
+              bucketManager.delete(QiNiuconfig.bucket,imagurl);
+              String path=ImageConfig.imagepath
+                      ;
+              String imagepath=path+imagurl;
+              System.out.println(imagepath);
+              File file=new File(imagepath);
+              file.delete();
+              String imagurls=villageApply.getIdentityimages();
+              imagurl=imagurl.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
+              System.out.println(imagurl);
+              Auth auths=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
+              BucketManager bucketManagers=new BucketManager(auth,new Configuration(Zone.zone0()));
+              bucketManager.delete(QiNiuconfig.bucket,imagurl);
+              String paths= ImageConfig.imagepath;
+              String imagepaths=path+imagurl;
+              System.out.println(imagepath);
+              File files=new File(imagepath);
+              file.delete();
+
               int result=villageApplyService.delete(id);
               return  new JsonResult("200",result);
 
@@ -714,6 +746,7 @@ public  JsonResult getStatusVillage(
             @RequestParam(value = "id")int id
     ){
           try{
+
               int result=storeApplyService.delete(id);
               return new JsonResult("200",result);
 

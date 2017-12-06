@@ -2,6 +2,7 @@ package com.linjun.controller;
 
 
 import com.linjun.common.JsonResult;
+import com.linjun.config.ImageConfig;
 import com.linjun.config.QiNiuconfig;
 import com.linjun.entity.PageBean;
 import com.linjun.model.Banner;
@@ -76,7 +77,7 @@ public class BannerController {
     public JsonResult uploadBanner(
             @RequestParam(value = "file") MultipartFile files) throws ParseException
             {
-                String filePath = "/Users/linjun/deaProjects/image/";
+                String filePath = ImageConfig.imagepath;
                 String fileName = files.getOriginalFilename();
                 String stuffxName = fileName.substring(fileName.lastIndexOf("."));
                 fileName = UUID.randomUUID() + stuffxName;
@@ -87,7 +88,7 @@ public class BannerController {
                 String b=sdf2.format(sdf1.parse(a));
                 Date date=sdf2.parse(b);
                 Banner banner=new Banner();
-                banner.setImageurl(fileName);
+                banner.setImageurl("http://oz4zfzmr0.bkt.clouddn.com/"+fileName);
 
                 Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
                 String upToken=auth.uploadToken(QiNiuconfig.bucket);
@@ -100,7 +101,6 @@ public class BannerController {
                 try {
                     files.transferTo(dest);
                     Response response=uploadManager.put(dest,fileName,upToken);
-
                     Banner banner1=bannerService.add(banner);
                     return  new JsonResult("200",banner);
                 } catch (IOException e) {

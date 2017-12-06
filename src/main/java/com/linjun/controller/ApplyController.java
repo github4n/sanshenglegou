@@ -4,6 +4,7 @@ import ch.qos.logback.core.net.SyslogOutputStream;
 import com.google.gson.Gson;
 import com.linjun.common.JsonResult;
 import com.linjun.common.domain.PeopleException;
+import com.linjun.config.ImageConfig;
 import com.linjun.config.QiNiuconfig;
 import com.linjun.model.*;
 import com.linjun.pojo.Base64jiexin;
@@ -93,7 +94,7 @@ public class ApplyController {
 
      try {
          bucketManager.delete(QiNiuconfig.bucket,imagurl);
-         String path="/Users/linjun/deaProjects/image/";
+         String path=ImageConfig.imagepath;
          String imagepath=path+imagurl;
          System.out.println(imagepath);
          File file=new File(imagepath);
@@ -123,7 +124,7 @@ public class ApplyController {
                     b[i]+=256;
                 }
             }
-            String filePath = "/Users/linjun/deaProjects/image/";
+            String filePath = ImageConfig.imagepath;
             String temp=RandomString.getRandomString(6);
             String fileName = System.currentTimeMillis()+temp+ ".jpg";
             temps=fileName;
@@ -155,8 +156,6 @@ public class ApplyController {
             @RequestParam(value = "identityimages")String identityimages
 
     ){
-        identityimage=identityimage.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
-        identityimages=identityimages.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
         try{
             VillageApply villageApply=new VillageApply();
             villageApply.setBankacount(bankaccount);
@@ -207,9 +206,6 @@ public class ApplyController {
          @RequestParam(value = "identityimages")String identityimages,
          @RequestParam(value = "businessimages")String businessimages
     ){
-        identityimage=identityimage.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
-        identityimages=identityimages.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
-        businessimages=businessimages.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
 
        try{
            StoreApply storeApply=new StoreApply();
@@ -262,8 +258,6 @@ public class ApplyController {
             @RequestParam(value = "identityimage")String identityimage,
             @RequestParam(value = "identityimages")String identityimages
     ){
-        identityimage=identityimage.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
-        identityimages=identityimages.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
          try{
              MemberApply memberApply=new MemberApply();
              String a= String.valueOf(new Date());
@@ -356,7 +350,6 @@ public class ApplyController {
        }
 
     }
-
 
 
 }

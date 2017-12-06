@@ -1,6 +1,7 @@
 package com.linjun.controller;
 
 import com.linjun.common.JsonResult;
+import com.linjun.config.ImageConfig;
 import com.linjun.config.QiNiuconfig;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
@@ -12,6 +13,7 @@ import com.linjun.service.*;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
@@ -109,8 +111,6 @@ public class StoreController {
        return  new JsonResult("500",e.getMessage());
       }
     }
-
-
 //    店铺的登入
     @GetMapping(value = "/login")
     public  JsonResult login(
@@ -230,7 +230,7 @@ public class StoreController {
     public  long temp;
     @PostMapping("/uploadImage")
     public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(value = "file") MultipartFile files) throws ParseException {
-        String filePath = "/Users/linjun/deaProjects/image/";
+        String filePath = ImageConfig.imagepath;
             String fileName = files.getOriginalFilename();
             String stuffxName = fileName.substring(fileName.lastIndexOf("."));
             fileName = UUID.randomUUID() + stuffxName;
@@ -241,7 +241,7 @@ public class StoreController {
         String b=sdf2.format(sdf1.parse(a));
         Date date=sdf2.parse(b);
             GoodsImage goodsImage=new GoodsImage();
-            goodsImage.setIamgeaddress(fileName);
+            goodsImage.setIamgeaddress("http://oz4zfzmr0.bkt.clouddn.com/"+fileName);
             if (temp!=id){
                 goodsImage.setIskeyiamge((byte) 1);
                 temp=id;
@@ -298,7 +298,7 @@ public JsonResult addGoods(
     if (files.length==0){
         return  new JsonResult("404","图片为空");
     }
-    String filePath="/Users/linjun/deaProjects/image/";
+    String filePath=ImageConfig.imagepath;
     for (int i = 0; i < files.length; i++) {
         String fileName=files[i].getOriginalFilename();
         String stuffxName=fileName.substring(fileName.lastIndexOf("."));
@@ -350,8 +350,25 @@ public JsonResult addGoods(
     @DeleteMapping(value = "/deleteGoods")
     public JsonResult deleteGoods(
         @RequestParam(value = "id")long id
-    ){
+    ) throws QiniuException {
+        int result=goodsImageService.deletebygoodsid(id);
+        List<GoodsImage> list=goodsImageService.find(id);
+        for (int i = 0; i <list.size() ; i++) {
+            String imagurl=list.get(i).getIamgeaddress();
+            imagurl=imagurl.replaceAll("http://oz4zfzmr0.bkt.clouddn.com/","");
+            System.out.println(imagurl);
+            Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
+            BucketManager bucketManager=new BucketManager(auth,new Configuration(Zone.zone0()));
+            bucketManager.delete(QiNiuconfig.bucket,imagurl);
+            String path= ImageConfig.imagepath;
+            String imagepath=path+imagurl;
+            System.out.println(imagepath);
+            File file=new File(imagepath);
+            file.delete();
+        }
+        int  b=goodsDetailService.deletebygoodid(id);
         boolean a=goodsService.delete(id);
+
         if (a){
             return  new JsonResult("200","删除商品成功");
         }else {
@@ -538,12 +555,10 @@ public JsonResult addGoods(
             @RequestParam(value ="storeid")Long storeid
     ){
                 try{
-
                      List<Goods> goodslist=goodsService.findBystoreid(storeid);
                     List<GoodsModel> list=new ArrayList<GoodsModel>();
                     for (Goods data:goodslist) {
                         GoodsModel goodsModel=new GoodsModel();
-
                         goodsModel.setGoodsName(goodsService.findByid(data.getId()).getGoodsname());
                         goodsModel.setImageaddress(goodsImageService.findimage(data.getId()));
                         goodsModel.setSoldamount(goodsService.findByid(data.getId()).getSoldamount());

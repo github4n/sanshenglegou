@@ -16,4 +16,5 @@ public interface VillageApplyService {
      VillageApply add(VillageApply villageApply);
     VillageApply isexit(VillageApply villageApply);
     VillageApply isStatus(VillageApply villageApply);
+    VillageApply findbyid(long id);
 }

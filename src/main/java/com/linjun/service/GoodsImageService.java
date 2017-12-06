@@ -12,4 +12,5 @@ public interface GoodsImageService {
     GoodsImage findMainImage(long goodsid);
     GoodsImage built(GoodsImage goodsImage);
     List<String> findimage(long goodsImage);
+
 }

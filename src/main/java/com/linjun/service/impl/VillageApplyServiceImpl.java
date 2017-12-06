@@ -208,4 +208,10 @@ public class VillageApplyServiceImpl implements VillageApplyService {
             throw new PeopleException("查询失败");
         }
     }
+
+    @Override
+    public VillageApply findbyid(long id) {
+
+        return villageApplyMapper.selectByPrimaryKey(id);
+    }
 }

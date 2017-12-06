@@ -50,4 +50,12 @@ public class GoodsDetailServiceImpl implements GoodsDetailService {
             return list.get(0);
 
     }
+
+    @Override
+    public int deletebygoodid(long goodid) {
+        GoodsDetailCriteria goodsDetailCriteria=new GoodsDetailCriteria();
+        GoodsDetailCriteria.Criteria criteria=goodsDetailCriteria.createCriteria();
+        criteria.andGoodsidEqualTo(goodid);
+        return goodsDetailMapper.deleteByExample(goodsDetailCriteria);
+    }
 }
