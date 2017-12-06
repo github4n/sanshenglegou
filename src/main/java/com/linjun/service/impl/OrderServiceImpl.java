@@ -243,6 +243,44 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Long todayOrderstoreid(Long storeid) {
+        String a=String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        SimpleDateFormat sdf4= new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+        String b= null;
+        String c=null;
+        Date date=null;
+        Date date1 = null;
+        Date date2=null;
+        Date v=null;
+        try {
+            Date d=sdf1.parse(a);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
+            date=sdf2.parse(b);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            b=sdf3.format(v);
+            date1=sdf2.parse(b);
+            String ds=sdf4.format(v);
+            date2=sdf2.parse(ds);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        OrderCriteria orderCriteria=new OrderCriteria();
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andStoreidEqualTo(storeid);
+        criteria.andPaytimeBetween(date1,date2);
+        return orderMapper.countByExample(orderCriteria);
+    }
+
+    @Override
     public Long toadayOrderPay() {
 
         String a=String.valueOf(new Date());
@@ -276,6 +314,45 @@ public class OrderServiceImpl implements OrderService {
         }
         OrderCriteria orderCriteria=new OrderCriteria();
         OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andPaytimeBetween(date1,date2);
+        criteria.andIspayEqualTo((byte) 1);
+        return orderMapper.countByExample(orderCriteria);
+    }
+
+    @Override
+    public Long todayOrderPaystoreid(long storeid) {
+        String a=String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        SimpleDateFormat sdf4= new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+        String b= null;
+        String c=null;
+        Date date=null;
+        Date date1 = null;
+        Date date2=null;
+        Date v=null;
+        try {
+            Date d=sdf1.parse(a);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
+            date=sdf2.parse(b);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            b=sdf3.format(v);
+            date1=sdf2.parse(b);
+            String ds=sdf4.format(v);
+            date2=sdf2.parse(ds);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        OrderCriteria orderCriteria=new OrderCriteria();
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andStoreidEqualTo(storeid);
         criteria.andPaytimeBetween(date1,date2);
         criteria.andIspayEqualTo((byte) 1);
         return orderMapper.countByExample(orderCriteria);
@@ -335,6 +412,16 @@ public class OrderServiceImpl implements OrderService {
         criteria.andIspayEqualTo((byte) 1);
         return orderMapper.countByExample(orderCriteria);
     }
+
+    @Override
+    public Long sumOrderstoreid(long storeid) {
+        OrderCriteria orderCriteria=new OrderCriteria();
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andIspayEqualTo((byte) 1);
+        criteria.andStoreidEqualTo(storeid);
+        return orderMapper.countByExample(orderCriteria);
+    }
+
     @Override
     public Float sumMoney() {
         OrderCriteria orderCriteria=new OrderCriteria();
@@ -352,6 +439,25 @@ public class OrderServiceImpl implements OrderService {
         }
         return sumMoney;
     }
+    @Override
+    public Float sumMoneystoreid(long storeid) {
+        OrderCriteria orderCriteria=new OrderCriteria();
+        OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+        criteria.andIspayEqualTo((byte) 1);
+        criteria.andStoreidEqualTo(storeid);
+        List<Order> list=orderMapper.selectByExample(orderCriteria);
+        long sum=orderMapper.countByExample(orderCriteria);
+        Float sumMoney=null;
+        for (int i = 0; i < sum; i++) {
+            if (userMapper.selectByPrimaryKey(list.get(i).getUserid()).getRole()==1){
+                sumMoney+=list.get(i).getMemberprice();
+            }else {
+                sumMoney+=list.get(i).getMarketpricce();
+            }
+        }
+        return sumMoney;
+    }
+
     private Date getpost(int post) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR) - post);
@@ -422,6 +528,58 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<Float> weekMoneystoreid(long storeid) {
+        List<Float> list=new ArrayList<Float>();
+        Calendar rightNow=Calendar.getInstance();
+        int day = rightNow.get(rightNow.DAY_OF_WEEK);//获取时间
+        String a= String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String b= null;
+        Date date=null;
+        try {
+            b = sdf2.format(sdf1.parse(a));
+            date=sdf2.parse(b);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (day==1){
+            for (int i=7;i>0;i--){
+                OrderCriteria orderCriteria=new OrderCriteria();
+                OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                criteria.andIspayEqualTo((byte) 1);
+                criteria.andStoreidEqualTo(storeid);
+                List<Order> list1=orderMapper.selectByExample(orderCriteria);
+                Float dayMoney=null;
+                for (int j = 0; j <list1.size() ; j++) {
+                    dayMoney+=list1.get(j).getPricesum();
+                }
+                list.add(dayMoney);
+
+            }
+        }else {
+            for (int i = day-1; i < 0; i++) {
+
+                OrderCriteria orderCriteria=new OrderCriteria();
+                OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+                criteria.andPaytimeBetween(getpost(i-1),getpost(i-2));
+                criteria.andIspayEqualTo((byte) 1);
+                criteria.andStoreidEqualTo(storeid);
+                List<Order> list1=orderMapper.selectByExample(orderCriteria);
+                Float dayMoney=null;
+                for (int j = 0; j <list1.size() ; j++) {
+                    dayMoney+=list1.get(j).getPricesum();
+                }
+                list.add(dayMoney);
+
+            }
+        }
+        return  list;
+
+    }
+
+    @Override
     public List<Long> weekorderPlan() {
        List<Long> list=new ArrayList<Long>();
         Calendar rightNow=Calendar.getInstance();
@@ -467,7 +625,7 @@ public class OrderServiceImpl implements OrderService {
                 cancel+=orderMapper.countByExample(orderCriteria);
                 OrderCriteria orderCriteria4 =new OrderCriteria();
                 OrderCriteria.Criteria criteria4= orderCriteria.createCriteria();
-                criteria.andIspayEqualTo((byte) 0);
+                criteria.andIspayEqualTo((byte) 4);
                 criteria.andPaytimeBetween(getpost(i),getpost(i-1));
                 complete+=orderMapper.countByExample(orderCriteria);
 
@@ -498,7 +656,116 @@ public class OrderServiceImpl implements OrderService {
                 cancel+=orderMapper.countByExample(orderCriteria);
                 OrderCriteria orderCriteria4 =new OrderCriteria();
                 OrderCriteria.Criteria criteria4= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 4);
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                complete+=orderMapper.countByExample(orderCriteria);
+
+            }
+        }
+        list.add(notpay);
+        list.add(pay);
+        list.add(sendGoods);
+        list.add(cancel);
+        list.add(complete);
+        return list;
+    }
+
+    @Override
+    public List<Long> weekorderPlanstoreid(long storeid) {
+        List<Long> list=new ArrayList<Long>();
+        Calendar rightNow=Calendar.getInstance();
+        int day = rightNow.get(rightNow.DAY_OF_WEEK);//获取日期是周几；
+        String a= String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String b= null;
+        Date date=null;
+        try {
+            b = sdf2.format(sdf1.parse(a));
+            date=sdf2.parse(b);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        long notpay = 0;
+        long pay=0;
+        long sendGoods=0;
+        long cancel=0;
+        long complete=0;
+        if (day==1){
+            for (int i = 7; i >0 ; i--) {
+//                统计未支付的订单；
+                OrderCriteria orderCriteria =new OrderCriteria();
+                OrderCriteria.Criteria criteria= orderCriteria.createCriteria();
                 criteria.andIspayEqualTo((byte) 0);
+                criteria.andStoreidEqualTo(storeid);
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                notpay+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria1 =new OrderCriteria();
+                OrderCriteria.Criteria criteria1= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 1);
+                criteria.andStoreidEqualTo(storeid);
+
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                pay+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria2 =new OrderCriteria();
+                OrderCriteria.Criteria criteria2= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 2);
+                criteria.andStoreidEqualTo(storeid);
+
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                sendGoods+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria3 =new OrderCriteria();
+                OrderCriteria.Criteria criteria3= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 3);
+                criteria.andStoreidEqualTo(storeid);
+
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                cancel+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria4 =new OrderCriteria();
+                OrderCriteria.Criteria criteria4= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 4);
+                criteria.andStoreidEqualTo(storeid);
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                complete+=orderMapper.countByExample(orderCriteria);
+
+            }
+
+
+        }else {
+            for (int i = day-1; i < 0; i++) {
+                OrderCriteria orderCriteria =new OrderCriteria();
+                OrderCriteria.Criteria criteria= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 0);
+                criteria.andStoreidEqualTo(storeid);
+
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                notpay+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria1 =new OrderCriteria();
+                OrderCriteria.Criteria criteria1= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 1);
+                criteria.andStoreidEqualTo(storeid);
+
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                pay+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria2 =new OrderCriteria();
+                OrderCriteria.Criteria criteria2= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 2);
+                criteria.andStoreidEqualTo(storeid);
+
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                sendGoods+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria3 =new OrderCriteria();
+                OrderCriteria.Criteria criteria3= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 3);
+                criteria.andStoreidEqualTo(storeid);
+
+                criteria.andPaytimeBetween(getpost(i),getpost(i-1));
+                cancel+=orderMapper.countByExample(orderCriteria);
+                OrderCriteria orderCriteria4 =new OrderCriteria();
+                OrderCriteria.Criteria criteria4= orderCriteria.createCriteria();
+                criteria.andIspayEqualTo((byte) 4);
+                criteria.andStoreidEqualTo(storeid);
+
                 criteria.andPaytimeBetween(getpost(i),getpost(i-1));
                 complete+=orderMapper.countByExample(orderCriteria);
 
@@ -731,6 +998,59 @@ public class OrderServiceImpl implements OrderService {
             OrderCriteria orderCriteria=new OrderCriteria();
             OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
             criteria.andPaytimeBetween(date1,date2);
+            long acount=orderMapper.countByExample(orderCriteria);
+            list.add((int) acount);
+
+        }
+        return list;
+    }
+
+    @Override
+    public List<Integer> monthOrderstoreid(long storeid) {
+        List<Integer> list=new ArrayList<Integer>();
+        String currentTime=String.valueOf(new Date());
+        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String b= null;
+        Date date=null;
+        Date date1=null;
+        Date date2=null;
+        Date v=null;
+        try {
+            Date d=sdf1.parse(currentTime);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
+            date=sdf2.parse(b);
+            System.out.println(date);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(date);
+        int dayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
+        Calendar c=Calendar.getInstance();
+        c.set(Calendar.DATE,1);
+        c.roll(Calendar.DATE,-1);
+        int months=c.get(Calendar.DATE);
+
+        for (int i = 1; i <months+1 ; i++) {
+
+            SimpleDateFormat sdf3=new SimpleDateFormat("yyyy-MM-"+i+" 00:00:00");
+            SimpleDateFormat sdf4=new SimpleDateFormat("yyyy-MM-"+i+" 23:59:59");
+            try {
+                b=sdf3.format(v);
+                date1=sdf2.parse(b);
+                String ds=sdf4.format(v);
+                date2=sdf2.parse(ds);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            OrderCriteria orderCriteria=new OrderCriteria();
+            OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
+            criteria.andPaytimeBetween(date1,date2);
+            criteria.andStoreidEqualTo(storeid);
             long acount=orderMapper.countByExample(orderCriteria);
             list.add((int) acount);
 

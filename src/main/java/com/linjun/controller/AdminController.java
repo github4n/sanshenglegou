@@ -673,8 +673,7 @@ public class AdminController {
               Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
               BucketManager bucketManager=new BucketManager(auth,new Configuration(Zone.zone0()));
               bucketManager.delete(QiNiuconfig.bucket,imagurl);
-              String path=ImageConfig.imagepath
-                      ;
+              String path=ImageConfig.imagepath;
               String imagepath=path+imagurl;
               System.out.println(imagepath);
               File file=new File(imagepath);

@@ -5,6 +5,7 @@ import com.linjun.model.WithDrawApply;
 
 public interface WithDrawApplyService {
     PageBean<WithDrawApply> findAll(int currentpage,int pagesize);
+    PageBean<WithDrawApply> findAllBystoreid(long storeid,int currentpage,int pagesize);
     Long countWithDraw();
     WithDrawApply update(WithDrawApply withDrawApply);
     int delete(long id);
@@ -15,4 +16,5 @@ public interface WithDrawApplyService {
      WithDrawApply add(WithDrawApply withDrawApply);
      WithDrawApply isexit(WithDrawApply withDrawApply);
      WithDrawApply isStatus(WithDrawApply withDrawApply);
+     Float balance (long storeid);
 }

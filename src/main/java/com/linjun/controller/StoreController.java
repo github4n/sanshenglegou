@@ -5,10 +5,7 @@ import com.linjun.config.ImageConfig;
 import com.linjun.config.QiNiuconfig;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
-import com.linjun.pojo.GoodsList;
-import com.linjun.pojo.GoodsModel;
-import com.linjun.pojo.OrderDetailList;
-import com.linjun.pojo.OrderList;
+import com.linjun.pojo.*;
 import com.linjun.service.*;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
@@ -50,6 +47,8 @@ public class StoreController {
     LogisticsService logisticsService;
     @Autowired
     GoodsDetailService goodsDetailService;
+    @Autowired
+    WithDrawApplyService withDrawApplyService;
 //    店铺注册
     @PostMapping(value = "/register")
     public JsonResult register(
@@ -63,6 +62,54 @@ public class StoreController {
         }
 
     }
+//    获取店铺的提现申请
+    @GetMapping(value = "/getstorewithdraw")
+    public  JsonResult getstorewithdraw(
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize")int pagesize,
+            @RequestParam(value = "storeid")long storeid
+    ){
+            try{
+                PageBean<WithDrawApply> list=withDrawApplyService.findAllBystoreid(storeid,page,pagesize);
+          return  new JsonResult("200",list);
+            }catch (Exception e){
+                return  new JsonResult("500",e.getMessage());
+            }
+    }
+
+
+
+//    获取店铺首页的数据
+    @GetMapping(value = "/getstorehomedata")
+    public  JsonResult getstorehomedata(
+            @RequestParam(value = "storeid")long storeid
+    ){
+       try{
+           StoreHeaderData storeHeaderData=new StoreHeaderData();
+           storeHeaderData.setTodayorder(orderService.todayOrderstoreid(storeid));
+           storeHeaderData.setTodaypay(orderService.todayOrderPaystoreid(storeid));
+           storeHeaderData.setOrdersum(orderService.sumOrderstoreid(storeid));
+           Float summoney=orderService.sumMoneystoreid(storeid);
+           storeHeaderData.setSummoney(summoney);
+           int months=userService.monthDay();
+           List<Integer> list=new ArrayList<Integer>();
+           for (int i = 1; i <months+1; i++) {
+               list.add(i);
+           }
+           storeHeaderData.setMonth(list);
+           storeHeaderData.setWeekpay(orderService.weekMoneystoreid(storeid));
+           storeHeaderData.setWeekplan(orderService.weekorderPlanstoreid(storeid));
+           storeHeaderData.setMonthorder(orderService.monthOrderstoreid(storeid));
+             Float outcome=withDrawApplyService.balance(storeid);
+           storeHeaderData.setBalance(summoney-outcome);
+           return new JsonResult("200",storeHeaderData);
+
+       }catch (Exception e){
+           return new JsonResult("500",e.getMessage());
+       }
+    }
+
+
 //    店铺注销
     @DeleteMapping(value = "/delete")
     public  JsonResult delete(

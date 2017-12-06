@@ -297,13 +297,15 @@ public class ApplyController {
 //    提现申请提交
     @PostMapping(value = "/submitwithdraw")
     public JsonResult submitwithdraw(
-            @RequestParam(value = "userid")long userid,
-            @RequestParam(value = "username")String username,
-            @RequestParam(value = "storename")String storename,
+            @RequestParam(value = "storeid")long storeid,
             @RequestParam(value = "price")Float price,
+            @RequestParam(value = "username")String username,
             @RequestParam(value = "bankacount")String bankacount
     ){
    try{
+       Store store=storeService.findByid(storeid);
+       long userid=store.getStoreuserid();
+       String storename=store.getStorename();
        String a= String.valueOf(new Date());
        SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
