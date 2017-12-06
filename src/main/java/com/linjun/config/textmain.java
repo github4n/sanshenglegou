@@ -13,10 +13,46 @@ public class textmain {
 
    public  static void main(String[] args) throws ParseException {
 
-       long a= new Date().getTime();
+       String a= String.valueOf(new Date());
+       SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+       SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+       SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+       SimpleDateFormat sdf4= new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+       String b= null;
+       Date date=null;
+       Date date1=null;
+       Date date2=null;
+       Date date3=null;
+       Date v=null;
+       try {
+           Date d=sdf1.parse(a);
+           b = sdf2.format(d);
+           v=d;
+           System.out.println(v);
+           date=sdf2.parse(b);
+           System.out.println(date);
+
+       } catch (ParseException e) {
+           e.printStackTrace();
+       }
+       try {
+           b = sdf2.format(sdf1.parse(a));
+           date1=sdf2.parse(b);
+
+           b=sdf3.format(v);
+           date2=sdf2.parse(b);
+           b=sdf4.format(v);
+           date3=sdf2.parse(b);
+       } catch (ParseException e) {
+           e.printStackTrace();
+       }
 
 
-System.out.println(a);
+System.out.println(date1);
+       System.out.println(date2);
+       System.out.println(date3);
+
+
 
    }
 

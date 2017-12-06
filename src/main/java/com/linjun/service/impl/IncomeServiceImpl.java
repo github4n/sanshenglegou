@@ -48,8 +48,6 @@ public class IncomeServiceImpl implements InComeService {
          }else {
              throw new PeopleException("查询失败");
          }
-
-
     }
 
     @Override
@@ -63,17 +61,30 @@ public class IncomeServiceImpl implements InComeService {
     public Float todayincome() {
           String a=String.valueOf(new Date());
         SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd 00:00:00");
-        SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd 23:59:59");
+        SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd 00:00:00");
+        SimpleDateFormat sdf4= new SimpleDateFormat("yyyy-MM-dd 23:59:59");
         String b= null;
         String c=null;
+        Date date=null;
         Date date1 = null;
         Date date2=null;
+        Date v=null;
         try {
-            b = sdf2.format(sdf1.parse(a));
-            c=sdf3.format(sdf1.parse(a));
+            Date d=sdf1.parse(a);
+            b = sdf2.format(d);
+            v=d;
+            System.out.println(v);
+            date=sdf2.parse(b);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            b=sdf3.format(v);
             date1=sdf2.parse(b);
-            date2=sdf3.parse(c);
+            String ds=sdf4.format(v);
+            date2=sdf2.parse(ds);
         } catch (ParseException e) {
             e.printStackTrace();
         }
