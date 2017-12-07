@@ -51,7 +51,6 @@ public class CreditGoodsServiceImpl implements CreditGoodsService {
     @Override
     public List<Creditgoods> findall() {
         CreditgoodsCriteria creditgoodsCriteria=new CreditgoodsCriteria();
-        CreditgoodsCriteria.Criteria criteria=creditgoodsCriteria.createCriteria();
 
 
         List<Creditgoods> list=creditgoodsMapper.selectByExample(creditgoodsCriteria);

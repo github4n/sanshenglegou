@@ -7,6 +7,7 @@
     <result column="imageurl" jdbcType="VARCHAR" property="imageurl" />
     <result column="cregoodsSum" jdbcType="BIGINT" property="cregoodssum" />
     <result column="soldamount" jdbcType="BIGINT" property="soldamount" />
+    <result column="price" jdbcType="BIGINT" property="price" />
     <result column="isstart" jdbcType="TINYINT" property="isstart" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, creditgood, imageurl, cregoodsSum, soldamount, isstart, createTime
+    id, creditgood, imageurl, cregoodsSum, soldamount, price, isstart, createTime
   </sql>
   <select id="selectByExample" parameterType="com.linjun.model.CreditgoodsCriteria" resultMap="BaseResultMap">
     select
@@ -107,11 +108,11 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into t_creditgoods (creditgood, imageurl, cregoodsSum, 
-      soldamount, isstart, createTime
-      )
+      soldamount, price, isstart, 
+      createTime)
     values (#{creditgood,jdbcType=VARCHAR}, #{imageurl,jdbcType=VARCHAR}, #{cregoodssum,jdbcType=BIGINT}, 
-      #{soldamount,jdbcType=BIGINT}, #{isstart,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}
-      )
+      #{soldamount,jdbcType=BIGINT}, #{price,jdbcType=BIGINT}, #{isstart,jdbcType=TINYINT}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Creditgoods">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -130,6 +131,9 @@
       </if>
       <if test="soldamount != null">
         soldamount,
+      </if>
+      <if test="price != null">
+        price,
       </if>
       <if test="isstart != null">
         isstart,
@@ -150,6 +154,9 @@
       </if>
       <if test="soldamount != null">
         #{soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=BIGINT},
       </if>
       <if test="isstart != null">
         #{isstart,jdbcType=TINYINT},
@@ -183,6 +190,9 @@
       <if test="record.soldamount != null">
         soldamount = #{record.soldamount,jdbcType=BIGINT},
       </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=BIGINT},
+      </if>
       <if test="record.isstart != null">
         isstart = #{record.isstart,jdbcType=TINYINT},
       </if>
@@ -201,6 +211,7 @@
       imageurl = #{record.imageurl,jdbcType=VARCHAR},
       cregoodsSum = #{record.cregoodssum,jdbcType=BIGINT},
       soldamount = #{record.soldamount,jdbcType=BIGINT},
+      price = #{record.price,jdbcType=BIGINT},
       isstart = #{record.isstart,jdbcType=TINYINT},
       createTime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -222,6 +233,9 @@
       <if test="soldamount != null">
         soldamount = #{soldamount,jdbcType=BIGINT},
       </if>
+      <if test="price != null">
+        price = #{price,jdbcType=BIGINT},
+      </if>
       <if test="isstart != null">
         isstart = #{isstart,jdbcType=TINYINT},
       </if>
@@ -237,6 +251,7 @@
       imageurl = #{imageurl,jdbcType=VARCHAR},
       cregoodsSum = #{cregoodssum,jdbcType=BIGINT},
       soldamount = #{soldamount,jdbcType=BIGINT},
+      price = #{price,jdbcType=BIGINT},
       isstart = #{isstart,jdbcType=TINYINT},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
