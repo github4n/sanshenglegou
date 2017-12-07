@@ -3,6 +3,7 @@ package com.linjun.controller;
 import com.linjun.common.JsonResult;
 import com.linjun.model.Goods;
 import com.linjun.pojo.GoodsModel;
+import com.linjun.service.GoodsDetailService;
 import com.linjun.service.GoodsImageService;
 import com.linjun.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +15,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/recommend")
 public class RecommendController {
       @Autowired
     GoodsService goodsService;
+      @Autowired
+    GoodsDetailService goodsDetailService;
     @Autowired
     GoodsImageService goodsImageService;
-    @GetMapping(value = "/")
+    @RequestMapping(value = "/recommend")
     public JsonResult getRecommend(){
         try {
             long sum = goodsService.countGoods();
             int[] random = randomCommon(0, (int) sum, 12);
             List<GoodsModel> list = new ArrayList<GoodsModel>();
             for (int i : random) {
-                Goods goods = goodsService.findByid(i);
-                GoodsModel goodsModel = new GoodsModel();
-                goodsModel.setPrice(goods.getMemberprice());
-                goodsModel.setSoldamount(goods.getSoldamount());
-                goodsModel.setImageaddress(goodsImageService.findimage(i));
-                goodsModel.setGoodsName(goods.getGoodsname());
-                goodsModel.setId(goods.getId());
+                Goods goods=goodsService.findByid(i);
+                    GoodsModel goodsModel=new GoodsModel();
+                    goodsModel.setStoreid(goods.getStoreid());
+                    goodsModel.setGoodsName(goods.getGoodsname());
+                    goodsModel.setSoldamount(goods.getSoldamount());
+                    goodsModel.setPrice(goods.getMarketprive());
+                    goodsModel.setStorename(goods.getShop());
+                    goodsModel.setMemberprice(goods.getMemberprice());
+                    goodsModel.setGoodsSum(goods.getGoodssum());
+                    goodsModel.setImageaddress(goodsImageService.findimage(goods.getId()));
+                    goodsModel.setContent(goodsDetailService.findByGoodsid(goods.getId()).getContent());
+                    goodsModel.setId(goods.getId());
                 list.add(goodsModel);
             }
             return new JsonResult("200",list);

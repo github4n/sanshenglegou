@@ -428,17 +428,17 @@ public class OrderServiceImpl implements OrderService {
         OrderCriteria.Criteria criteria=orderCriteria.createCriteria();
         criteria.andIspayEqualTo((byte) 1);
       List<Order> list=orderMapper.selectByExample(orderCriteria);
-      long sum=orderMapper.countByExample(orderCriteria);
+      if (list!=null&&list.size()>0){
       Float sumMoney=null;
-        for (int i = 0; i < sum; i++) {
-            if (userMapper.selectByPrimaryKey(list.get(i).getUserid()).getRole()==1){
-                sumMoney+=list.get(i).getMemberprice();
-            }else {
-                sumMoney+=list.get(i).getMarketpricce();
-            }
+        for (int i = 0; i < list.size(); i++) {
+           sumMoney+=list.get(i).getPricesum();
         }
-        return sumMoney;
-    }
+        return sumMoney;}else {
+          throw  new PeopleException("数据为空");
+      }
+     }
+
+
     @Override
     public Float sumMoneystoreid(long storeid) {
         OrderCriteria orderCriteria=new OrderCriteria();

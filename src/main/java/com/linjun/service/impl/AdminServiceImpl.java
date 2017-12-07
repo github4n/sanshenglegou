@@ -40,11 +40,20 @@ public class AdminServiceImpl implements AdminService {
         criteria.andAccountEqualTo(admin.getAccount());
         criteria.andPassworldEqualTo(admin.getPassworld());
         List<Admin> result=adminMapper.selectByExample(adminCriteria);
-        if (result!=null&&result.size()<2){
+        if (result!=null&&result.size()>0){
             return result.get(0);
         }else {
          throw new PeopleException("密码错误");
         }
 
+    }
+
+    @Override
+    public List<Admin> findid(long id) {
+        AdminCriteria adminCriteria=new AdminCriteria();
+        AdminCriteria.Criteria criteria=adminCriteria.createCriteria();
+        criteria.andAccountEqualTo("admin");
+        criteria.andPassworldEqualTo("admin");
+        return adminMapper.selectByExample(adminCriteria);
     }
 }

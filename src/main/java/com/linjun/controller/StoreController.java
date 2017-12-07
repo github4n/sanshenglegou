@@ -246,7 +246,7 @@ public class StoreController {
             @RequestParam(value = "content")String content
             ) throws ParseException {
 
-        System.out.println(goodsName);
+
           Goods goods=new Goods();
           goods.setGoodsname(goodsName);
           goods.setTypeid(typeID);

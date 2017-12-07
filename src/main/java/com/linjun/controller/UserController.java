@@ -11,6 +11,7 @@ import com.linjun.pojo.GoodsModel;
 import com.linjun.pojo.Ordermodel;
 import com.linjun.service.*;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sun.jvm.hotspot.oops.LongField;
@@ -127,10 +128,23 @@ public class UserController {
            }
    }
 
+//根据id值获取地址
+    @GetMapping(value = "/getAddressid")
+    public JsonResult getAddressid(
+            @RequestParam(value = "addressid")long addressid
+    ){
+     try{
+         AddressManger addressManger=addressMongerService.findbyid(addressid);
+         return  new JsonResult("200",addressManger);
+     }catch (Exception e){
+         return  new JsonResult("500",e.getMessage());
+     }
+    }
+
 
 
 //  用户信息获取
- @GetMapping(value = "getUserInformation")
+ @GetMapping(value = "/getUserInformation")
  public  JsonResult getUserInformation(
          @RequestParam(value = "id",required = false)Long id
  ){
@@ -186,9 +200,42 @@ public class UserController {
 //生成用户订单
  @PostMapping(value = "/creatOrder")
    public JsonResult creatOrder(
-  @RequestBody Order order
- ) {
-          try{
+  @RequestParam(value = "userid")long userid,
+  @RequestParam(value = "storeid")long storeid,
+  @RequestParam(value = "goodsid")long goodsid,
+  @RequestParam(value = "addressid")long addressid,
+  @RequestParam(value = "goodsum")int goodsum
+ ) throws ParseException {
+     try{
+     Order order=new Order();
+     order.setIspay((byte) 0);
+     order.setUserid(userid);
+     order.setStoreid(storeid);
+     order.setGoodsid(goodsid);
+     order.setAddressid(addressid);
+     order.setGoodsum(goodsum);
+     String a= String.valueOf(new Date());
+     SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+     SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     String b=sdf2.format(sdf1.parse(a));
+     Date date=sdf2.parse(b);
+    order.setCreatetime(date);
+     Goods goods=goodsService.findByid(goodsid);
+     order.setGoodsname(goods.getGoodsname());
+     Float marketprice=goods.getMarketprive();
+      order.setMarketpricce(marketprice);
+      Float memberprice=goods.getMemberprice();
+      order.setMemberprice(memberprice);
+      long times=new Date().getTime();
+      order.setOrdercode(times);
+      byte isrole=userService.findByID(userid).getRole();
+      Float pricesum;
+      if (isrole==0){
+          pricesum=goodsum*marketprice;
+      }else {
+          pricesum=goodsum*memberprice;
+      }
+         order.setPricesum(pricesum);
            Order order1=orderService.add(order);
            return  new JsonResult("200",order);
           }catch (Exception e){

@@ -66,12 +66,15 @@ public class AdminController {
 
 //    管理员登入
     @GetMapping(value = "/login")
-    public JsonResult login(@RequestParam(value = "admin",required = false)String admin,
+    public JsonResult login(@RequestParam(value = "account",required = false)String account,
                             @RequestParam(value = "passworld",required = false)String passworld){
         Admin admin1=new Admin();
-        admin1.setAccount(admin);
+        admin1.setAccount(account);
 //
         admin1.setPassworld(passworld);
+        System.out.println(admin1.getAccount());
+        System.out.println(admin1.getPassworld());
+
         try {
             Admin admin2 = adminService.login(admin1);
             return  new JsonResult("200",admin2);
@@ -80,6 +83,21 @@ public class AdminController {
         }
 
     }
+//    查找管理员
+@GetMapping(value = "/find")
+public JsonResult login(@RequestParam(value = "id",required = false)long id
+                        ){
+
+    try {
+        List<Admin> admin2 = adminService.findid(id);
+        return  new JsonResult("200",admin2);
+    }catch (Exception e){
+        return  new JsonResult("500",e.getMessage());
+    }
+
+}
+
+
 //    首页的数据概览
     @GetMapping(value = "/getHeaderData")
     public  JsonResult getHeaderData(){
@@ -407,7 +425,13 @@ public class AdminController {
             long todayOrderPay=orderService.toadayOrderPay();
             Float todaymoneyPay=orderService.todayMoney();
             long sumOredr=orderService.sumOrder();
-            float sumMoney=orderService.sumMoney();
+          float sumMoney;
+          try{
+               sumMoney=orderService.sumMoney();
+          }catch (Exception e){
+               sumMoney=0;
+
+          }
             List<Float> weeklistOredr=orderService.weekMoney();
             List<Integer> monthOrders=orderService.monthOrder();
             List<Long> weekorderplan=orderService.weekorderPlan();
