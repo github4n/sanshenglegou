@@ -213,7 +213,7 @@ public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(va
              }
     }
 //    购买积分商品
-   @PutMapping(value = "/buycreditgoods")
+   @GetMapping(value = "/buycreditgoods")
     public  JsonResult buy(
             @RequestParam(value = "creditgoodsid")long creditgoodsid,
             @RequestParam(value = "userid")long userid
