@@ -89,7 +89,15 @@ public class StoreController {
            storeHeaderData.setTodayorder(orderService.todayOrderstoreid(storeid));
            storeHeaderData.setTodaypay(orderService.todayOrderPaystoreid(storeid));
            storeHeaderData.setOrdersum(orderService.sumOrderstoreid(storeid));
-           Float summoney=orderService.sumMoneystoreid(storeid);
+//           Float summoney=orderService.sumMoneystoreid(storeid);
+           Float summoney=null;
+           try{
+               summoney=orderService.sumMoneystoreid(storeid);
+           }catch (Exception e){
+               summoney=null;
+           }
+
+
            storeHeaderData.setSummoney(summoney);
            int months=userService.monthDay();
            List<Integer> list=new ArrayList<Integer>();
@@ -101,7 +109,7 @@ public class StoreController {
            storeHeaderData.setWeekplan(orderService.weekorderPlanstoreid(storeid));
            storeHeaderData.setMonthorder(orderService.monthOrderstoreid(storeid));
              Float outcome=withDrawApplyService.balance(storeid);
-           storeHeaderData.setBalance(summoney-outcome);
+//           storeHeaderData.setBalance(summoney-outcome);
            return new JsonResult("200",storeHeaderData);
 
        }catch (Exception e){
