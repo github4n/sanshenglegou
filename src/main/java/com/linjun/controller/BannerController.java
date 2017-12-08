@@ -75,25 +75,25 @@ public class BannerController {
     //   首页轮播图的添加
     @PostMapping(value = "/uploadBanner")
     public JsonResult uploadBanner(
-            @RequestParam(value = "file") MultipartFile files) throws ParseException
+            @RequestParam(value ="id")byte id,  @RequestParam(value = "file") MultipartFile files) throws ParseException
             {
                 String filePath = ImageConfig.imagepath;
                 String fileName = files.getOriginalFilename();
                 String stuffxName = fileName.substring(fileName.lastIndexOf("."));
-                fileName = UUID.randomUUID() + stuffxName;
-                fileName = System.currentTimeMillis() + fileName;
+                fileName = System.currentTimeMillis() + stuffxName;
                 String a= String.valueOf(new Date());
                 SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
                 SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String b=sdf2.format(sdf1.parse(a));
                 Date date=sdf2.parse(b);
                 Banner banner=new Banner();
+                banner.setIsstart(id);
                 banner.setImageurl("http://oz4zfzmr0.bkt.clouddn.com/"+fileName);
+               System.out.println(banner.getImageurl());
 
                 Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
                 String upToken=auth.uploadToken(QiNiuconfig.bucket);
                 UploadManager uploadManager=new UploadManager(new Configuration(Zone.zone0()));
-
                 File dest = new File(filePath + fileName);
                 if (!dest.getParentFile().exists()) {
                     dest.getParentFile().mkdirs();

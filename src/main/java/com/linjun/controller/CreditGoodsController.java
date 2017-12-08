@@ -129,6 +129,7 @@ public class CreditGoodsController {
         @RequestParam(value = "price")long price
     ){
         try{
+            System.out.println("");
            Creditgoods creditgoods=new Creditgoods();
            creditgoods.setCreditgood(creditgood);
            creditgoods.setCregoodssum(cregoodssum);
@@ -141,6 +142,7 @@ public class CreditGoodsController {
             String b=sdf2.format(sdf1.parse(a));
             Date date=sdf2.parse(b);
             creditgoods.setCreatetime(date);
+
             Creditgoods creditgoods1=creditGoodsService.add(creditgoods);
         return  new JsonResult("200",creditgoods);
         }catch (Exception e){
@@ -153,19 +155,13 @@ public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(va
     String filePath = ImageConfig.imagepath;
     String fileName = files.getOriginalFilename();
     String stuffxName = fileName.substring(fileName.lastIndexOf("."));
-    fileName = UUID.randomUUID() + stuffxName;
-    fileName = System.currentTimeMillis() + fileName;
-    String a= String.valueOf(new Date());
-    SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-    SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    String b=sdf2.format(sdf1.parse(a));
-    Date date=sdf2.parse(b);
+    fileName = System.currentTimeMillis() + stuffxName;
     Creditgoods creditgoods = new Creditgoods();
+    creditgoods.setId(id);
     creditgoods.setImageurl("http://oz4zfzmr0.bkt.clouddn.com/"+fileName);
     Auth auth=Auth.create(QiNiuconfig.accessKey,QiNiuconfig.secretKey);
     String upToken=auth.uploadToken(QiNiuconfig.bucket);
     UploadManager uploadManager=new UploadManager(new Configuration(Zone.zone0()));
-    creditgoods.setId(id);
     File dest = new File(filePath + fileName);
     if (!dest.getParentFile().exists()) {
         dest.getParentFile().mkdirs();

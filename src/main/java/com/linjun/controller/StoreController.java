@@ -246,7 +246,7 @@ public class StoreController {
             @RequestParam(value = "content")String content
             ) throws ParseException {
 
-
+        System.out.println(goodsName);
           Goods goods=new Goods();
           goods.setGoodsname(goodsName);
           goods.setTypeid(typeID);
@@ -280,13 +280,14 @@ public class StoreController {
         String filePath = ImageConfig.imagepath;
             String fileName = files.getOriginalFilename();
             String stuffxName = fileName.substring(fileName.lastIndexOf("."));
-            fileName = UUID.randomUUID() + stuffxName;
-            fileName = System.currentTimeMillis() + fileName;
+             fileName = System.currentTimeMillis() + stuffxName;
+
         String a= String.valueOf(new Date());
         SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String b=sdf2.format(sdf1.parse(a));
         Date date=sdf2.parse(b);
+
             GoodsImage goodsImage=new GoodsImage();
             goodsImage.setIamgeaddress("http://oz4zfzmr0.bkt.clouddn.com/"+fileName);
             if (temp!=id){
