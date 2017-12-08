@@ -153,6 +153,7 @@ public class CreditGoodsController {
 @PostMapping("/uploadImage")
 public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(value = "file") MultipartFile files) throws ParseException {
     String filePath = ImageConfig.imagepath;
+    System.out.println("sdasdas");
     String fileName = files.getOriginalFilename();
     String stuffxName = fileName.substring(fileName.lastIndexOf("."));
     fileName = System.currentTimeMillis() + stuffxName;
