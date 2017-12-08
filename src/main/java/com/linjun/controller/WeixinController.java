@@ -173,6 +173,12 @@ private String TOKEN="weixin";
        return new JsonResult("","");
 
    }
+//微信支付
+
+
+
+
+
 
     /**
      * 排序方法
