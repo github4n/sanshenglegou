@@ -13,10 +13,9 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import sun.jvm.hotspot.interpreter.BytecodeGetPut;
-import sun.plugin2.message.JavaScriptBaseMessage;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,6 +70,8 @@ public class CreditGoodsController {
     CreditGoodsService creditGoodsService;
     @Autowired
     CreditByUserService creditByUserService;
+    @Autowired
+    DoTransactionalService doTransactionalService;
 
 //    获取全部积分商品
     @GetMapping(value = "/getcreditgoods")
@@ -211,6 +212,7 @@ public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(va
     }
 //    购买积分商品
    @GetMapping(value = "/buycreditgoods")
+   @Transactional
     public  JsonResult buy(
             @RequestParam(value = "creditgoodsid")long creditgoodsid,
             @RequestParam(value = "userid")long userid
@@ -218,7 +220,10 @@ public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(va
        try{
            Creditgoods creditg=creditGoodsService.finbyid(creditgoodsid);
            CreditManger creditManger=creditMangerService.findByuserid(userid);
+//           库存
            long goodsum=creditg.getCregoodssum();
+//           售出数量
+
            long soldsum=creditg.getSoldamount();
            long creditsum=creditg.getPrice();
            goodsum=goodsum-1;
@@ -226,33 +231,33 @@ public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(va
            creditgoods.setCregoodssum(goodsum);
            creditgoods.setSoldamount(soldsum+1);
           long creditsuma=creditManger.getCreditsum()-creditsum;
+//          积分管理更新
            CreditManger creditManger1=new CreditManger();
            creditManger1.setCreditsum(creditsuma);
            creditManger1.setId(creditManger.getId());
            long creditsums=creditManger.getConsumedcredit()+creditsum;
            creditManger1.setConsumedcredit(creditsums);
-           creditMangerService.updateByuserid(creditManger1);
 //           更新积分细节
            String a= String.valueOf(new Date());
            SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
            SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
            String b=sdf2.format(sdf1.parse(a));
            Date date=sdf2.parse(b);
+//           积分细节更新
            CreditDetail creditDetail=new CreditDetail();
            creditDetail.setStatus((byte) 1);
            creditDetail.setUserid(userid);
            creditDetail.setChangtime(date);
            creditDetail.setConsumcredit(creditsum);
+//           用户兑换记录
            Creditbyuser creditbyuser=new Creditbyuser();
            creditbyuser.setUserid(userid);
            creditbyuser.setCreatetime(date);
            creditbyuser.setCreditgoodid(creditgoodsid);
-
-           creditByUserService.add(creditbyuser);
-           creditDetialService.update(creditDetail);
-           creditGoodsService.update(creditgoods);
-           return  new JsonResult("200",goodsum);
+           doTransactionalService.buycreditGoods(creditbyuser,creditManger1,creditgoods,creditDetail);
+           return  new JsonResult("200","成功");
        }catch (Exception e){
+
            return new JsonResult("500",e.getMessage());
        }
    }

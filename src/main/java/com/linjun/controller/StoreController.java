@@ -646,10 +646,10 @@ public JsonResult addGoods(
 
               randomCommon(0, sum, n,set);
            List<Store> list = new ArrayList<Store>();
-//            for (int i : random) {
+          for (int i : set) {
                 Store store=storeService.findByid(1);
                 list.add(store);
-           // }
+           }
             return  new JsonResult("200",list);
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());

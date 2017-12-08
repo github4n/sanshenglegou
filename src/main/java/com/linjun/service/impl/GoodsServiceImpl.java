@@ -77,6 +77,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public long countGoods() {
         GoodsCriteria goodsCriteria=new GoodsCriteria();
+        GoodsCriteria.Criteria criteria=goodsCriteria.createCriteria();
         return goodsMapper.countByExample(goodsCriteria);
     }
 

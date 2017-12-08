@@ -12,66 +12,80 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @RestController
 public class RecommendController {
-      @Autowired
+    @Autowired
     GoodsService goodsService;
-      @Autowired
+    @Autowired
     GoodsDetailService goodsDetailService;
     @Autowired
     GoodsImageService goodsImageService;
-    @RequestMapping(value = "/recommend")
-    public JsonResult getRecommend(){
+
+    @GetMapping(value = "/recommend")
+    public JsonResult getRecommend() {
         try {
             long sum = goodsService.countGoods();
-            int[] random = randomCommon(0, (int) sum, 12);
+            int n = 1;
+            if (sum > 2) {
+                n = 1;
+            } else {
+                n = (int) sum;
+            }
+            HashSet<Integer> set = new HashSet<Integer>();
+
+            randomCommon(1, (int) sum, n, set);
             List<GoodsModel> list = new ArrayList<GoodsModel>();
-            for (int i : random) {
-                Goods goods=goodsService.findByid(i);
-                    GoodsModel goodsModel=new GoodsModel();
-                    goodsModel.setStoreid(goods.getStoreid());
-                    goodsModel.setGoodsName(goods.getGoodsname());
-                    goodsModel.setSoldamount(goods.getSoldamount());
-                    goodsModel.setPrice(goods.getMarketprive());
-                    goodsModel.setStorename(goods.getShop());
-                    goodsModel.setMemberprice(goods.getMemberprice());
-                    goodsModel.setGoodsSum(goods.getGoodssum());
-                    goodsModel.setImageaddress(goodsImageService.findimage(goods.getId()));
-                    goodsModel.setContent(goodsDetailService.findByGoodsid(goods.getId()).getContent());
-                    goodsModel.setId(goods.getId());
+            for (int i : set) {
+                Goods goods = goodsService.findByid(i);
+                GoodsModel goodsModel = new GoodsModel();
+                goodsModel.setStoreid(goods.getStoreid());
+                goodsModel.setGoodsName(goods.getGoodsname());
+                goodsModel.setSoldamount(goods.getSoldamount());
+                goodsModel.setPrice(goods.getMarketprive());
+                goodsModel.setStorename(goods.getShop());
+                goodsModel.setMemberprice(goods.getMemberprice());
+                goodsModel.setGoodsSum(goods.getGoodssum());
+                List<String> iamgeurl = null;
+                try {
+                    iamgeurl = goodsImageService.findimage(goods.getId());
+                } catch (Exception e) {
+                    iamgeurl = null;
+                }
+                goodsModel.setImageaddress(iamgeurl);
+                String content = null;
+                try {
+                    content = goodsDetailService.findByGoodsid(goods.getId()).getContent();
+                } catch (Exception e) {
+                    content = "";
+                }
+                goodsModel.setContent(content);
+                goodsModel.setId(goods.getId());
                 list.add(goodsModel);
             }
-            return new JsonResult("200",list);
-        }catch (Exception e){
-            return  new JsonResult("500",e.getMessage());
+            return new JsonResult("200", list);
+        } catch (Exception e) {
+            return new JsonResult("500", e.getMessage());
         }
     }
-//    去重算法
-public static int[] randomCommon(int min, int max, int n){
-    if (n > (max - min + 1) || max < min) {
-        return null;
-    }
-    int[] result = new int[n];
-    int count = 0;
-    while(count < n) {
-        int num = (int) (Math.random() * (max - min)) + min;
-        boolean flag = true;
-        for (int j = 0; j < n; j++) {
-            if(num == result[j]){
-                flag = false;
-                break;
-            }
+
+    //    去重算法
+    public void randomCommon(int min, int max, int n, HashSet<Integer> set) {
+        if (n > (max - min + 1) || max < min) {
         }
-        if(flag){
-            result[count] = num;
-            count++;
+        for (int i = 0; i < n; i++) {
+            // 调用Math.random()方法
+            int num = (int) (Math.random() * (max - min)) + min;
+            set.add(num);// 将不同的数存入HashSet中
         }
+        int setSize = set.size();
+        // 如果存入的数小于指定生成的个数，则调用递归再生成剩余个数的随机数，如此循环，直到达到指定大小
+        if (setSize < n) {
+            randomCommon(min, max, n - setSize, set);// 递归
+        }
+
+
     }
-    return result;
-}
-
-
-
 }

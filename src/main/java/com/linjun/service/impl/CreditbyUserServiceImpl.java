@@ -16,7 +16,7 @@ public class CreditbyUserServiceImpl implements CreditByUserService{
     CreditbyuserMapper creditbyuserMapper;
     @Override
     public Creditbyuser add(Creditbyuser creditbyuser) {
-        long result=creditbyuserMapper.updateByPrimaryKeySelective(creditbyuser);
+        long result=creditbyuserMapper.insertSelective(creditbyuser);
         if (result>0){
             return creditbyuserMapper.selectByPrimaryKey(result);
         }else {
@@ -34,6 +34,5 @@ public class CreditbyUserServiceImpl implements CreditByUserService{
         }else {
             throw new PeopleException("数据为空");
         }
-
     }
 }
