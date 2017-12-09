@@ -11,6 +11,7 @@ import com.linjun.pojo.GoodsModel;
 import com.linjun.pojo.Ordermodel;
 import com.linjun.service.*;
 
+import com.sun.javafx.binding.StringFormatter;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -499,6 +500,28 @@ public class UserController {
          }
 
     }
+//    判断该商品是否已添加收藏
+    @GetMapping(value ="/iscollect")
+    public  JsonResult iscollect(
+            @RequestParam(value = "userid")Long userid,
+            @RequestParam(value = "goodsid")Long goodsid
+
+    ){
+          try{
+
+             Collect collect=new Collect();
+             collect.setUserid(userid);
+             collect.setGoodsid(goodsid);
+             Collect collect1=collectService.isExit(collect);
+              return  new JsonResult("200",collect1);
+          }catch (Exception e){
+              return  new JsonResult("500",e.getMessage());
+          }
+    }
+
+
+
+
 //获取收藏列表
     @GetMapping(value = "/getcollect")
     public  JsonResult getCollect(
@@ -510,17 +533,23 @@ public class UserController {
            List<GoodsModel> list=new ArrayList<GoodsModel>();
            for (Collect data:collect) {
                GoodsModel goodsModel=new GoodsModel();
-
-               goodsModel.setGoodsName(goodsService.findByid(data.getGoodsid()).getGoodsname());
+               Goods goods=goodsService.findByid(data.getGoodsid());
+               goodsModel.setGoodsName(goods.getGoodsname());
                goodsModel.setImageaddress(goodsImageService.findimage(data.getGoodsid()));
-               goodsModel.setSoldamount(goodsService.findByid(data.getGoodsid()).getSoldamount());
-               goodsModel.setStorename(goodsService.findByid(data.getGoodsid()).getShop());
-               goodsModel.setPrice(goodsService.findByid(data.getGoodsid()).getMarketprive());
-               goodsModel.setMemberprice(goodsService.findByid(data.getGoodsid()).getMemberprice());
+               goodsModel.setSoldamount(goods.getSoldamount());
+               goodsModel.setStorename(goods.getShop());
+               goodsModel.setPrice(goods.getMarketprive());
+               goodsModel.setMemberprice(goods.getMemberprice());
                goodsModel.setId(data.getId());
-               goodsModel.setStoreid(goodsService.findByid(data.getGoodsid()).getStoreid());
-               goodsModel.setGoodsSum(goodsService.findByid(data.getGoodsid()).getGoodssum());
-               goodsModel.setContent(goodsDetailService.findByGoodsid(data.getGoodsid()).getContent());
+               goodsModel.setStoreid(goods.getStoreid());
+               goodsModel.setGoodsSum(goods.getGoodssum());
+               String content=null;
+               try{
+                   content=goodsDetailService.findByGoodsid(data.getGoodsid()).getContent();
+               }catch (Exception e){
+                   content="";
+               }
+               goodsModel.setContent(content);
                list.add(goodsModel);
            }
           return  new JsonResult("200",list);
@@ -539,7 +568,8 @@ public class UserController {
             return new JsonResult("500",e.getMessage());
         }
     }
-     @PostMapping(value ="/addcollect")
+//    添加收藏
+     @GetMapping(value ="/addcollect")
     public JsonResult addcollect(
             @RequestParam(value = "userid")Long userid,
             @RequestParam(value = "goodsid")Long goodsid

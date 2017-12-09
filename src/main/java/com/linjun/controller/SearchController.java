@@ -395,18 +395,32 @@ public class SearchController {
         List<Goods> list=goodsService.searchgoods(conditions);
             List<GoodsModel> goodslist=new ArrayList<GoodsModel>();
             for (Goods data:list) {
-                GoodsModel goodsModel=new GoodsModel();
-                goodsModel.setContent(goodsDetailService.findByGoodsid(data.getId()).getContent());
-                goodsModel.setGoodsSum(data.getGoodssum());
-                goodsModel.setId(data.getId());
-                goodsModel.setMemberprice(data.getMemberprice());
+                GoodsModel goodsModel = new GoodsModel();
+                goodsModel.setStoreid(data.getStoreid());
+                goodsModel.setGoodsName(data.getGoodsname());
+                goodsModel.setSoldamount(data.getSoldamount());
                 goodsModel.setPrice(data.getMarketprive());
                 goodsModel.setStorename(data.getShop());
-                goodsModel.setSoldamount(data.getSoldamount());
-                goodsModel.setGoodsName(data.getGoodsname());
+                goodsModel.setMemberprice(data.getMemberprice());
+                goodsModel.setGoodsSum(data.getGoodssum());
+                List<String> iamgeurl = null;
+                try {
+                    iamgeurl = goodsImageService.findimage(data.getId());
+                } catch (Exception e) {
+                    iamgeurl = null;
+                }
+                goodsModel.setImageaddress(iamgeurl);
+                String content = null;
+                try {
+                    content = goodsDetailService.findByGoodsid(data.getId()).getContent();
+                } catch (Exception e) {
+                    content = "";
+                }
+                goodsModel.setContent(content);
+                goodsModel.setId(data.getId());
                 goodslist.add(goodsModel);
             }
-            return new JsonResult("200",list);
+            return new JsonResult("200",goodslist);
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());
         }

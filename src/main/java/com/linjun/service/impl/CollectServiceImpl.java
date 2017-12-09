@@ -45,4 +45,19 @@ public class CollectServiceImpl implements CollectService {
            throw new PeopleException("获取数据失败");
         }
     }
+
+    @Override
+    public Collect isExit(Collect collect) {
+        CollectCriteria collectCriteria=new CollectCriteria();
+        CollectCriteria.Criteria criteria=collectCriteria.createCriteria();
+        criteria.andUseridEqualTo(collect.getUserid());
+        criteria.andGoodsidEqualTo(collect.getGoodsid());
+        List<Collect> list=collectMapper.selectByExample(collectCriteria);
+        if (list!=null&&list.size()>0){
+            return list.get(0);
+        }else {
+            throw  new PeopleException("数据为空");
+        }
+
+    }
 }

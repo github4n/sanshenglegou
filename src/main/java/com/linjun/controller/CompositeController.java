@@ -27,7 +27,7 @@ public class CompositeController {
     @GetMapping(value = "/index")
     public JsonResult getfish(@RequestParam(value = "goodstype") long goodstype){
         try {
-            List<Goods> goodsList = goodsService.findBystoreid(goodstype);
+            List<Goods> goodsList = goodsService.gettypeGoods(goodstype);
             List<GoodsModel> goodsModelList = new ArrayList<GoodsModel>();
             for (Goods goods : goodsList) {
                 GoodsModel goodsModel=new GoodsModel();
@@ -38,8 +38,20 @@ public class CompositeController {
                 goodsModel.setStorename(goods.getShop());
                 goodsModel.setMemberprice(goods.getMemberprice());
                 goodsModel.setGoodsSum(goods.getGoodssum());
-                goodsModel.setImageaddress(goodsImageService.findimage(goods.getId()));
-                goodsModel.setContent(goodsDetailService.findByGoodsid(goods.getId()).getContent());
+                List<String> imageurl=new ArrayList<String>();
+                try{
+                    imageurl=goodsImageService.findimage(goods.getId());
+                }catch (Exception e){
+                   imageurl= null;
+                }
+                goodsModel.setImageaddress(imageurl);
+                String content=null;
+                try{
+                    content=goodsDetailService.findByGoodsid(goods.getId()).getContent();
+                }catch (Exception e){
+                    content="";
+                }
+                goodsModel.setContent(content);
                 goodsModel.setId(goods.getId());
                 goodsModelList.add(goodsModel);
             }

@@ -614,17 +614,29 @@ public JsonResult addGoods(
                      List<Goods> goodslist=goodsService.findBystoreid(storeid);
                     List<GoodsModel> list=new ArrayList<GoodsModel>();
                     for (Goods data:goodslist) {
-                        GoodsModel goodsModel=new GoodsModel();
-                        goodsModel.setGoodsName(goodsService.findByid(data.getId()).getGoodsname());
-                        goodsModel.setImageaddress(goodsImageService.findimage(data.getId()));
-                        goodsModel.setSoldamount(goodsService.findByid(data.getId()).getSoldamount());
-                        goodsModel.setStorename(goodsService.findByid(data.getId()).getShop());
-                        goodsModel.setPrice(goodsService.findByid(data.getId()).getMarketprive());
-                        goodsModel.setMemberprice(goodsService.findByid(data.getId()).getMemberprice());
+                        GoodsModel goodsModel = new GoodsModel();
+                        goodsModel.setStoreid(data.getStoreid());
+                        goodsModel.setGoodsName(data.getGoodsname());
+                        goodsModel.setSoldamount(data.getSoldamount());
+                        goodsModel.setPrice(data.getMarketprive());
+                        goodsModel.setStorename(data.getShop());
+                        goodsModel.setMemberprice(data.getMemberprice());
+                        goodsModel.setGoodsSum(data.getGoodssum());
+                        List<String> iamgeurl = null;
+                        try {
+                            iamgeurl = goodsImageService.findimage(data.getId());
+                        } catch (Exception e) {
+                            iamgeurl = null;
+                        }
+                        goodsModel.setImageaddress(iamgeurl);
+                        String content = null;
+                        try {
+                            content = goodsDetailService.findByGoodsid(data.getId()).getContent();
+                        } catch (Exception e) {
+                            content = "";
+                        }
+                        goodsModel.setContent(content);
                         goodsModel.setId(data.getId());
-                        goodsModel.setStoreid(goodsService.findByid(data.getId()).getStoreid());
-                        goodsModel.setGoodsSum(goodsService.findByid(data.getId()).getGoodssum());
-                        goodsModel.setContent(goodsDetailService.findByGoodsid(data.getId()).getContent());
                         list.add(goodsModel);}
                     return  new JsonResult("200",list);
                 }catch (Exception e){
