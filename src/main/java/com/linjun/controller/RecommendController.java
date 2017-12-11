@@ -8,7 +8,6 @@ import com.linjun.service.GoodsImageService;
 import com.linjun.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ public class RecommendController {
         try {
             long sum = goodsService.countGoods();
             int n = 1;
+
             if (sum > 2) {
                 n = 1;
             } else {

@@ -1,7 +1,6 @@
 package com.linjun.controller;
 
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+
 import com.linjun.common.JsonResult;
 import com.linjun.config.ImageConfig;
 import com.linjun.config.QiNiuconfig;
@@ -13,17 +12,13 @@ import com.qiniu.common.Zone;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
-import com.qiniu.util.Json;
-import io.swagger.models.auth.In;
-import org.mapstruct.TargetType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sound.sampled.Line;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController

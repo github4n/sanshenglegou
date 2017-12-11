@@ -1,9 +1,8 @@
 package com.linjun.controller;
 
 import com.linjun.common.JsonResult;
-import com.linjun.entity.PageBean;
 import com.linjun.model.Goods;
-import com.linjun.model.GoodsDetail;
+
 import com.linjun.pojo.GoodsModel;
 import com.linjun.service.GoodsDetailService;
 import com.linjun.service.GoodsImageService;

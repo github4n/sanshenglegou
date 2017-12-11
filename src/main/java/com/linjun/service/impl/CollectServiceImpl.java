@@ -7,7 +7,6 @@ import com.linjun.model.CollectCriteria;
 import com.linjun.service.CollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.plugin.javascript.JSClassLoader;
 
 import java.util.List;
 @Service

@@ -8,8 +8,6 @@ import com.linjun.entity.PageBean;
 import com.linjun.model.User;
 import com.linjun.model.UserCriteria;
 import com.linjun.service.UserService;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
