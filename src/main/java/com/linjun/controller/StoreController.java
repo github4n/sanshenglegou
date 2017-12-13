@@ -440,6 +440,7 @@ public JsonResult addGoods(
             @RequestParam(value = "pagesize",required = false)int pagesize
     ){
                 PageBean<Goods>  goodslist=goodsService.findBySID(storeID,page,pagesize);
+                System.out.println(goodslist);
              List<GoodsList> goodsLists=new ArrayList<GoodsList>();
        try {
            for (Goods data : goodslist.getList()) {
@@ -459,8 +460,15 @@ public JsonResult addGoods(
                storedata.setMemberPrice(data.getMemberprice());
                storedata.setSoldamount(data.getSoldamount());
                storedata.setGoodsSum(data.getGoodssum());
-               SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-               storedata.setCreateTime(df.format(data.getCreatetime()));
+               String time=null;
+               try{
+                   SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                   time=df.format(data.getCreatetime());
+               }catch (Exception e){
+                   time=null;
+               }
+
+               storedata.setCreateTime(time);
                storedata.setTypeName(goodsTypeService.findById(data.getTypeid()).getTypename());
                goodsLists.add(storedata);
            }
@@ -601,9 +609,6 @@ public JsonResult addGoods(
                     return  new JsonResult("500",e.getMessage());
                 }
     }
-
-
-
 
 //  获取店铺信息
     @GetMapping(value = "/getstoreinfo")
