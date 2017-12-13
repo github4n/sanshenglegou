@@ -24,4 +24,5 @@ public interface StoreService {
     PageBean<Store> findShop(int currentpage,int pagesize);
     int changeList(List<Store> stores );
     int deleleList(List<Store> stores);
+    List<Store> getaddstore();
 }

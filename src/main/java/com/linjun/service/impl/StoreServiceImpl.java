@@ -254,7 +254,21 @@ if (temp==stores.size()){
 }else {
     throw  new PeopleException("批量删除失败");
 }
+    }
 
+    @Override
+    public List<Store> getaddstore() {
+
+        StoreCriteria storeCriteria=new StoreCriteria();
+        StoreCriteria.Criteria criteria=storeCriteria.createCriteria();
+        criteria.andIsauthEqualTo((byte) 1);
+        criteria.andTypeEqualTo((byte) 0);
+        List<Store> lists=storeMapper.selectByExample(storeCriteria);
+       if (lists!=null&&lists.size()>0){
+           return lists;
+       }else {
+           throw  new PeopleException("获取数据失败");
+       }
     }
 
 }

@@ -29,8 +29,8 @@ public class RecommendController {
             long sum = goodsService.countGoods();
             int n = 1;
 
-            if (sum > 2) {
-                n = 1;
+            if (sum > 6) {
+                n = 6;
             } else {
                 n = (int) sum;
             }

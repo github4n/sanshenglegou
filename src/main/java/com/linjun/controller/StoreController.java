@@ -7,6 +7,7 @@ import com.linjun.entity.PageBean;
 import com.linjun.model.*;
 import com.linjun.pojo.*;
 import com.linjun.service.*;
+import com.lly835.bestpay.rest.type.Get;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -574,7 +575,7 @@ public JsonResult addGoods(
            return  new JsonResult("200",logistics);
 
     }
-
+//获取时间
     @GetMapping(value = "/gettime")
     public JsonResult gettime() throws ParseException {
                 GoodsImage goodsImage=new GoodsImage();
@@ -590,6 +591,19 @@ public JsonResult addGoods(
                 goodsImageService.built(goodsImage);
                 return new JsonResult("200",goodsImage);
     }
+//获得所有的店铺列表
+    @GetMapping(value = "/getstorelist")
+    public JsonResult getstorelist(){
+                try{
+                    List<Store> list=storeService.getaddstore();
+                    return  new JsonResult("200",list);
+                }catch (Exception e){
+                    return  new JsonResult("500",e.getMessage());
+                }
+    }
+
+
+
 
 //  获取店铺信息
     @GetMapping(value = "/getstoreinfo")
@@ -647,7 +661,7 @@ public JsonResult addGoods(
     public JsonResult getrandomstore(){
         try{
             int sum = (int) storeService.countStore();
-            int n=1;
+            int n=0;
             if (sum>8){
                  n=6;
             }else {
@@ -655,10 +669,12 @@ public JsonResult addGoods(
             }
             HashSet<Integer> set = new HashSet<Integer>();
 
-              randomCommon(0, sum, n,set);
+              randomCommon(1, sum+1, n+1,set);
            List<Store> list = new ArrayList<Store>();
           for (int i : set) {
-                Store store=storeService.findByid(1);
+
+
+                Store store=storeService.findByid(i);
                 list.add(store);
            }
             return  new JsonResult("200",list);
