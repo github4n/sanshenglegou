@@ -440,14 +440,12 @@ public JsonResult addGoods(
             @RequestParam(value = "pagesize",required = false)int pagesize
     ){
                 PageBean<Goods>  goodslist=goodsService.findBySID(storeID,page,pagesize);
-                System.out.println(goodslist);
              List<GoodsList> goodsLists=new ArrayList<GoodsList>();
        try {
            for (Goods data : goodslist.getList()) {
                GoodsList storedata=new GoodsList();
                storedata.setId(data.getId());
                storedata.setGoodsName(data.getGoodsname());
-               System.out.println(data.getId());
                String a;
                try{
                     a=goodsImageService.findMainImage(data.getId()).getIamgeaddress();

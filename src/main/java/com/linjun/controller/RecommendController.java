@@ -36,7 +36,7 @@ public class RecommendController {
             }
             HashSet<Integer> set = new HashSet<Integer>();
 
-            randomCommon(1, (int) sum, n, set);
+            randomCommon(1, (int) sum+1, n+1, set);
             List<GoodsModel> list = new ArrayList<GoodsModel>();
             for (int i : set) {
                 Goods goods = goodsService.findByid(i);
