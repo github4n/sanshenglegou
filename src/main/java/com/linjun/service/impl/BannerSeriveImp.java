@@ -90,4 +90,17 @@ public class BannerSeriveImp implements BannerService {
             throw new PeopleException("添加失败");
         }
     }
+
+    @Override
+    public List<Banner> getbanner(byte type) {
+        BannerCriteria bannerCriteria=new BannerCriteria();
+        BannerCriteria.Criteria criteria=bannerCriteria.createCriteria();
+        criteria.andTypeEqualTo(type);
+        List<Banner> list=bannerMapper.selectByExample(bannerCriteria);
+        if (list!=null&&list.size()>0){
+            return list;
+        }else {
+            throw   new PeopleException("获取失败");
+        }
+    }
 }

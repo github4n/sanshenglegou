@@ -12,4 +12,5 @@ public interface BannerService {
  Long countbanner();
   int deletebanner(long id);
   Banner add(Banner banner);
+  List<Banner> getbanner(byte type);
 }

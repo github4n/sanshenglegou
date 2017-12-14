@@ -7,6 +7,8 @@ public class Banner {
 
     private Byte isstart;
 
+    private Byte type;
+
     public Long getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class Banner {
 
     public void setIsstart(Byte isstart) {
         this.isstart = isstart;
+    }
+
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
     }
 }

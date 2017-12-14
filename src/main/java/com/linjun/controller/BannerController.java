@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -44,6 +45,20 @@ public class BannerController {
       }
 
     }
+//    移动端banner图片
+    @GetMapping(value = "/gethome")
+    public JsonResult gethome(
+          @RequestParam(value = "type")byte type
+    ){
+        try{
+            List<Banner> list=bannerService.getbanner(type);
+            return new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
+
+
 //修改轮播图状态
     @PutMapping(value ="/updateBanner")
     public  JsonResult updateBanner(
@@ -52,8 +67,6 @@ public class BannerController {
           try {
               Banner banner1=bannerService.update(banner);
               return  new JsonResult("200",banner1);
-
-
           }catch (Exception e){
               return  new JsonResult("500",e.getMessage());
           }

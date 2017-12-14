@@ -23,6 +23,10 @@ public class Goods {
 
     private Long soldamount;
 
+    private Byte iscredits;
+
+    private Long credit;
+
     private Byte isstart;
 
     private Date createtime;
@@ -105,6 +109,22 @@ public class Goods {
 
     public void setSoldamount(Long soldamount) {
         this.soldamount = soldamount;
+    }
+
+    public Byte getIscredits() {
+        return iscredits;
+    }
+
+    public void setIscredits(Byte iscredits) {
+        this.iscredits = iscredits;
+    }
+
+    public Long getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Long credit) {
+        this.credit = credit;
     }
 
     public Byte getIsstart() {

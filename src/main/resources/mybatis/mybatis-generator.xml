@@ -264,5 +264,21 @@
 		>
 			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
 		</table>
+		<table tableName="t_suggest"
+			   domainObjectName="Suggest" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
+		<table tableName="t_rate"
+			   domainObjectName="Rate" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
 	</context>
 </generatorConfiguration>  

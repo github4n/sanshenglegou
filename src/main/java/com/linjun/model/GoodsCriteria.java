@@ -725,6 +725,126 @@ public class GoodsCriteria {
             return (Criteria) this;
         }
 
+        public Criteria andIscreditsIsNull() {
+            addCriterion("iscredits is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsIsNotNull() {
+            addCriterion("iscredits is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsEqualTo(Byte value) {
+            addCriterion("iscredits =", value, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsNotEqualTo(Byte value) {
+            addCriterion("iscredits <>", value, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsGreaterThan(Byte value) {
+            addCriterion("iscredits >", value, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsGreaterThanOrEqualTo(Byte value) {
+            addCriterion("iscredits >=", value, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsLessThan(Byte value) {
+            addCriterion("iscredits <", value, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsLessThanOrEqualTo(Byte value) {
+            addCriterion("iscredits <=", value, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsIn(List<Byte> values) {
+            addCriterion("iscredits in", values, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsNotIn(List<Byte> values) {
+            addCriterion("iscredits not in", values, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsBetween(Byte value1, Byte value2) {
+            addCriterion("iscredits between", value1, value2, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andIscreditsNotBetween(Byte value1, Byte value2) {
+            addCriterion("iscredits not between", value1, value2, "iscredits");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditIsNull() {
+            addCriterion("credit is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditIsNotNull() {
+            addCriterion("credit is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditEqualTo(Long value) {
+            addCriterion("credit =", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditNotEqualTo(Long value) {
+            addCriterion("credit <>", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditGreaterThan(Long value) {
+            addCriterion("credit >", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditGreaterThanOrEqualTo(Long value) {
+            addCriterion("credit >=", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditLessThan(Long value) {
+            addCriterion("credit <", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditLessThanOrEqualTo(Long value) {
+            addCriterion("credit <=", value, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditIn(List<Long> values) {
+            addCriterion("credit in", values, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditNotIn(List<Long> values) {
+            addCriterion("credit not in", values, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditBetween(Long value1, Long value2) {
+            addCriterion("credit between", value1, value2, "credit");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreditNotBetween(Long value1, Long value2) {
+            addCriterion("credit not between", value1, value2, "credit");
+            return (Criteria) this;
+        }
+
         public Criteria andIsstartIsNull() {
             addCriterion("isstart is null");
             return (Criteria) this;

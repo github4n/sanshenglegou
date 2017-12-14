@@ -12,6 +12,8 @@
     <result column="storeID" jdbcType="BIGINT" property="storeid" />
     <result column="shop" jdbcType="VARCHAR" property="shop" />
     <result column="soldamount" jdbcType="BIGINT" property="soldamount" />
+    <result column="iscredits" jdbcType="TINYINT" property="iscredits" />
+    <result column="credit" jdbcType="BIGINT" property="credit" />
     <result column="isstart" jdbcType="TINYINT" property="isstart" />
     <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
   </resultMap>
@@ -75,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, goodsName, TypeID, goodsSum, marketPrive, memberPrice, sendCredit, storeID, shop, 
-    soldamount, isstart, createTime
+    soldamount, iscredits, credit, isstart, createTime
   </sql>
   <select id="selectByExample" parameterType="com.linjun.model.GoodsCriteria" resultMap="BaseResultMap">
     select
@@ -115,11 +117,13 @@
     insert into t_goods (goodsName, TypeID, goodsSum, 
       marketPrive, memberPrice, sendCredit, 
       storeID, shop, soldamount, 
-      isstart, createTime)
+      iscredits, credit, isstart, 
+      createTime)
     values (#{goodsname,jdbcType=VARCHAR}, #{typeid,jdbcType=BIGINT}, #{goodssum,jdbcType=BIGINT}, 
       #{marketprive,jdbcType=REAL}, #{memberprice,jdbcType=REAL}, #{sendcredit,jdbcType=INTEGER}, 
       #{storeid,jdbcType=BIGINT}, #{shop,jdbcType=VARCHAR}, #{soldamount,jdbcType=BIGINT}, 
-      #{isstart,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP})
+      #{iscredits,jdbcType=TINYINT}, #{credit,jdbcType=BIGINT}, #{isstart,jdbcType=TINYINT}, 
+      #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.linjun.model.Goods">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
@@ -153,6 +157,12 @@
       </if>
       <if test="soldamount != null">
         soldamount,
+      </if>
+      <if test="iscredits != null">
+        iscredits,
+      </if>
+      <if test="credit != null">
+        credit,
       </if>
       <if test="isstart != null">
         isstart,
@@ -188,6 +198,12 @@
       </if>
       <if test="soldamount != null">
         #{soldamount,jdbcType=BIGINT},
+      </if>
+      <if test="iscredits != null">
+        #{iscredits,jdbcType=TINYINT},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=BIGINT},
       </if>
       <if test="isstart != null">
         #{isstart,jdbcType=TINYINT},
@@ -236,6 +252,12 @@
       <if test="record.soldamount != null">
         soldamount = #{record.soldamount,jdbcType=BIGINT},
       </if>
+      <if test="record.iscredits != null">
+        iscredits = #{record.iscredits,jdbcType=TINYINT},
+      </if>
+      <if test="record.credit != null">
+        credit = #{record.credit,jdbcType=BIGINT},
+      </if>
       <if test="record.isstart != null">
         isstart = #{record.isstart,jdbcType=TINYINT},
       </if>
@@ -259,6 +281,8 @@
       storeID = #{record.storeid,jdbcType=BIGINT},
       shop = #{record.shop,jdbcType=VARCHAR},
       soldamount = #{record.soldamount,jdbcType=BIGINT},
+      iscredits = #{record.iscredits,jdbcType=TINYINT},
+      credit = #{record.credit,jdbcType=BIGINT},
       isstart = #{record.isstart,jdbcType=TINYINT},
       createTime = #{record.createtime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -295,6 +319,12 @@
       <if test="soldamount != null">
         soldamount = #{soldamount,jdbcType=BIGINT},
       </if>
+      <if test="iscredits != null">
+        iscredits = #{iscredits,jdbcType=TINYINT},
+      </if>
+      <if test="credit != null">
+        credit = #{credit,jdbcType=BIGINT},
+      </if>
       <if test="isstart != null">
         isstart = #{isstart,jdbcType=TINYINT},
       </if>
@@ -325,6 +355,8 @@
       storeID = #{storeid,jdbcType=BIGINT},
       shop = #{shop,jdbcType=VARCHAR},
       soldamount = #{soldamount,jdbcType=BIGINT},
+      iscredits = #{iscredits,jdbcType=TINYINT},
+      credit = #{credit,jdbcType=BIGINT},
       isstart = #{isstart,jdbcType=TINYINT},
       createTime = #{createtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
