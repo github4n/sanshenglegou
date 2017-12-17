@@ -5,6 +5,7 @@ import com.linjun.config.ImageConfig;
 import com.linjun.config.QiNiuconfig;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
+import com.linjun.pojo.GoodsModel;
 import com.linjun.service.*;
 import com.lly835.bestpay.rest.type.Get;
 import com.qiniu.common.Zone;
@@ -85,11 +86,81 @@ public class CreditGoodsController {
         }
     }
 
-//时间排序
+//销量排序
+  @GetMapping(value = "/getsortsoleCredit")
+  public  JsonResult getsortsoleCredit(){
+        try{
+            List<Creditgoods> list=creditGoodsService.findall();
+            Collections.sort(list,new SortBySole());
+            return  new JsonResult("200",list);
+        }catch (Exception e){
+         return  new JsonResult("500",e.getMessage());
+        }
+  }
+    //价格从低到高排序
+    @GetMapping(value = "/getsortpsCredit")
+    public  JsonResult getsortpsCredit(){
+        try{
+            List<Creditgoods> list=creditGoodsService.findall();
+            Collections.sort(list,new SortByPrices());
+            return  new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
+
+    //价格从高到底排序
+    @GetMapping(value = "/getsortpbCredit")
+    public  JsonResult getsortpbCredit(){
+        try{
+            List<Creditgoods> list=creditGoodsService.findall();
+            Collections.sort(list,new SortByPriceb());
+            return  new JsonResult("200",list);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
 
 
+  class  SortBySole implements Comparator{
 
+      @Override
+      public int compare(Object o1, Object o2) {
+          Creditgoods goodsModel1=(Creditgoods) o1;
+          Creditgoods goodsModel2=(Creditgoods) o2;
+          if (goodsModel1.getSoldamount()<goodsModel2.getSoldamount()){
+              return 1;
+          }else {
+              return -1;
+          }
+      }
+  }
+    class  SortByPrices implements Comparator{
 
+        @Override
+        public int compare(Object o1, Object o2) {
+            Creditgoods goodsModel1=(Creditgoods) o1;
+            Creditgoods goodsModel2=(Creditgoods) o2;
+            if (goodsModel1.getPrice()>goodsModel2.getPrice()){
+                return 1;
+            }else {
+                return -1;
+            }
+        }
+    }
+    class  SortByPriceb implements Comparator{
+
+        @Override
+        public int compare(Object o1, Object o2) {
+            Creditgoods goodsModel1=(Creditgoods) o1;
+            Creditgoods goodsModel2=(Creditgoods) o2;
+            if (goodsModel1.getPrice()<goodsModel2.getPrice()){
+                return 1;
+            }else {
+                return -1;
+            }
+        }
+    }
 
 
 //    更新积分商品
