@@ -663,6 +663,188 @@ public class UserController {
                     return new JsonResult("500",e.getMessage());
                 }
     }
+//商品销量排序
+@GetMapping(value = "/getyiwugoodsSortSale")
+public JsonResult getyiwugoodsSortSale(
+){
+    try{
+        List<Goods> goodsList = goodsService.gettypeGoods(23);
+        List<GoodsModel> goodsModelList = new ArrayList<GoodsModel>();
+        for (Goods goods : goodsList) {
+            GoodsModel goodsModel=new GoodsModel();
+            goodsModel.setStoreid(goods.getStoreid());
+            goodsModel.setGoodsName(goods.getGoodsname());
+            goodsModel.setSoldamount(goods.getSoldamount());
+            goodsModel.setPrice(goods.getMarketprive());
+            goodsModel.setStorename(goods.getShop());
+            goodsModel.setMemberprice(goods.getMemberprice());
+            goodsModel.setGoodsSum(goods.getGoodssum());
+            goodsModel.setIscredits(goods.getIscredits());
+            goodsModel.setCredit(goods.getCredit());
+            List<String> imageurl=new ArrayList<String>();
+            try{
+                imageurl=goodsImageService.findimage(goods.getId());
+            }catch (Exception e){
+                imageurl= null;
+            }
+            goodsModel.setImageaddress(imageurl);
+            String content=null;
+            try{
+                content=goodsDetailService.findByGoodsid(goods.getId()).getContent();
+            }catch (Exception e){
+                content="";
+            }
+            goodsModel.setContent(content);
+            goodsModel.setId(goods.getId());
+            goodsModelList.add(goodsModel);
+        }
+
+
+        Collections.sort(goodsModelList,new SortBySole());
+        return new JsonResult("200", goodsModelList);
+
+
+    }catch (Exception e){
+        return new JsonResult("500",e.getMessage());
+    }
+}
+
+    //商品价格从低到高排序
+    @GetMapping(value = "/getyiwugoodsSortPrices")
+    public JsonResult getyiwugoodsSortPrices(
+    ){
+        try{
+            List<Goods> goodsList = goodsService.gettypeGoods(23);
+            List<GoodsModel> goodsModelList = new ArrayList<GoodsModel>();
+            for (Goods goods : goodsList) {
+                GoodsModel goodsModel=new GoodsModel();
+                goodsModel.setStoreid(goods.getStoreid());
+                goodsModel.setGoodsName(goods.getGoodsname());
+                goodsModel.setSoldamount(goods.getSoldamount());
+                goodsModel.setPrice(goods.getMarketprive());
+                goodsModel.setStorename(goods.getShop());
+                goodsModel.setMemberprice(goods.getMemberprice());
+                goodsModel.setGoodsSum(goods.getGoodssum());
+                goodsModel.setIscredits(goods.getIscredits());
+                goodsModel.setCredit(goods.getCredit());
+                List<String> imageurl=new ArrayList<String>();
+                try{
+                    imageurl=goodsImageService.findimage(goods.getId());
+                }catch (Exception e){
+                    imageurl= null;
+                }
+                goodsModel.setImageaddress(imageurl);
+                String content=null;
+                try{
+                    content=goodsDetailService.findByGoodsid(goods.getId()).getContent();
+                }catch (Exception e){
+                    content="";
+                }
+                goodsModel.setContent(content);
+                goodsModel.setId(goods.getId());
+                goodsModelList.add(goodsModel);
+            }
+
+
+            Collections.sort(goodsModelList,new SortByPrices());
+            return new JsonResult("200", goodsModelList);
+
+
+        }catch (Exception e){
+            return new JsonResult("500",e.getMessage());
+        }
+    }
+
+
+    //商品价格从高到底排序
+    @GetMapping(value = "/getyiwugoodsSortPriceb")
+    public JsonResult getyiwugoodsSortPriceb(
+    ){
+        try{
+            List<Goods> goodsList = goodsService.gettypeGoods(23);
+            List<GoodsModel> goodsModelList = new ArrayList<GoodsModel>();
+            for (Goods goods : goodsList) {
+                GoodsModel goodsModel=new GoodsModel();
+                goodsModel.setStoreid(goods.getStoreid());
+                goodsModel.setGoodsName(goods.getGoodsname());
+                goodsModel.setSoldamount(goods.getSoldamount());
+                goodsModel.setPrice(goods.getMarketprive());
+                goodsModel.setStorename(goods.getShop());
+                goodsModel.setMemberprice(goods.getMemberprice());
+                goodsModel.setGoodsSum(goods.getGoodssum());
+                goodsModel.setIscredits(goods.getIscredits());
+                goodsModel.setCredit(goods.getCredit());
+                List<String> imageurl=new ArrayList<String>();
+                try{
+                    imageurl=goodsImageService.findimage(goods.getId());
+                }catch (Exception e){
+                    imageurl= null;
+                }
+                goodsModel.setImageaddress(imageurl);
+                String content=null;
+                try{
+                    content=goodsDetailService.findByGoodsid(goods.getId()).getContent();
+                }catch (Exception e){
+                    content="";
+                }
+                goodsModel.setContent(content);
+                goodsModel.setId(goods.getId());
+                goodsModelList.add(goodsModel);
+            }
+
+
+            Collections.sort(goodsModelList,new SortByPriceb());
+            return new JsonResult("200", goodsModelList);
+
+
+        }catch (Exception e){
+            return new JsonResult("500",e.getMessage());
+        }
+    }
+
+
+
+    class  SortBySole implements Comparator{
+
+        @Override
+        public int compare(Object o1, Object o2) {
+            GoodsModel goodsModel1=(GoodsModel) o1;
+            GoodsModel goodsModel2=(GoodsModel) o2;
+            if (goodsModel1.getSoldamount()<goodsModel2.getSoldamount()){
+                return 1;
+            }else {
+                return -1;
+            }
+        }
+    }
+    class  SortByPrices implements Comparator{
+
+        @Override
+        public int compare(Object o1, Object o2) {
+            GoodsModel goodsModel1=(GoodsModel) o1;
+            GoodsModel goodsModel2=(GoodsModel) o2;
+            if (goodsModel1.getPrice()>goodsModel2.getPrice()){
+                return 1;
+            }else {
+                return -1;
+            }
+        }
+    }
+    class  SortByPriceb implements Comparator{
+
+        @Override
+        public int compare(Object o1, Object o2) {
+            GoodsModel goodsModel1=(GoodsModel) o1;
+            GoodsModel goodsModel2=(GoodsModel) o2;
+            if (goodsModel1.getPrice()<goodsModel2.getPrice()){
+                return 1;
+            }else {
+                return -1;
+            }
+        }
+    }
+
+
 
 
 }
