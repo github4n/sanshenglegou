@@ -1,14 +1,8 @@
 package com.linjun.service.impl;
 
 import com.linjun.common.domain.PeopleException;
-import com.linjun.dao.CreditDetailMapper;
-import com.linjun.dao.CreditMangerMapper;
-import com.linjun.dao.CreditbyuserMapper;
-import com.linjun.dao.CreditgoodsMapper;
-import com.linjun.model.CreditDetail;
-import com.linjun.model.CreditManger;
-import com.linjun.model.Creditbyuser;
-import com.linjun.model.Creditgoods;
+import com.linjun.dao.*;
+import com.linjun.model.*;
 import com.linjun.service.DoTransactionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +19,10 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
     CreditbyuserMapper creditbyuserMapper;
   @Autowired
     CreditgoodsMapper creditgoodsMapper;
-
-
+ @Autowired
+    GoodsMapper goodsMapper;
+ @Autowired
+ OrderMapper orderMapper;
 
     @Override
     public int buycreditGoods(Creditbyuser creditbyuser, CreditManger creditManger, Creditgoods creditgoods, CreditDetail creditDetail) {
@@ -51,6 +47,22 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
        }else {
            throw new PeopleException("失败");
        }
+
+    }
+
+    @Override
+    public int buyGood(Goods goods, Order order) {
+        int result=goodsMapper.updateByPrimaryKeySelective(goods);
+        int result1=orderMapper.insertSelective(order);
+        if (result>0){
+            if (result1>0){
+                return 1;
+            }else {
+                throw  new PeopleException("失败");
+            }
+        }else {
+            throw new PeopleException("失败");
+        }
 
     }
 }

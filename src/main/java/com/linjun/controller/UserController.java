@@ -62,6 +62,8 @@ public class UserController {
     ShoppingcartService shoppingcartService;
     @Autowired
     CreditDetialService creditDetialService;
+@Autowired
+DoTransactionalService doTransactionalService;
 
 
 // 用户注册
@@ -218,6 +220,11 @@ public class UserController {
      Date date=sdf2.parse(b);
     order.setCreatetime(date);
      Goods goods=goodsService.findByid(goodsid);
+     long seldsum=goods.getSoldamount();
+     Goods goods1=new Goods();
+goods1.setSoldamount(seldsum-1);
+goods1.setId(goods.getId());
+goods1.setGoodssum((long)goodsum-1);
      order.setGoodsname(goods.getGoodsname());
      Float marketprice=goods.getMarketprive();
       order.setMarketpricce(marketprice);
@@ -233,8 +240,9 @@ public class UserController {
           pricesum=goodsum*memberprice;
       }
          order.setPricesum(pricesum);
-           Order order1=orderService.add(order);
-           return  new JsonResult("200",order);
+         int result=doTransactionalService.buyGood(goods1,order);
+
+           return  new JsonResult("200",result);
           }catch (Exception e){
            return  new JsonResult("500",e.getMessage());
           }
@@ -254,6 +262,9 @@ public class UserController {
              }
 
     }
+
+
+
 
 //加入购物车功能
   @PostMapping(value = "/creatshopping")

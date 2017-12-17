@@ -35,10 +35,9 @@ public class PayController {
                             Map<String, Object> map) {
         PayRequest request = new PayRequest();
         Random random = new Random();
-
         //支付请求参数
         request.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
-        request.setOrderId(String.valueOf(random.nextInt(1000000000)));
+        request.setOrderId(String.valueOf(random.nextInt(100000000)));
         request.setOrderAmount(0.01);
         request.setOrderName("最好的支付sdk");
         request.setOpenid(openid);
