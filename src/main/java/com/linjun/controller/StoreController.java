@@ -251,7 +251,8 @@ public class StoreController {
             @RequestParam(value = "marketprive") float marketPrive,
             @RequestParam(value = "memberprive") float memberPrive,
             @RequestParam(value = "storeid") long storeID,
-            @RequestParam(value = "content")String content
+            @RequestParam(value = "content")String content,
+            @RequestParam(value = "credit")long credit
             ) throws ParseException {
 
         System.out.println(goodsName);
@@ -262,6 +263,8 @@ public class StoreController {
           goods.setMarketprive(marketPrive);
           goods.setMemberprice(memberPrive);
           goods.setSoldamount((long) 0);
+          goods.setCredit(credit);
+
         String a= String.valueOf(new Date());
         SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
         SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

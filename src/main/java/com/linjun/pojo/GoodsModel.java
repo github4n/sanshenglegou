@@ -14,6 +14,24 @@ public class GoodsModel {
     private long goodsSum;
     private  String content;
    private  long storeid;
+    private byte  iscredits;
+    private  long credit;
+
+    public byte getIscredits() {
+        return iscredits;
+    }
+
+    public void setIscredits(byte iscredits) {
+        this.iscredits = iscredits;
+    }
+
+    public long getCredit() {
+        return credit;
+    }
+
+    public void setCredit(long credit) {
+        this.credit = credit;
+    }
 
     public long getStoreid() {
         return storeid;

@@ -37,6 +37,8 @@ public class CompositeController {
                 goodsModel.setStorename(goods.getShop());
                 goodsModel.setMemberprice(goods.getMemberprice());
                 goodsModel.setGoodsSum(goods.getGoodssum());
+                goodsModel.setIscredits(goods.getIscredits());
+                goodsModel.setCredit(goods.getCredit());
                 List<String> imageurl=new ArrayList<String>();
                 try{
                     imageurl=goodsImageService.findimage(goods.getId());

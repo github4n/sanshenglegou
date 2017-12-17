@@ -48,6 +48,8 @@ public class RecommendController {
                 goodsModel.setStorename(goods.getShop());
                 goodsModel.setMemberprice(goods.getMemberprice());
                 goodsModel.setGoodsSum(goods.getGoodssum());
+                goodsModel.setIscredits(goods.getIscredits());
+                goodsModel.setCredit(goods.getCredit());
                 List<String> iamgeurl = null;
                 try {
                     iamgeurl = goodsImageService.findimage(goods.getId());
@@ -70,7 +72,6 @@ public class RecommendController {
             return new JsonResult("500", e.getMessage());
         }
     }
-
     //    去重算法
     public void randomCommon(int min, int max, int n, HashSet<Integer> set) {
         if (n > (max - min + 1) || max < min) {

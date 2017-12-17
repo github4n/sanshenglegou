@@ -539,6 +539,8 @@ public class UserController {
                goodsModel.setId(data.getId());
                goodsModel.setStoreid(goods.getStoreid());
                goodsModel.setGoodsSum(goods.getGoodssum());
+               goodsModel.setIscredits(goods.getIscredits());
+               goodsModel.setCredit(goods.getCredit());
                String content=null;
                try{
                    content=goodsDetailService.findByGoodsid(data.getGoodsid()).getContent();
@@ -601,6 +603,8 @@ public class UserController {
                     goodsModel.setStorename(goods.getShop());
                     goodsModel.setMemberprice(goods.getMemberprice());
                     goodsModel.setGoodsSum(goods.getGoodssum());
+                    goodsModel.setIscredits(goods.getIscredits());
+                    goodsModel.setCredit(goods.getCredit());
                    goodsModel.setImageaddress(goodsImageService.findimage(goodsid));
                    String content=null;
                    try{
@@ -615,6 +619,49 @@ public class UserController {
                     return  new JsonResult("500",e.getMessage());
                 }
 
+    }
+//    获取易物商城数据
+    @GetMapping(value = "/getyiwugoods")
+    public JsonResult getyiwugoods(
+    ){
+                try{
+                    List<Goods> goodsList = goodsService.gettypeGoods(23);
+                    List<GoodsModel> goodsModelList = new ArrayList<GoodsModel>();
+                    for (Goods goods : goodsList) {
+                        GoodsModel goodsModel=new GoodsModel();
+                        goodsModel.setStoreid(goods.getStoreid());
+                        goodsModel.setGoodsName(goods.getGoodsname());
+                        goodsModel.setSoldamount(goods.getSoldamount());
+                        goodsModel.setPrice(goods.getMarketprive());
+                        goodsModel.setStorename(goods.getShop());
+                        goodsModel.setMemberprice(goods.getMemberprice());
+                        goodsModel.setGoodsSum(goods.getGoodssum());
+                        goodsModel.setIscredits(goods.getIscredits());
+                        goodsModel.setCredit(goods.getCredit());
+                        List<String> imageurl=new ArrayList<String>();
+                        try{
+                            imageurl=goodsImageService.findimage(goods.getId());
+                        }catch (Exception e){
+                            imageurl= null;
+                        }
+                        goodsModel.setImageaddress(imageurl);
+                        String content=null;
+                        try{
+                            content=goodsDetailService.findByGoodsid(goods.getId()).getContent();
+                        }catch (Exception e){
+                            content="";
+                        }
+                        goodsModel.setContent(content);
+                        goodsModel.setId(goods.getId());
+                        goodsModelList.add(goodsModel);
+                    }
+
+                    return new JsonResult("200", goodsModelList);
+
+
+                }catch (Exception e){
+                    return new JsonResult("500",e.getMessage());
+                }
     }
 
 

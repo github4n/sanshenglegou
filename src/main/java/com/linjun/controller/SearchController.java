@@ -415,6 +415,8 @@ public class SearchController {
                 goodsModel.setSoldamount(data.getSoldamount());
                 goodsModel.setPrice(data.getMarketprive());
                 goodsModel.setStorename(data.getShop());
+                goodsModel.setIscredits(data.getIscredits());
+                goodsModel.setCredit(data.getCredit());
                 goodsModel.setMemberprice(data.getMemberprice());
                 goodsModel.setGoodsSum(data.getGoodssum());
                 List<String> iamgeurl = null;
