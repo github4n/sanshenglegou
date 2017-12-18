@@ -280,5 +280,13 @@
 		>
 			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
 		</table>
+		<table tableName="t_creditorder"
+			   domainObjectName="Creditorder" enableCountByExample="true"
+			   enableUpdateByExample="true" enableDeleteByExample="true"
+			   enableSelectByExample="true"
+			   selectByExampleQueryId="true"
+		>
+			<generatedKey column="ID" sqlStatement="MySql" identity="true"/>
+		</table>
 	</context>
 </generatorConfiguration>  

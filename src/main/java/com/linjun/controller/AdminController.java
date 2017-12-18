@@ -57,7 +57,8 @@ public class AdminController {
      StoreApplyService storeApplyService;
      @Autowired
      WithDrawApplyService withDrawApplyService;
-
+     @Autowired
+     CreditOrderService creditOrderService;
 
 //    管理员登入
     @GetMapping(value = "/login")
@@ -251,9 +252,45 @@ public JsonResult login(@RequestParam(value = "id",required = false)long id
               }
     }
 
+//获取积分商品订单列表
+    @GetMapping(value = "/getcreditorder")
+    public  JsonResult getcreditorder(
+            @RequestParam(value = "page")int page,
+            @RequestParam(value = "pagesize") int pagesize
+    ){
+                try{
+                    PageBean<Creditorder> list=creditOrderService.findall(page,pagesize);
+                    List<AdminCreditOrder> creditorderslist=new ArrayList<AdminCreditOrder>();
+                    for (Creditorder data :list.getList()) {
+                        AdminCreditOrder adminCreditOrder=new AdminCreditOrder();
+                        adminCreditOrder.setId(data.getId());
+                        adminCreditOrder.setAddressid(data.getAddressid());
+                        adminCreditOrder.setGoodsid(data.getGoodsid());
+                        adminCreditOrder.setGoodsname(data.getGoodsname());
+                        adminCreditOrder.setIspay(data.getIspay());
+                        adminCreditOrder.setLogistics(data.getLogistics());
+                        adminCreditOrder.setUserid(data.getUserid());
+                        adminCreditOrder.setLogisticscode(data.getLogisticscode());
+                        adminCreditOrder.setPricce(data.getPricce());
+                        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        adminCreditOrder.setCreatetime(df.format(data.getCreatetime()));
+                        AddressManger addressManger=addressMongerService.findbyid(data.getAddressid());
+                        adminCreditOrder.setName(addressManger.getReceivepeople());
+                        adminCreditOrder.setTel(addressManger.getReceivetel());
+                        adminCreditOrder.setAddress(addressManger.getAddressdetail());
+                       creditorderslist.add(adminCreditOrder);
+
+                    }
+
+                    PageBean<AdminCreditOrder> lists=new PageBean<AdminCreditOrder>(list.getTotal(),list.getPageNum(),list.getPageSize(),list.getPages(),list.getSize(),creditorderslist);
 
 
+                    return new JsonResult("200",lists);
+                }catch (Exception e){
+                    return  new JsonResult("500",e.getMessage());
+                }
 
+    }
 
 //商品类别设置
     @PutMapping(value = "/updateGoodsType")
