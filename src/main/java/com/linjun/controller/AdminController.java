@@ -4,10 +4,12 @@ package com.linjun.controller;
 import com.linjun.common.JsonResult;
 import com.linjun.config.ImageConfig;
 import com.linjun.config.QiNiuconfig;
+import com.linjun.dao.RateMapper;
 import com.linjun.entity.PageBean;
 import com.linjun.model.*;
 import com.linjun.pojo.*;
 import com.linjun.service.*;
+import com.lly835.bestpay.rest.type.Get;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
@@ -59,6 +61,8 @@ public class AdminController {
      WithDrawApplyService withDrawApplyService;
      @Autowired
      CreditOrderService creditOrderService;
+@Autowired
+    RateService rateService;
 
 //    管理员登入
     @GetMapping(value = "/login")
@@ -902,7 +906,28 @@ return new JsonResult("500",e.getMessage());
       }
  }
 
-
+// 获取当前返还积分比率
+    @GetMapping(value = "/getRate")
+    public JsonResult getRate(){
+        try{
+            float result=rateService.find(1);
+            return new JsonResult("200",result);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
+//修改当前返现比率
+    @PutMapping(value = "/updateRate")
+    public JsonResult updateRate(
+            @RequestBody Rate rate
+    ){
+        try{
+            float result =rateService.updata(rate);
+            return  new JsonResult("200",result);
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+    }
 
 
 
