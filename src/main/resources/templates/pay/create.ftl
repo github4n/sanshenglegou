@@ -11,12 +11,15 @@
                 },
                 function(res){
                     if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-                        alert('支付成功');
+                        location.href='http://www.shunnonghui.com/';
                     }else if(res.err_msg == "get_brand_wcpay_request:cancel") {
                         alert('支付过程中用户取消');
+                        location.href='http://www.shunnonghui.com/';
                     }else if(res.err_msg == "get_brand_wcpay_request:fail") {
+                        location.href='http://www.shunnonghui.com/';
                         alert('支付失败');
                     }else {
+                        location.href='http://www.shunnonghui.com/';
                         alert('未知异常');
                     }
                 }

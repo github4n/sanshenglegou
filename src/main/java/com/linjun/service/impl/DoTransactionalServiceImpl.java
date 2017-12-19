@@ -23,18 +23,25 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
     GoodsMapper goodsMapper;
  @Autowired
  OrderMapper orderMapper;
+ @Autowired
+ CreditorderMapper creditorderMapper;
 
     @Override
-    public int buycreditGoods(Creditbyuser creditbyuser, CreditManger creditManger, Creditgoods creditgoods, CreditDetail creditDetail) {
+    public int buycreditGoods(Creditbyuser creditbyuser, CreditManger creditManger, Creditgoods creditgoods, CreditDetail creditDetail,Creditorder creditorder) {
         int result=creditMangerMapper.updateByPrimaryKeySelective(creditManger);
         long result1=creditbyuserMapper.insertSelective(creditbyuser);
         int result2=creditDetailMapper.updateByPrimaryKeySelective(creditDetail);
         int result3=creditgoodsMapper.updateByPrimaryKeySelective(creditgoods);
+        int result4=creditorderMapper.insertSelective(creditorder);
        if(result>0){
            if (result1>0){
                if (result2>0){
                    if (result3>0){
-                       return 1;
+                       if (result4>0){
+                           return 1;
+                       }else {
+                           throw  new PeopleException("失败");
+                       }
                    }else {
                        throw new PeopleException("失败");
                    }

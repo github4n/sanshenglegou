@@ -295,7 +295,8 @@ public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(va
    @Transactional
     public  JsonResult buy(
             @RequestParam(value = "creditgoodsid")long creditgoodsid,
-            @RequestParam(value = "userid")long userid
+            @RequestParam(value = "userid")long userid,
+            @RequestParam(value = "addressid")long addressid
    ){
        try{
            Creditgoods creditg=creditGoodsService.finbyid(creditgoodsid);
@@ -334,7 +335,19 @@ public JsonResult uploadImage(@RequestParam(value ="id")long id,@RequestParam(va
            creditbyuser.setUserid(userid);
            creditbyuser.setCreatetime(date);
            creditbyuser.setCreditgoodid(creditgoodsid);
-           doTransactionalService.buycreditGoods(creditbyuser,creditManger1,creditgoods,creditDetail);
+
+           Creditorder creditorder=new Creditorder();
+           AddressManger addressMange=addressMongerService.findbyid(addressid);
+           creditorder.setAddress(addressMange.getAddressdetail());
+           creditorder.setAddressid(addressid);
+           creditorder.setGoodsid(creditgoodsid);
+           creditorder.setGoodsname(creditg.getCreditgood());
+           creditorder.setCreatetime(date);
+           creditorder.setPricce(creditg.getPrice());
+           creditorder.setIspay((byte) 1);
+           creditorder.setUserid(userid);
+
+           doTransactionalService.buycreditGoods(creditbyuser,creditManger1,creditgoods,creditDetail,creditorder);
            return  new JsonResult("200","成功");
        }catch (Exception e){
 
