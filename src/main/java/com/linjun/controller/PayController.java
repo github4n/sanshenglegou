@@ -32,12 +32,15 @@ public class PayController {
      */
     @GetMapping(value = "/pay")
     public ModelAndView pay(@RequestParam("openid") String openid,
+                            @RequestParam("privce")float privce,
+                            @RequestParam("orderid")String orderid,
+                            @RequestParam("ordername")String ordername,
                             Map<String, Object> map) {
         PayRequest request = new PayRequest();
         Random random = new Random();
         request.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
-        request.setOrderId(String.valueOf(random.nextInt(100000000)));
-        request.setOrderAmount(0.01);
+        request.setOrderId(orderid);
+        request.setOrderAmount((double) privce);
         request.setOrderName("最好的支付sdk");
         request.setOpenid(openid);
         log.info("【发起支付】request={}", JsonUtil.toJson(request));
