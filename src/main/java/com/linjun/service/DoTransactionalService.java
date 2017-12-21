@@ -1,8 +1,9 @@
 package com.linjun.service;
 
 import com.linjun.model.*;
+import com.linjun.pojo.PayOrder;
 
 public interface DoTransactionalService {
     int buycreditGoods(Creditbyuser creditbyuser, CreditManger creditManger, Creditgoods creditgoods, CreditDetail creditDetail,Creditorder creditorder);
-    int buyGood(Goods goods,Order order);
+    PayOrder buyGood(Goods goods, Order order);
 }

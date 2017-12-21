@@ -3,6 +3,7 @@ package com.linjun.service.impl;
 import com.linjun.common.domain.PeopleException;
 import com.linjun.dao.*;
 import com.linjun.model.*;
+import com.linjun.pojo.PayOrder;
 import com.linjun.service.DoTransactionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,12 +59,16 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
     }
 
     @Override
-    public int buyGood(Goods goods, Order order) {
+    public PayOrder buyGood(Goods goods, Order order) {
         int result=goodsMapper.updateByPrimaryKeySelective(goods);
         int result1=orderMapper.insertSelective(order);
         if (result>0){
             if (result1>0){
-                return 1;
+              PayOrder payOrder=new PayOrder();
+               payOrder.setOrderid(result1);
+               payOrder.setOrdername(order.getGoodsname());
+               payOrder.setPrivce(order.getPricesum());
+                return payOrder;
             }else {
                 throw  new PeopleException("失败");
             }

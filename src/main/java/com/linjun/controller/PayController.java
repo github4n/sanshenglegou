@@ -1,5 +1,6 @@
 package com.linjun.controller;
 
+import com.linjun.common.JsonResult;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
@@ -31,28 +32,21 @@ public class PayController {
      * 发起支付
      */
     @GetMapping(value = "/pay")
-    public ModelAndView pay(@RequestParam("openid") String openid,
-                            @RequestParam("privce")float privce,
-                            @RequestParam("orderid")String orderid,
-                            @RequestParam("ordername")String ordername,
-                            Map<String, Object> map) {
+    public JsonResult pay(@RequestParam("openid") String openid,
+                          @RequestParam("privce")float privce,
+                          @RequestParam("orderid")String orderid,
+                          @RequestParam("ordername")String ordername){
         PayRequest request = new PayRequest();
         Random random = new Random();
         request.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
         request.setOrderId(orderid);
         request.setOrderAmount((double) privce);
-        request.setOrderName("最好的支付sdk");
+        request.setOrderName(ordername);
         request.setOpenid(openid);
-        log.info("【发起支付】request={}", JsonUtil.toJson(request));
 
         PayResponse payResponse = bestPayService.pay(request);
-        log.info("【发起支付】response={}", JsonUtil.toJson(payResponse));
 
-        map.put("payResponse", payResponse);
-
-        return new ModelAndView("pay/create", map);
-
-
+        return new JsonResult("200",payResponse);
 
     }
 

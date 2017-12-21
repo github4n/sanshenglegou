@@ -3,10 +3,7 @@ package com.linjun.controller;
 import com.linjun.common.JsonResult;
 
 import com.linjun.model.*;
-import com.linjun.pojo.Address;
-import com.linjun.pojo.Cart;
-import com.linjun.pojo.GoodsModel;
-import com.linjun.pojo.Ordermodel;
+import com.linjun.pojo.*;
 import com.linjun.service.*;
 
 
@@ -240,7 +237,8 @@ goods1.setGoodssum((long)goodsum-1);
           pricesum=goodsum*memberprice;
       }
          order.setPricesum(pricesum);
-         int result=doTransactionalService.buyGood(goods1,order);
+         PayOrder result=doTransactionalService.buyGood(goods1,order);
+
 
            return  new JsonResult("200",result);
           }catch (Exception e){
