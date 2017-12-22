@@ -1,6 +1,13 @@
 package com.linjun.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import com.linjun.common.JsonResult;
+import com.linjun.config.WeixinConfig;
+import com.linjun.pojo.Location;
+import com.linjun.util.HttpsUtil;
+import com.linjun.util.NetUtil;
 import com.qiniu.util.Json;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -35,21 +42,28 @@ public JsonResult getweixnconfigin(
     }
 
    @GetMapping(value = "/getzhlocation")
-   public JsonResult getzhlocation(String a,String b){
+   public JsonResult getzhlocation(double a,double b){
         try{
+            String locationurl="http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location="+a+","+b+"&output=json&pois=0&ak="+ WeixinConfig.BAIDULation;
+            Map<String, String> res = new HashMap<String, String>();
+            String response= NetUtil.sendGetRequest(locationurl,null,null);
+            response=response.replaceAll("renderReverse&&renderReverse","");
+            response=response.replaceAll("\\(","");
+            response=response.replaceAll("\\)","");
 
+            Location location=new Gson().fromJson(response,Location.class);
+            res.put("privince",location.getResult().getAddressComponent().getProvince());
+            res.put("city",location.getResult().getAddressComponent().getCity());
+            res.put("country",location.getResult().getAddressComponent().getCountry());
 
-
+            return new JsonResult("200",res);
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());
         }
 
 
    }
-
-
-
-
+    
 
     public static Map<String, String> sign(String jsapi_ticket, String url) {
         Map<String, String> ret = new HashMap<String, String>();

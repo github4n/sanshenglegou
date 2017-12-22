@@ -2,6 +2,13 @@ package com.linjun.config;
 
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.linjun.pojo.Location;
+import com.linjun.util.HttpsUtil;
+import com.linjun.util.NetUtil;
+
 import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,47 +19,21 @@ public class textmain {
 
 
    public  static void main(String[] args) throws ParseException {
+    Double a=39.934;
+    Double b=245.7;
+       String locationurl="http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location="+a+","+b+"&output=json&pois=0&ak="+ WeixinConfig.BAIDULation;
+       String c="http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=39.934,116.329&output=json&pois=0&ak=3vmb6zina9IM6ku0mkMONj8ge62Gj030";
 
-       String a= String.valueOf(new Date());
-       SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-       SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-       SimpleDateFormat sdf3= new SimpleDateFormat("yyyy-MM-dd 00:00:00");
-       SimpleDateFormat sdf4= new SimpleDateFormat("yyyy-MM-dd 23:59:59");
-       String b= null;
-       Date date=null;
-       Date date1=null;
-       Date date2=null;
-       Date date3=null;
-       Date v=null;
-       try {
-           Date d=sdf1.parse(a);
-           b = sdf2.format(d);
-           v=d;
-           System.out.println(v);
-           date=sdf2.parse(b);
-           System.out.println(date);
+//       String response= HttpsUtil.httpsRequestToString(c,"GET", null);
+ String response= NetUtil.sendGetRequest(c,null,null);
+    response=response.replaceAll("renderReverse&&renderReverse","");
+       response=response.replaceAll("\\(","");
+       response=response.replaceAll("\\)","");
 
-       } catch (ParseException e) {
-           e.printStackTrace();
-       }
-       try {
-           b = sdf2.format(sdf1.parse(a));
-           date1=sdf2.parse(b);
+       Location location=new Gson().fromJson(response,Location.class);
 
-           b=sdf3.format(v);
-           date2=sdf2.parse(b);
-           b=sdf4.format(v);
-           date3=sdf2.parse(b);
-       } catch (ParseException e) {
-           e.printStackTrace();
-       }
-
-
-System.out.println(date1);
-       System.out.println(date2);
-       System.out.println(date3);
-
-
+System.out.println(response);
+System.out.println(location.getResult().getAddressComponent().getCity());
 
    }
 
