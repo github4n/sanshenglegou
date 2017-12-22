@@ -43,12 +43,14 @@ public class PayController {
         request.setOrderAmount((double) privce);
         request.setOrderName(ordername);
         request.setOpenid(openid);
-
         PayResponse payResponse = bestPayService.pay(request);
-
         return new JsonResult("200",payResponse);
 
     }
+
+
+
+
 
     /**
      * 异步回调

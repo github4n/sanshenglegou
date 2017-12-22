@@ -387,6 +387,29 @@ goods1.setGoodssum((long)goodsum-1);
            }
 
     }
+//用户支付成功更新订单
+    @PutMapping(value = "/updatorder")
+    public JsonResult updatorder(
+            @RequestParam(value = "id")long id,
+            @RequestParam(value = "status")byte status
+    ){
+                try{
+                    Order order1=new Order();
+                    order1.setId(id);
+                    order1.setIspay(status);
+
+                Order order =orderService.updateOrder(order1);
+                    return new JsonResult("200",order);
+                }catch (Exception e){
+                    return  new JsonResult("500",e.getMessage());
+                }
+    }
+
+
+
+
+
+
 //    用户支付状态的订单
     @GetMapping(value = "/getOrderStatus")
     public  JsonResult getOrderStatus(

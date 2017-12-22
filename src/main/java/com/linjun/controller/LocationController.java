@@ -37,12 +37,12 @@ public JsonResult getweixnconfigin(
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());
         }
-
-
     }
 
    @GetMapping(value = "/getzhlocation")
-   public JsonResult getzhlocation(double a,double b){
+   public JsonResult getzhlocation(
+           @RequestParam(value = "a") double a,
+           @RequestParam(value = "b") double b){
         try{
             String locationurl="http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location="+a+","+b+"&output=json&pois=0&ak="+ WeixinConfig.BAIDULation;
             Map<String, String> res = new HashMap<String, String>();
@@ -63,7 +63,7 @@ public JsonResult getweixnconfigin(
 
 
    }
-    
+
 
     public static Map<String, String> sign(String jsapi_ticket, String url) {
         Map<String, String> ret = new HashMap<String, String>();
