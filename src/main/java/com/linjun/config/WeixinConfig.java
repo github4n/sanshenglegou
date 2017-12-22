@@ -12,5 +12,5 @@ public class WeixinConfig {
    public  static final  String API_KEY = "CErjCXMqdC5nXoYRIWI1YDz8B4UUv65m";
     public  static  final  String KeyPath="/Users/linjun/Downloads/cert/apiclient_cert.p12";
     public  static  final String notifyUrl="http://linjunjj.free.ngrok.cc";
-
+     public  static final String BAIDULation="mmQj37VA5Wiia0HKjV4AE7ZictGuNbTW";
 }

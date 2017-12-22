@@ -1,6 +1,7 @@
 package com.linjun.controller;
 
 import com.linjun.common.JsonResult;
+import com.qiniu.util.Json;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,23 @@ public JsonResult getweixnconfigin(
 
 
     }
+
+   @GetMapping(value = "/getzhlocation")
+   public JsonResult getzhlocation(String a,String b){
+        try{
+
+
+
+        }catch (Exception e){
+            return  new JsonResult("500",e.getMessage());
+        }
+
+
+   }
+
+
+
+
 
     public static Map<String, String> sign(String jsapi_ticket, String url) {
         Map<String, String> ret = new HashMap<String, String>();
