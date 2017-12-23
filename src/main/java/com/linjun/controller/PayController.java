@@ -45,10 +45,9 @@ public class PayController {
         request.setOpenid(openid);
         PayResponse payResponse = bestPayService.pay(request);
         return new JsonResult("200",payResponse);
-
     }
 
-
+//
 
 
 
