@@ -82,14 +82,60 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
     public int Complete(Order order, CreditManger creditManger, CreditDetail creditDetail) {
        int result=orderMapper.updateByPrimaryKeySelective(order);
        CreditManger isexit=creditMangerMapper.selectByPrimaryKey(creditManger.getUserid());
-
        int result2=creditDetailMapper.insertSelective(creditDetail);
        if (result>0){
-         if (isexit!=null){
-             int result3=creditMangerMapper.insertSelective(creditManger);
+         if (isexit==null){
+             long result3=creditMangerMapper.insertSelective(creditManger);
+             if (result3>0){
+              CreditDetail creditDetail1=creditDetailMapper.selectByPrimaryKey(result3);
+               if (creditDetail1!=null){
+                   int result4=creditDetailMapper.updateByPrimaryKeySelective(creditDetail);
+                   if (result4>0){
+                       return 1;
+                   }else {
+                       throw new PeopleException("失败");
+                   }
+               }else {
+                   int result4=creditDetailMapper.insertSelective(creditDetail);
+                   if (result4>0){
+                       return 1;
+                   }else {
+                       throw new PeopleException("失败");
+                   }
+               }
+
+
+             }else {
+                 throw  new PeopleException("失败");
+             }
 
 
          }else {
+            long result3=creditMangerMapper.updateByPrimaryKeySelective(creditManger);
+            if (result3>0){
+
+
+                CreditDetail creditDetail1=creditDetailMapper.selectByPrimaryKey(result3);
+                if (creditDetail1!=null){
+                    int result4=creditDetailMapper.updateByPrimaryKeySelective(creditDetail);
+                    if (result4>0){
+                        return 1;
+                    }else {
+                        throw new PeopleException("失败");
+                    }
+                }else {
+                    int result4=creditDetailMapper.insertSelective(creditDetail);
+                    if (result4>0){
+                        return 1;
+                    }else {
+                        throw new PeopleException("失败");
+                    }
+                }
+
+            }else {
+                throw  new PeopleException("失败");
+            }
+
 
          }
 
