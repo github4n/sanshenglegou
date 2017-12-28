@@ -89,6 +89,9 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
              if (result3>0){
               CreditDetail creditDetail1=creditDetailMapper.selectByPrimaryKey(result3);
                if (creditDetail1!=null){
+                   creditDetail.setCreditid(result3);
+
+
                    int result4=creditDetailMapper.updateByPrimaryKeySelective(creditDetail);
                    if (result4>0){
                        return 1;
@@ -117,6 +120,7 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
 
                 CreditDetail creditDetail1=creditDetailMapper.selectByPrimaryKey(result3);
                 if (creditDetail1!=null){
+                    creditDetail.setCreditid(result3);
                     int result4=creditDetailMapper.updateByPrimaryKeySelective(creditDetail);
                     if (result4>0){
                         return 1;

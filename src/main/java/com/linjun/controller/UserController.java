@@ -396,15 +396,32 @@ goods1.setGoodssum((long)goodsum-1);
             @RequestParam(value = "status")byte status
     ){
                 try{
+                    Order order2=orderService.findByID(id);
                     Order order1=new Order();
                     order1.setId(id);
                     order1.setIspay(status);
 
                     Float rate=rateService.find(1);
+                    CreditManger creditManger1=creditMangerService.findByuserid(id);
+                    long creditsum=creditManger1.getCreditsum();
+                    long getcredit=creditManger1.getGetcredit();
+                    CreditManger creditManger=new CreditManger();
+                     creditManger.setUserid(id);
+                     creditManger.setCreditsum(creditsum+(int)(order2.getPricesum()*rate));
+                     creditManger.setGetcredit(creditsum+(int)(order2.getPricesum()*rate));
 
 
-                Order order =orderService.updateOrder(order1);
-                    return new JsonResult("200",order);
+                     CreditDetail creditDetail=new CreditDetail();
+                     creditDetail.setAddcredit((long)(order2.getPricesum()*rate));
+                     creditDetail.setStatus((byte) 1);
+                    String a= String.valueOf(new Date());
+                    SimpleDateFormat sdf1= new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                    SimpleDateFormat sdf2= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String b=sdf2.format(sdf1.parse(a));
+                    Date date=sdf2.parse(b);
+                    creditDetail.setChangtime(date);
+                int result=doTransactionalService.Complete(order1,creditManger,creditDetail);
+                    return new JsonResult("200",result);
                 }catch (Exception e){
                     return  new JsonResult("500",e.getMessage());
                 }
