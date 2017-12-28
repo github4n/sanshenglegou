@@ -77,4 +77,26 @@ public class DoTransactionalServiceImpl implements DoTransactionalService {
         }
 
     }
+
+    @Override
+    public int Complete(Order order, CreditManger creditManger, CreditDetail creditDetail) {
+       int result=orderMapper.updateByPrimaryKeySelective(order);
+       CreditManger isexit=creditMangerMapper.selectByPrimaryKey(creditManger.getUserid());
+
+       int result2=creditDetailMapper.insertSelective(creditDetail);
+       if (result>0){
+         if (isexit!=null){
+             int result3=creditMangerMapper.insertSelective(creditManger);
+
+
+         }else {
+
+         }
+
+
+       }else {
+           throw new PeopleException("失败");
+       }
+
+    }
 }

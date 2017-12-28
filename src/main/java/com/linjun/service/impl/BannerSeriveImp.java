@@ -96,6 +96,7 @@ public class BannerSeriveImp implements BannerService {
         BannerCriteria bannerCriteria=new BannerCriteria();
         BannerCriteria.Criteria criteria=bannerCriteria.createCriteria();
         criteria.andTypeEqualTo(type);
+        criteria.andIsstartEqualTo((byte) 1);
         List<Banner> list=bannerMapper.selectByExample(bannerCriteria);
         if (list!=null&&list.size()>0){
             return list;

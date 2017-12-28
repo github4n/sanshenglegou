@@ -7,4 +7,5 @@ public interface CreditMangerService {
     public  CreditManger updateByuserid(CreditManger creditManger);
     public  int deleteByuserid(long userid);
     public  CreditManger findByuserid(long userid);
+    boolean isexit(long id);
 }

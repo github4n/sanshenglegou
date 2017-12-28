@@ -47,4 +47,17 @@ public class CreditMangerServiceImpl implements CreditMangerService {
             throw new PeopleException("查询失败");
         }
     }
+
+    @Override
+    public boolean isexit(long id) {
+
+        CreditManger list=creditMangerMapper.selectByPrimaryKey(id);
+        if (list!=null){
+            return true;
+        }else {
+            return false;
+        }
+
+
+    }
 }

@@ -61,6 +61,8 @@ public class UserController {
     CreditDetialService creditDetialService;
 @Autowired
 DoTransactionalService doTransactionalService;
+@Autowired
+RateService rateService;
 
 
 // 用户注册
@@ -397,6 +399,9 @@ goods1.setGoodssum((long)goodsum-1);
                     Order order1=new Order();
                     order1.setId(id);
                     order1.setIspay(status);
+
+                    Float rate=rateService.find(1);
+
 
                 Order order =orderService.updateOrder(order1);
                     return new JsonResult("200",order);
