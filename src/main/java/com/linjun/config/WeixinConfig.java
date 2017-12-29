@@ -5,7 +5,7 @@ import java.util.StringTokenizer;
 public class WeixinConfig {
     public  static  final  String WX_APPID="wxe0cd32449ecbbc02";
     public  static  final  String WX_APPSECRET="e013ff9369099a3ef3888b3ef9b9c38b";
-    public  static  final String REDIRECT_URI="http://www.shunnonghui.com/wechat";
+    public  static  final String REDIRECT_URI="http://www.shunnonghui.com/author";
     public  static  final  String MCH_ID="1493683362";
     public  static  final  String APPID="wxe0cd32449ecbbc02";
     public static final String WXUNIFIEDORDER_HTTPURL = "https://api.mch.weixin.qq.com/pay/unifiedorder";
