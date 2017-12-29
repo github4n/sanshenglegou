@@ -34,7 +34,7 @@ public class WeixinController {
 //    校验微信服务器
     private Logger logger = LoggerFactory.getLogger(getClass());
 private String TOKEN="weixin";
-@GetMapping(value = "/weixn")
+@GetMapping(value = "/weixin")
     public  String checkName(@RequestParam(name = "signature") String signature,
                              @RequestParam(name = "timestamp") String timestamp,
                              @RequestParam(name = "nonce") String nonce,
