@@ -119,6 +119,7 @@ private String TOKEN="weixin";
                          String city=userMessageJsonObject.getString("city");
                          String country=userMessageJsonObject.getString("country");
                          String province=userMessageJsonObject.getString("province");
+
                          if (userService.isExitByopenid(openid)){
                            User user=userService.findByopenid(openid);
                              String a= String.valueOf(new Date());
@@ -129,7 +130,8 @@ private String TOKEN="weixin";
                              Date date=sdf2.parse(b);
                              System.out.println(date);
                            user.setLogin(new Date());
-                          User user1=   userService.updateUser(user);
+                          User user1= userService.updateUser(user);
+                             System.out.println(user.toString());
                           String time =sdf2.format(user1.getLogin());
 
                              return  new JsonResult("200",user);
@@ -174,7 +176,18 @@ private String TOKEN="weixin";
 
    }
 //微信支付
+@GetMapping(value = "/getuserinfo")
+public JsonResult getuserinfo(
+        @RequestParam(value = "openid")String openid
+){
+    try{
+        User user=userService.findByopenid(openid);
+       return  new JsonResult("200",user);
+    }catch (Exception e){
+        return  new JsonResult("500",e.getMessage());
+    }
 
+}
 
 
 

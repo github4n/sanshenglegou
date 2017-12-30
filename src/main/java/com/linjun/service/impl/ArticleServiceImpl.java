@@ -48,6 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article addArticle(Article article) {
         int result=articleMapper.insertSelective(article);
+
         if (result>0){
             return articleMapper.selectByPrimaryKey((long) result);
         }else {

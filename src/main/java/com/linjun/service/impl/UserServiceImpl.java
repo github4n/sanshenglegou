@@ -23,9 +23,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User add(User user) {
 
-        long result=userMapper.insertSelective(user);
+        int result=userMapper.insertSelective(user);
+        System.out.println(result);
         if (result>0){
-            return userMapper.selectByPrimaryKey(result);
+
+            return userMapper.selectByPrimaryKey((long)result);
         }else{
             throw new PeopleException("添加失败");
         }

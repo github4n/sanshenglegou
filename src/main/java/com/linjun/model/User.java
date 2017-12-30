@@ -162,4 +162,26 @@ public class User {
     public void setIp(String ip) {
         this.ip = ip == null ? null : ip.trim();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", openid='" + openid + '\'' +
+                ", token='" + token + '\'' +
+                ", role=" + role +
+                ", city='" + city + '\'' +
+                ", province='" + province + '\'' +
+                ", country='" + country + '\'' +
+                ", sex='" + sex + '\'' +
+                ", tel='" + tel + '\'' +
+                ", email='" + email + '\'' +
+                ", headimage='" + headimage + '\'' +
+                ", state=" + state +
+                ", createtime=" + createtime +
+                ", login=" + login +
+                ", ip='" + ip + '\'' +
+                '}';
+    }
 }
