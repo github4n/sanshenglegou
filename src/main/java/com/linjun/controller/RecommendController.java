@@ -27,6 +27,7 @@ public class RecommendController {
     public JsonResult getRecommend() {
         try {
             long sum = goodsService.countGoods();
+            System.out.println(sum);
             int n = 1;
 
             if (sum > 6) {
@@ -36,11 +37,13 @@ public class RecommendController {
             }
             HashSet<Integer> set = new HashSet<Integer>();
 
-            randomCommon(1, (int) sum+1, n+1, set);
+            randomCommon(1, (int) sum+1, n+2, set);
+            GoodsModel goodsModel = new GoodsModel();
             List<GoodsModel> list = new ArrayList<GoodsModel>();
             for (int i : set) {
+                System.out.println(i);
                 Goods goods = goodsService.findByid(i);
-                GoodsModel goodsModel = new GoodsModel();
+                System.out.println(goods);
                 goodsModel.setStoreid(goods.getStoreid());
                 goodsModel.setGoodsName(goods.getGoodsname());
                 goodsModel.setSoldamount(goods.getSoldamount());
@@ -65,8 +68,11 @@ public class RecommendController {
                 }
                 goodsModel.setContent(content);
                 goodsModel.setId(goods.getId());
+
+                System.out.println(goodsModel);
                 list.add(goodsModel);
             }
+
             return new JsonResult("200", list);
         } catch (Exception e) {
             return new JsonResult("500", e.getMessage());

@@ -113,4 +113,22 @@ public class GoodsModel {
     public void setGoodsSum(long goodsSum) {
         this.goodsSum = goodsSum;
     }
+
+    @Override
+    public String toString() {
+        return "GoodsModel{" +
+                "id=" + id +
+                ", imageaddress=" + imageaddress +
+                ", goodsName='" + goodsName + '\'' +
+                ", price=" + price +
+                ", memberprice=" + memberprice +
+                ", soldamount=" + soldamount +
+                ", storename='" + storename + '\'' +
+                ", goodsSum=" + goodsSum +
+                ", content='" + content + '\'' +
+                ", storeid=" + storeid +
+                ", iscredits=" + iscredits +
+                ", credit=" + credit +
+                '}';
+    }
 }

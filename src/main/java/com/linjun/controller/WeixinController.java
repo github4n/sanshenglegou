@@ -133,7 +133,6 @@ private String TOKEN="weixin";
                           User user1= userService.updateUser(user);
                              System.out.println(user.toString());
                           String time =sdf2.format(user1.getLogin());
-
                              return  new JsonResult("200",user);
                          }else {
                              User user=new User();

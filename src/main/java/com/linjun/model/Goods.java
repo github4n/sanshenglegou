@@ -142,4 +142,24 @@ public class Goods {
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
     }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "id=" + id +
+                ", goodsname='" + goodsname + '\'' +
+                ", typeid=" + typeid +
+                ", goodssum=" + goodssum +
+                ", marketprive=" + marketprive +
+                ", memberprice=" + memberprice +
+                ", sendcredit=" + sendcredit +
+                ", storeid=" + storeid +
+                ", shop='" + shop + '\'' +
+                ", soldamount=" + soldamount +
+                ", iscredits=" + iscredits +
+                ", credit=" + credit +
+                ", isstart=" + isstart +
+                ", createtime=" + createtime +
+                '}';
+    }
 }
