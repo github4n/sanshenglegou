@@ -69,7 +69,6 @@ public class RecommendController {
                 goodsModel.setContent(content);
                 goodsModel.setId(goods.getId());
 
-                System.out.println(goodsModel);
                 list.add(goodsModel);
             }
 
