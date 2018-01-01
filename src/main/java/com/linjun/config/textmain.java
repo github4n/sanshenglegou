@@ -23,9 +23,9 @@ public class textmain {
     Double b=245.7;
        String locationurl="http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location="+a+","+b+"&output=json&pois=0&ak="+ WeixinConfig.BAIDULation;
        String c="http://api.map.baidu.com/geocoder/v2/?callback=renderReverse&location=39.934,116.329&output=json&pois=0&ak=3vmb6zina9IM6ku0mkMONj8ge62Gj030";
-
-  //       String response= HttpsUtil.httpsRequestToString(c,"GET", null);
- String response= NetUtil.sendGetRequest(c,null,null);
+//
+       String response= HttpsUtil.httpsRequestToString(c,"GET", null);
+// String response= NetUtil.sendGetRequest(c,null,null);
     response=response.replaceAll("renderReverse&&renderReverse","");
        response=response.replaceAll("\\(","");
        response=response.replaceAll("\\)","");
