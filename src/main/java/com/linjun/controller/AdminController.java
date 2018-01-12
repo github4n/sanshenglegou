@@ -315,8 +315,6 @@ public JsonResult login(@RequestParam(value = "id",required = false)long id
 
 
 
-
-
 //    获取所有商品
     @GetMapping(value = "/getGoodsAll")
     public JsonResult getGoodsAll(@RequestParam(value = "page")int page,@RequestParam(value = "pagesize")int pagesize){
@@ -346,6 +344,7 @@ public JsonResult login(@RequestParam(value = "id",required = false)long id
                   }
                   admindata.setGoodsimage(a);
                   admindata.setTypeName(goodsTypeService.findById(data.getId()).getTypename());
+//                  数据为空的时候会出现异常
                     SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     admindata.setCreateTime(df.format(data.getCreatetime()));
                     list.add(admindata);
