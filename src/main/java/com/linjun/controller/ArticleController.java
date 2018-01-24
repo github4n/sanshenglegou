@@ -26,6 +26,7 @@ public class ArticleController {
             article.setTitle(title);
             article.setLooksum((long)0);
            Article li= articleService.addArticle(article);
+
             return  new JsonResult("200",article);
         }catch (Exception e){
             return  new JsonResult("500",e.getMessage());

@@ -40,4 +40,14 @@ public class Article {
     public void setLooksum(Long looksum) {
         this.looksum = looksum;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", title='" + title + '\'' +
+                ", looksum=" + looksum +
+                '}';
+    }
 }

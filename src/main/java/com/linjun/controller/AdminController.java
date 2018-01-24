@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -255,6 +256,49 @@ public JsonResult login(@RequestParam(value = "id",required = false)long id
                   return  new JsonResult("500",e.getMessage());
               }
     }
+
+
+    private Long id;
+
+    private String nickname;
+
+    private String userheadimg;
+
+    private String password;
+
+    private String sex;
+
+    private Byte userrole;
+
+    private Date birthday;
+
+    private Long tel;
+
+    private Byte userstutal;
+
+    private String address;
+
+    private Integer infofull;
+
+    private String email;
+
+    private String school;
+
+    private String major;
+
+    private Long parisesum;
+
+    private Date createtime;
+
+    private Date logouttime;
+
+    private Long logoutip;
+    private  long  fens;
+    private  long awardSum;
+
+
+
+
 
 //获取积分商品订单列表
     @GetMapping(value = "/getcreditorder")

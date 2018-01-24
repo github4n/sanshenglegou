@@ -50,7 +50,10 @@ public class ArticleServiceImpl implements ArticleService {
         int result=articleMapper.insertSelective(article);
 
         if (result>0){
-            return articleMapper.selectByPrimaryKey((long) result);
+            Article article1=articleMapper.selectByPrimaryKey((long) result);
+           System.out.println(article1.toString());
+            System.out.println(article.toString());
+            return article1;
         }else {
             throw  new PeopleException("增加文章失败");
         }
